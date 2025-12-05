@@ -185,7 +185,7 @@ if (needs_cookie_consent() && basename($_SERVER['PHP_SELF']) !== 'cookie_consent
             </p>
          </article>
          <figure class="scroll-effect">
-            <img src="" alt="Hero section image" title="Hero section image">
+            <img src="./media/hero-image1.jpg" alt="Hero section image" title="Hero section image">
          </figure>
       </section>
       <section id="categories">      
