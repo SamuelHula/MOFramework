@@ -120,7 +120,7 @@
    </section>
    <section id="copyright">
       <div class="copyright-content">
-         <p>&copy; 2026 CodeLibrary. All rights reserved. | Designed by <a href="https://samuel-the-dev.github.io/samuel-hula-portfolio/" target="_blank">Samuel Hula</a></p>
+         <p>&copy; 2026 CodeLibrary. All rights reserved. | Designed by <a href="https://samuel-the-dev.github.io/samuel-hula-portfolio/" target="_blank" style="color: var(--back-light); text-decoration: none;">Samuel Hula</a></p>
          <div class="legal-links">
             <a href="privacy.php">Privacy Policy</a>
             <a href="terms.php">Terms of Service</a>
