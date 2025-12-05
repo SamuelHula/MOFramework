@@ -1034,7 +1034,7 @@
    align-self: flex-start;
    padding: 0.75rem 2rem;
    font-size: 1rem;
-   border: none;
+   border: 1px solid var(--primary);
    cursor: pointer;
    transition: all 0.3s;
 }
