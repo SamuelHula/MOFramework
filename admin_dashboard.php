@@ -471,7 +471,7 @@ try {
          
          <div class="admin-header scroll-effect">
                <div class="admin-greeting">
-                  Welcome back, <?php echo htmlspecialchars($_SESSION['admin_name']); ?>! 👑
+                  Welcome back<?php echo htmlspecialchars($_SESSION['admin_name']); ?>!
                </div>
                <h1>Admin Dashboard</h1>
                <div class="admin-role">
