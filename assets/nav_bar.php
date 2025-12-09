@@ -86,9 +86,6 @@ if ($needs_consent && $current_page !== 'cookie_consent.php') {
                 <a href="signin.php" class="signin_btn" title="Sign In">Sign In</a>
                 <a href="signup.php" class="signup_btn" title="Sign Up">Sign Up</a>
             <?php endif; ?>
-            <?php if (isset($_SESSION['admin_loggedin']) && $_SESSION['admin_loggedin'] === true): ?>
-                <li><a href="admin_dashboard.php" class="dashboard_btn">Admin Panel</a></li>
-            <?php endif; ?>
         </li>
     </ul>
 </nav>
