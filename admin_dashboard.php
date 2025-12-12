@@ -487,13 +487,23 @@ try {
          <div class="admin-grid scroll-effect">
                <div class="admin-card">
                   <div class="stats-card-decor"></div>
-                  <h3>📊 User Statistics</h3>
-                  <div class="stat-number"><?php echo $totalUsers; ?></div>
-                  <div class="stat-label">Total Registered Users</div>
-                  <p>Manage user accounts, permissions, and monitor user activities across the platform.</p>
+                  <h3>👤 User Management</h3>
+                  <div class="stat-number">
+                     <?php 
+                     try {
+                           $stmt = $pdo->query("SELECT COUNT(*) as total FROM users");
+                           $totalUsers = $stmt->fetch()['total'];
+                           echo $totalUsers;
+                     } catch (PDOException $e) {
+                           echo '0';
+                     }
+                     ?>
+                  </div>
+                  <div class="stat-label">Registered Users</div>
+                  <p>Manage user accounts, view user information, and perform administrative actions.</p>
                   <div class="admin-actions">
-                     <a href="#" class="admin-btn admin-btn-primary">Browse Users</a>
-                     <a href="#" class="admin-btn admin-btn-success">Add New User</a>
+                     <a href="manage_users.php" class="admin-btn admin-btn-primary">Browse Users</a>
+                     <a href="add_user.php" class="admin-btn admin-btn-success">Add New User</a>
                   </div>
                </div>
                

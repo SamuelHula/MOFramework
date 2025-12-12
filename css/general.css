@@ -705,7 +705,7 @@ footer {
 }
 .admin-nav-bar {
    background: white;
-   padding: 1rem;
+   padding: 1% 15%;
    display: flex;
    justify-content: space-between;
    align-items: center;
@@ -713,9 +713,7 @@ footer {
    top: 0;
    left: 50%;
    transform: translateX(-50%);
-   width: 70%;
-   min-width: 300px;
-   max-width: 1200px;
+   width: 100%;
    z-index: 1000;
    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
    border-radius: 0 0 15px 15px;

@@ -250,22 +250,6 @@ try {
          gap: 1rem;
          margin-top: 2rem;
       }
-      .back-link {
-         display: inline-block;
-         margin-bottom: 1.5rem;
-         color: var(--primary);
-         text-decoration: none;
-         font-weight: 600;
-         font-family: var(--subheading);
-         padding: 0.5rem 1rem;
-         border-radius: 8px;
-         border: 2px solid transparent;
-         transition: all 0.3s;
-      }
-      .back-link:hover {
-         background: var(--back-light);
-         border-color: var(--primary);
-      }
       
       /* Floating Balls Styles */
       .floating-balls {
@@ -333,7 +317,6 @@ try {
          background: radial-gradient(circle at 30% 30%, var(--secondary), transparent);
          animation-delay: -15s;
       }
-
       @keyframes float {
          0%, 100% {
             transform: translate(0, 0) rotate(0deg);
@@ -348,7 +331,6 @@ try {
             transform: translate(10px, 20px) rotate(3deg);
          }
       }
-      
       .form-card-decor {
          position: absolute;
          top: 0;
@@ -359,13 +341,12 @@ try {
          border-radius: 0 20px 0 50px;
          opacity: 0.1;
       }
-      
       .table-header-actions {
          display: flex;
          gap: 1rem;
          align-items: center;
+         justify-content: space-between;
       }
-      
       @media screen and (max-width: 768px) {
          body {
             padding-top: 120px;
@@ -417,9 +398,8 @@ try {
    <main id="main">
       <section class="manage-admin-container">
          <div class="admin-management-header scroll-effect">
-               <h1>👑 Admin Management</h1>
+               <h1>Admin Management</h1>
                <p>Create and manage administrator accounts with different permission levels</p>
-               <a href="admin_dashboard.php" class="back-link">← Back to Dashboard</a>
          </div>
          
          <!-- Add/Edit Admin Form -->

@@ -9,8 +9,8 @@
             Manage Admins
          </a>
       <?php endif; ?>
-      <a href="#" class="admin-nav-link <?php echo $active_page === 'reports' ? 'active' : ''; ?>">
-         Reports
+      <a href="manage_users.php" class="admin-nav-link <?php echo $active_page === 'manage_users' ? 'active' : ''; ?>">
+         Manage Users
       </a>
       <a href="#" class="admin-nav-link <?php echo $active_page === 'settings' ? 'active' : ''; ?>">
          Settings
