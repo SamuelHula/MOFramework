@@ -12,8 +12,8 @@
       <a href="manage_users.php" class="admin-nav-link <?php echo $active_page === 'manage_users' ? 'active' : ''; ?>">
          Manage Users
       </a>
-      <a href="#" class="admin-nav-link <?php echo $active_page === 'settings' ? 'active' : ''; ?>">
-         Settings
+      <a href="admin_manage_snippets.php" class="admin-nav-link <?php echo $active_page === 'admin_manage_snippets' ? 'active' : ''; ?>">
+         Manage Snippets
       </a>
       <form action="./assets/admin_logout.php" method="POST" style="display: inline;">
          <button type="submit" class="admin-signout-btn">Sign Out</button>

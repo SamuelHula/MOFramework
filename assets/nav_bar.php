@@ -69,14 +69,14 @@ if ($needs_consent && $current_page !== 'cookie_consent.php') {
             <li><a href="#contact_form" title="Contact">Contact</a></li>
         <?php else: ?>
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                <li><a href="account.php" class="<?php echo $current_page == 'account.php' ? 'active' : ''; ?>" title="Account Info">Account Info</a></li>
-            <?php else: ?>
-                <li><a href="about.php" class="<?php echo $current_page == 'about.php' ? 'active' : ''; ?>" title="About">About</a></li>
+                <li><a href="snippets_catalog.php" class="<?php echo $current_page == 'snippets_catalog.php' ? 'active' : ''; ?>" title="Code Snippets">Snippets</a></li>
+                <li><a href="favorites.php" class="<?php echo $current_page == 'favorites.php' ? 'active' : ''; ?>" title="My Favorites">Favorites</a></li>
+                <li><a href="account.php" class="<?php echo $current_page == 'account.php' ? 'active' : ''; ?>" title="Account Info">Account</a></li>
             <?php endif; ?>
-            <li><a href="docs.php" class="<?php echo $current_page == 'docs.php' ? 'active' : ''; ?>" title="Documentation">Docs</a></li>   
-            <li><a href="examples.php" class="<?php echo $current_page == 'examples.php' ? 'active' : ''; ?>" title="Examples">Examples</a></li>
         <?php endif; ?>
+                
         
+
         <!-- Auth buttons -->
         <li class="nav-auth-buttons">
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>

@@ -485,53 +485,60 @@ try {
          </div>
          
          <div class="admin-grid scroll-effect">
-               <div class="admin-card">
-                  <div class="stats-card-decor"></div>
-                  <h3>👤 User Management</h3>
-                  <div class="stat-number">
-                     <?php 
-                     try {
-                           $stmt = $pdo->query("SELECT COUNT(*) as total FROM users");
-                           $totalUsers = $stmt->fetch()['total'];
-                           echo $totalUsers;
-                     } catch (PDOException $e) {
-                           echo '0';
-                     }
-                     ?>
-                  </div>
-                  <div class="stat-label">Registered Users</div>
-                  <p>Manage user accounts, view user information, and perform administrative actions.</p>
-                  <div class="admin-actions">
-                     <a href="manage_users.php" class="admin-btn admin-btn-primary">Browse Users</a>
-                     <a href="add_user.php" class="admin-btn admin-btn-success">Add New User</a>
-                  </div>
+            <div class="admin-card">
+               <div class="stats-card-decor"></div>
+               <h3>👤 User Management</h3>
+               <div class="stat-number">
+                  <?php 
+                  try {
+                        $stmt = $pdo->query("SELECT COUNT(*) as total FROM users");
+                        $totalUsers = $stmt->fetch()['total'];
+                        echo $totalUsers;
+                  } catch (PDOException $e) {
+                        echo '0';
+                  }
+                  ?>
                </div>
-               
-               <div class="admin-card">
-                  <div class="stats-card-decor"></div>
-                  <h3>👥 Admin Team</h3>
-                  <div class="stat-number"><?php echo $totalAdmins; ?></div>
-                  <div class="stat-label">Active Administrators</div>
-                  <p>Manage administrator accounts, roles, permissions, and monitor admin activities.</p>
-                  <div class="admin-actions">
-                     <?php if ($_SESSION['admin_role'] === 'super_admin'): ?>
-                           <a href="manage_admin.php?action=add" class="admin-btn admin-btn-success">Add Admin</a>
-                     <?php endif; ?>
-                     <a href="manage_admin.php" class="admin-btn admin-btn-primary">Manage Team</a>
-                  </div>
+               <div class="stat-label">Registered Users</div>
+               <p>Manage user accounts, view user information, and perform administrative actions.</p>
+               <div class="admin-actions">
+                  <a href="manage_users.php" class="admin-btn admin-btn-primary">Browse Users</a>
+                  <a href="add_user.php" class="admin-btn admin-btn-success">Add New User</a>
                </div>
-               
-               <div class="admin-card">
-                  <div class="stats-card-decor"></div>
-                  <h3>🔧 System Tools</h3>
-                  <div class="stat-number">⚙️</div>
-                  <div class="stat-label">System Configuration</div>
-                  <p>Access system settings, configuration tools, backup utilities, and maintenance tools.</p>
-                  <div class="admin-actions">
-                     <a href="#" class="admin-btn admin-btn-warning">Settings</a>
-                     <a href="#" class="admin-btn admin-btn-primary">Backup System</a>
-                  </div>
+            </div>
+            
+            <div class="admin-card">
+               <div class="stats-card-decor"></div>
+               <h3>👥 Admin Team</h3>
+               <div class="stat-number"><?php echo $totalAdmins; ?></div>
+               <div class="stat-label">Active Administrators</div>
+               <p>Manage administrator accounts, roles, permissions, and monitor admin activities.</p>
+               <div class="admin-actions">
+                  <?php if ($_SESSION['admin_role'] === 'super_admin'): ?>
+                        <a href="manage_admin.php?action=add" class="admin-btn admin-btn-success">Add Admin</a>
+                  <?php endif; ?>
+                  <a href="manage_admin.php" class="admin-btn admin-btn-primary">Manage Team</a>
                </div>
+            </div>               
+            <div class="admin-card">
+               <div class="stats-card-decor"></div>
+               <h3>💻 Code Snippets</h3>
+               <?php 
+               try {
+                  $stmt = $pdo->query("SELECT COUNT(*) as total FROM snippets");
+                  $totalSnippets = $stmt->fetch()['total'];
+                  echo '<div class="stat-number">' . $totalSnippets . '</div>';
+               } catch (PDOException $e) {
+                  echo '<div class="stat-number">0</div>';
+               }
+               ?>
+               <div class="stat-label">Total Snippets</div>
+               <p>Manage code snippets, add new ones, and organize by categories.</p>
+               <div class="admin-actions">
+                  <a href="admin_add_snippet.php" class="admin-btn admin-btn-success">Add New Snippet</a>
+                  <a href="admin_manage_snippets.php" class="admin-btn admin-btn-primary">Manage Snippets</a>
+               </div>
+            </div>
          </div>
          
          <div class="recent-activities scroll-effect">
