@@ -14,6 +14,98 @@ if (needs_cookie_consent() && basename($_SERVER['PHP_SELF']) !== 'cookie_consent
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Homepage</title>
+   <!-- SEO Meta Tags -->
+   <meta name="theme-color" content="var(--back-light)" />
+   <meta name="background-color" content="var(--back-light)" />
+   <meta name="description" content="Discover ready-to-use code snippets, components, and assets to accelerate your web development projects. From CSS animations to PHP utilities.">
+   <meta name="keywords" content="code snippets, web development, CSS, JavaScript, PHP, components, assets, free code, programming, frontend, backend, developers">
+   <meta name="author" content="Code Library">
+   <meta name="robots" content="index, follow">
+   <meta property="og:type" content="website">
+   <meta property="og:url" content="https://codelibrary.dev/">
+   <meta property="og:title" content="Code Library - Free Code Snippets for Developers">
+   <meta property="og:description" content="Discover ready-to-use code snippets, components, and assets to accelerate your web development projects. From CSS animations to PHP utilities.">
+   <meta property="og:image" content="https://codelibrary.dev/media/og-image.jpg">
+   <meta property="twitter:card" content="summary_large_image">
+   <meta property="twitter:url" content="https://codelibrary.dev/">
+   <meta property="twitter:title" content="Code Library - Free Code Snippets for Developers">
+   <meta property="twitter:description" content="Discover ready-to-use code snippets, components, and assets to accelerate your web development projects. From CSS animations to PHP utilities.">
+   <meta property="twitter:image" content="https://codelibrary.dev/media/twitter-image.jpg">
+   <meta name="language" content="English">
+   <meta name="revisit-after" content="7 days">
+   <meta name="rating" content="general">
+   <meta name="distribution" content="global">
+   <link rel="canonical" href="https://codelibrary.dev/">
+   <meta property="og:locale" content="en_US">
+   <meta property="og:image:width" content="1200">
+   <meta property="og:image:height" content="630">
+   <meta property="og:image:type" content="image/jpeg">
+   <meta name="twitter:creator" content="@codelibrary">
+   <meta name="twitter:site" content="@codelibrary">
+   
+   <!-- Schema.org JSON-LD -->
+   <script type="application/ld+json">
+     {
+       "@context": "https://schema.org",
+       "@type": "WebSite",
+       "name": "Code Library",
+       "url": "https://codelibrary.dev/",
+       "description": "A free library of code snippets for developers",
+       "sameAs": [],
+       "potentialAction": {
+         "@type": "SearchAction",
+         "target": "https://codelibrary.dev/search?q={search_term_string}",
+         "query-input": "required name=search_term_string"
+       }
+     }
+   </script>
+   
+   <script type="application/ld+json">
+     {
+       "@context": "https://schema.org",
+       "@type": "ContactPage",
+       "name": "Contact Code Library",
+       "description": "Get in touch with Code Library for support and inquiries",
+       "mainEntity": {
+         "@type": "Organization",
+         "name": "Code Library",
+         "email": "samuel.hula.dev@gmail.com",
+         "contactPoint": {
+           "@type": "ContactPoint",
+           "contactType": "customer service",
+           "email": "samuel.hula.dev@gmail.com",
+           "availableLanguage": ["English"],
+           "areaServed": "Worldwide"
+         },
+         "address": {
+           "@type": "PostalAddress",
+           "addressLocality": "Nová Baňa",
+           "addressCountry": "SK"
+         }
+       }
+     }
+   </script>
+   
+   <!-- Website Schema -->
+   <script type="application/ld+json">
+     {
+       "@context": "https://schema.org",
+       "@type": "WebPage",
+       "name": "Code Library Homepage",
+       "description": "Free code snippets for developers",
+       "publisher": {
+         "@type": "Organization",
+         "name": "Code Library",
+         "url": "https://codelibrary.dev"
+       },
+       "mainEntity": {
+         "@type": "Collection",
+         "name": "Code Snippets",
+         "numberOfItems": 500,
+         "description": "Collection of free code snippets for web development"
+       }
+     }
+   </script>
    <link rel="stylesheet" href="./css/general.css">
    <link rel="stylesheet" href="./css/home.css">
    <script src="./js/fly-in.js"></script>
