@@ -45,66 +45,64 @@ if (needs_cookie_consent() && basename($_SERVER['PHP_SELF']) !== 'cookie_consent
    
    <!-- Schema.org JSON-LD -->
    <script type="application/ld+json">
-     {
-       "@context": "https://schema.org",
-       "@type": "WebSite",
-       "name": "Code Library",
-       "url": "https://codelibrary.dev/",
-       "description": "A free library of code snippets for developers",
-       "sameAs": [],
-       "potentialAction": {
-         "@type": "SearchAction",
-         "target": "https://codelibrary.dev/search?q={search_term_string}",
-         "query-input": "required name=search_term_string"
-       }
-     }
-   </script>
-   
-   <script type="application/ld+json">
-     {
-       "@context": "https://schema.org",
-       "@type": "ContactPage",
-       "name": "Contact Code Library",
-       "description": "Get in touch with Code Library for support and inquiries",
-       "mainEntity": {
-         "@type": "Organization",
+      {
+         "@context": "https://schema.org",
+         "@type": "WebSite",
          "name": "Code Library",
-         "email": "samuel.hula.dev@gmail.com",
-         "contactPoint": {
-           "@type": "ContactPoint",
-           "contactType": "customer service",
-           "email": "samuel.hula.dev@gmail.com",
-           "availableLanguage": ["English"],
-           "areaServed": "Worldwide"
-         },
-         "address": {
-           "@type": "PostalAddress",
-           "addressLocality": "Nová Baňa",
-           "addressCountry": "SK"
+         "url": "https://codelibrary.dev/",
+         "description": "A free library of code snippets for developers",
+         "sameAs": [],
+         "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://codelibrary.dev/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
          }
-       }
-     }
+      }
    </script>
-   
+   <script type="application/ld+json">
+      {
+         "@context": "https://schema.org",
+         "@type": "ContactPage",
+         "name": "Contact Code Library",
+         "description": "Get in touch with Code Library for support and inquiries",
+         "mainEntity": {
+            "@type": "Organization",
+            "name": "Code Library",
+            "email": "samuel.hula.dev@gmail.com",
+            "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "email": "samuel.hula.dev@gmail.com",
+            "availableLanguage": ["English"],
+            "areaServed": "Worldwide"
+            },
+            "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nová Baňa",
+            "addressCountry": "SK"
+            }
+         }
+      }
+   </script>
    <!-- Website Schema -->
    <script type="application/ld+json">
-     {
-       "@context": "https://schema.org",
-       "@type": "WebPage",
-       "name": "Code Library Homepage",
-       "description": "Free code snippets for developers",
-       "publisher": {
-         "@type": "Organization",
-         "name": "Code Library",
-         "url": "https://codelibrary.dev"
-       },
-       "mainEntity": {
-         "@type": "Collection",
-         "name": "Code Snippets",
-         "numberOfItems": 500,
-         "description": "Collection of free code snippets for web development"
-       }
-     }
+      {
+         "@context": "https://schema.org",
+         "@type": "WebPage",
+         "name": "Code Library Homepage",
+         "description": "Free code snippets for developers",
+         "publisher": {
+            "@type": "Organization",
+            "name": "Code Library",
+            "url": "https://codelibrary.dev"
+         },
+         "mainEntity": {
+            "@type": "Collection",
+            "name": "Code Snippets",
+            "numberOfItems": 500,
+            "description": "Collection of free code snippets for web development"
+         }
+      }
    </script>
    <link rel="stylesheet" href="./css/general.css">
    <link rel="stylesheet" href="./css/home.css">
