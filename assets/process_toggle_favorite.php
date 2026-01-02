@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    $action = isset($_POST['action']) ? $_POST['action'] : '';
    
    if (!$snippet_id) {
+      header('Content-Type: application/json');
       echo json_encode(['success' => false, 'message' => 'Invalid snippet ID']);
       exit;
    }
@@ -25,46 +26,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt->execute([$snippet_id]);
       
       if (!$stmt->fetch()) {
-         echo json_encode(['success' => false, 'message' => 'Snippet not found']);
+         header('Content-Type: application/json');
+         echo json_encode(['success' => false, 'message' => 'Snippet not found or not public']);
          exit;
       }
       
-      if ($action === 'add') {
-         // Add to favorites
-         $stmt = $pdo->prepare("INSERT IGNORE INTO user_favorites (user_id, snippet_id) VALUES (?, ?)");
-         $stmt->execute([$_SESSION['user_id'], $snippet_id]);
-         
-         echo json_encode(['success' => true, 'is_favorite' => true]);
+      // Check if already favorited
+      $stmt = $pdo->prepare("SELECT id FROM user_favorites WHERE user_id = ? AND snippet_id = ?");
+      $stmt->execute([$_SESSION['user_id'], $snippet_id]);
+      $is_favorite = $stmt->fetch();
+      
+      if ($action === 'add' || $action === '') {
+         if (!$is_favorite) {
+            // Add to favorites
+            $stmt = $pdo->prepare("INSERT INTO user_favorites (user_id, snippet_id) VALUES (?, ?)");
+            $stmt->execute([$_SESSION['user_id'], $snippet_id]);
+            $is_favorite = true;
+         }
+         header('Content-Type: application/json');
+         echo json_encode(['success' => true, 'is_favorite' => true, 'message' => 'Added to favorites']);
          
       } elseif ($action === 'remove') {
-         // Remove from favorites
-         $stmt = $pdo->prepare("DELETE FROM user_favorites WHERE user_id = ? AND snippet_id = ?");
-         $stmt->execute([$_SESSION['user_id'], $snippet_id]);
-         
-         echo json_encode(['success' => true, 'is_favorite' => false]);
+         if ($is_favorite) {
+            // Remove from favorites
+            $stmt = $pdo->prepare("DELETE FROM user_favorites WHERE user_id = ? AND snippet_id = ?");
+            $stmt->execute([$_SESSION['user_id'], $snippet_id]);
+            $is_favorite = false;
+         }
+         header('Content-Type: application/json');
+         echo json_encode(['success' => true, 'is_favorite' => false, 'message' => 'Removed from favorites']);
          
       } else {
-         // Toggle
-         $stmt = $pdo->prepare("SELECT id FROM user_favorites WHERE user_id = ? AND snippet_id = ?");
-         $stmt->execute([$_SESSION['user_id'], $snippet_id]);
-         
-         if ($stmt->fetch()) {
-               // Remove
-               $stmt = $pdo->prepare("DELETE FROM user_favorites WHERE user_id = ? AND snippet_id = ?");
-               $stmt->execute([$_SESSION['user_id'], $snippet_id]);
-               echo json_encode(['success' => true, 'is_favorite' => false]);
+         // Toggle action
+         if ($is_favorite) {
+            // Remove
+            $stmt = $pdo->prepare("DELETE FROM user_favorites WHERE user_id = ? AND snippet_id = ?");
+            $stmt->execute([$_SESSION['user_id'], $snippet_id]);
+            $is_favorite = false;
          } else {
-               // Add
-               $stmt = $pdo->prepare("INSERT INTO user_favorites (user_id, snippet_id) VALUES (?, ?)");
-               $stmt->execute([$_SESSION['user_id'], $snippet_id]);
-               echo json_encode(['success' => true, 'is_favorite' => true]);
+            // Add
+            $stmt = $pdo->prepare("INSERT INTO user_favorites (user_id, snippet_id) VALUES (?, ?)");
+            $stmt->execute([$_SESSION['user_id'], $snippet_id]);
+            $is_favorite = true;
          }
+         header('Content-Type: application/json');
+         echo json_encode(['success' => true, 'is_favorite' => $is_favorite]);
       }
       
    } catch (PDOException $e) {
       error_log("Favorite toggle error: " . $e->getMessage());
-      echo json_encode(['success' => false, 'message' => 'Database error']);
+      header('Content-Type: application/json');
+      echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
    }
 } else {
-   echo json_encode(['success' => false, 'message' => 'Invalid request']);
+   header('Content-Type: application/json');
+   echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
+?>

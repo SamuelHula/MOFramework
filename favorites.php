@@ -18,19 +18,28 @@ $offset = ($page - 1) * $limit;
 // Fetch user's favorite snippets
 try {
    $query = "SELECT s.*, c.name as category_name 
-            FROM snippets s 
+            FROM user_favorites uf 
+            JOIN snippets s ON uf.snippet_id = s.id
             LEFT JOIN categories c ON s.category_id = c.id 
-            JOIN user_favorites uf ON s.id = uf.snippet_id 
             WHERE uf.user_id = ? AND s.is_public = 1 
             ORDER BY uf.created_at DESC 
             LIMIT ? OFFSET ?";
    
    $stmt = $pdo->prepare($query);
-   $stmt->execute([$_SESSION['user_id'], $limit, $offset]);
+   $stmt->bindValue(1, $_SESSION['user_id'], PDO::PARAM_INT);
+   $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+   $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+   $stmt->execute();
+   
    $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
-   // Count total favorites
-   $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM user_favorites WHERE user_id = ?");
+   // Count total favorites (only public ones)
+   $countQuery = "SELECT COUNT(*) as total 
+                  FROM user_favorites uf 
+                  JOIN snippets s ON uf.snippet_id = s.id
+                  WHERE uf.user_id = ? AND s.is_public = 1";
+   
+   $stmt = $pdo->prepare($countQuery);
    $stmt->execute([$_SESSION['user_id']]);
    $totalFavorites = $stmt->fetch()['total'];
    $totalPages = ceil($totalFavorites / $limit);
@@ -40,6 +49,66 @@ try {
    $favorites = [];
    $totalFavorites = 0;
    $totalPages = 0;
+}
+
+// Function to make all code snippets end at exactly the same visual position
+function normalizeCodeToSameHeight($code, $target_lines = 8) {
+   // Split code into lines
+   $lines = explode("\n", $code);
+   $total_original_lines = count($lines);
+   
+   // Take exactly $target_lines lines
+   $selected_lines = array_slice($lines, 0, $target_lines);
+   
+   // If we have fewer lines than target, add empty lines
+   if (count($selected_lines) < $target_lines) {
+      $missing_lines = $target_lines - count($selected_lines);
+      for ($i = 0; $i < $missing_lines; $i++) {
+         $selected_lines[] = "";
+      }
+   }
+   
+   // Check for incomplete tags at the end of the LAST line
+   $last_line = end($selected_lines);
+   $last_tag_open = strrpos($last_line, '<');
+   $last_tag_close = strrpos($last_line, '>');
+   
+   if ($last_tag_open !== false && ($last_tag_close === false || $last_tag_open > $last_tag_close)) {
+      // We're inside a tag on the last line, replace with placeholder
+      array_pop($selected_lines);
+      $selected_lines[] = "&lt;...&gt;";
+      // Add one more empty line to maintain count
+      if (count($selected_lines) < $target_lines) {
+         $selected_lines[] = "";
+      }
+   }
+   
+   // Check for incomplete PHP tags
+   $last_php_open = strrpos($last_line, '<?php');
+   $last_php_close = strrpos($last_line, '?>');
+   
+   if ($last_php_open !== false && ($last_php_close === false || $last_php_open > $last_php_close)) {
+      // We're inside PHP code, replace with placeholder
+      array_pop($selected_lines);
+      $selected_lines[] = "&lt;?php ... ?&gt;";
+      // Add one more empty line to maintain count
+      if (count($selected_lines) < $target_lines) {
+         $selected_lines[] = "";
+      }
+   }
+   
+   // IMPORTANT: Add visual indicator that code continues ONLY if original had more lines
+   // We'll add an ellipsis line at the EXACT SAME POSITION for all snippets
+   if ($total_original_lines > $target_lines) {
+      // Replace the last line with ellipsis to maintain visual consistency
+      array_pop($selected_lines);
+      $selected_lines[] = "...";
+   }
+   
+   // Ensure we have exactly $target_lines
+   $selected_lines = array_slice($selected_lines, 0, $target_lines);
+   
+   return implode("\n", $selected_lines);
 }
 ?>
 <!DOCTYPE html>
@@ -108,6 +177,7 @@ try {
          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
          gap: 2rem;
          margin-bottom: 3rem;
+         align-items: start;
       }
       .favorite-card {
          background: white;
@@ -115,9 +185,12 @@ try {
          overflow: hidden;
          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
          transition: all 0.3s ease;
-         display: flex;
-         flex-direction: column;
+         display: grid;
+         grid-template-rows: auto auto 1fr auto;
+         grid-template-rows: subgrid;
+         grid-row: span 4;
          position: relative;
+         min-height: 450px;
       }
       .favorite-card:hover {
          transform: translateY(-5px);
@@ -146,23 +219,25 @@ try {
          transform: scale(1.1);
       }
       .snippet-header {
-         padding: 1.5rem;
+         padding: 1.5rem 1.5rem 1rem;
          border-bottom: 1px solid var(--back-dark);
+         grid-row: 1;
+         display: grid;
+         grid-template-columns: 1fr auto;
+         grid-template-rows: auto auto;
+         gap: 0.5rem;
+         align-items: center;
       }
       .snippet-title {
          font-size: 1.3rem;
          font-weight: 600;
-         margin-bottom: 0.5rem;
          color: var(--text-color);
-      }
-      .snippet-meta {
-         display: flex;
-         gap: 1rem;
-         font-size: 0.9rem;
-         color: var(--text-color);
-         opacity: 0.7;
+         grid-column: 1;
+         grid-row: 1;
       }
       .language-badge {
+         grid-column: 2;
+         grid-row: 1;
          display: inline-block;
          padding: 0.2rem 0.8rem;
          background: var(--primary);
@@ -170,17 +245,38 @@ try {
          border-radius: 20px;
          font-size: 0.8rem;
          font-weight: 500;
+         justify-self: end;
+      }
+      .snippet-meta {
+         grid-column: 1 / -1;
+         grid-row: 2;
+         display: grid;
+         grid-template-columns: 1fr auto auto;
+         gap: 1rem;
+         font-size: 0.9rem;
+         color: var(--text-color);
+         opacity: 0.7;
+         align-items: center;
       }
       .snippet-content {
-         padding: 1.5rem;
-         flex: 1;
+         padding: 1rem 1.5rem;
+         grid-row: 2 / 4;
+         display: grid;
+         grid-template-rows: auto 1fr;
+         gap: 1rem;
+         min-height: 250px;
       }
       .snippet-description {
          color: var(--text-color);
          opacity: 0.8;
-         line-height: 1.6;
-         margin-bottom: 1.5rem;
+         line-height: 1.5;
          font-size: 0.95rem;
+         display: -webkit-box;
+         -webkit-line-clamp: 3;
+         -webkit-box-orient: vertical;
+         overflow: hidden;
+         min-height: 4.5em;
+         grid-row: 1;
       }
       .snippet-preview {
          background: #f8f9fa;
@@ -189,22 +285,47 @@ try {
          font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
          font-size: 0.85rem;
          color: #333;
-         max-height: 150px;
          overflow: hidden;
          position: relative;
+         grid-row: 2;
+         height: 100%;
+         display: flex;
+         flex-direction: column;
       }
-      .snippet-preview::after {
+      .snippet-preview pre {
+         margin: 0;
+         white-space: pre-wrap;
+         word-wrap: break-word;
+         flex: 1;
+         display: flex;
+         flex-direction: column;
+         min-height: 0; /* Crucial for flex sizing */
+      }
+      .snippet-preview code {
+         display: block;
+         font-family: inherit;
+         line-height: 1.5;
+         /* Force exactly 8 lines */
+         min-height: 12em; /* 8 lines * 1.5 line-height */
+         max-height: 12em; /* 8 lines * 1.5 line-height */
+         overflow: hidden;
+      }
+      /* This ensures ALL snippets end at the same visual line */
+      .snippet-preview code::after {
          content: '';
          position: absolute;
-         bottom: 0;
-         left: 0;
-         right: 0;
-         height: 40px;
-         background: linear-gradient(to bottom, transparent, #f8f9fa);
+         bottom: 1rem; /* Match the padding */
+         left: 1rem;
+         right: 1rem;
+         height: 1.5em; /* Exactly one line height */
+         background: linear-gradient(to top, #f8f9fa 0%, rgba(248, 249, 250, 0.8) 50%, transparent 100%);
+         pointer-events: none;
+         z-index: 1;
       }
       .snippet-actions {
-         padding: 1.5rem;
+         padding: 1rem 1.5rem;
          border-top: 1px solid var(--back-dark);
+         grid-row: 4;
       }
       .view-btn {
          display: block;
@@ -312,6 +433,12 @@ try {
          <?php if ($totalFavorites > 0): ?>
                <div class="favorites-grid scroll-effect">
                   <?php foreach ($favorites as $snippet): ?>
+                     <?php 
+                     $code_preview = normalizeCodeToSameHeight($snippet['code'], 8);
+                     $description_preview = strlen($snippet['description']) > 150 ? 
+                           substr($snippet['description'], 0, 150) . '...' : 
+                           $snippet['description'];
+                     ?>
                      <div class="favorite-card" id="favorite-<?php echo $snippet['id']; ?>">
                            <button class="remove-favorite" onclick="removeFavorite(<?php echo $snippet['id']; ?>)">
                               <i class="fas fa-times"></i>
@@ -320,8 +447,8 @@ try {
                            <div class="snippet-header">
                               <div class="snippet-title">
                                  <?php echo htmlspecialchars($snippet['title']); ?>
-                                 <span class="language-badge"><?php echo htmlspecialchars($snippet['language']); ?></span>
                               </div>
+                              <span class="language-badge"><?php echo htmlspecialchars($snippet['language']); ?></span>
                               <div class="snippet-meta">
                                  <?php if ($snippet['category_name']): ?>
                                        <span><?php echo htmlspecialchars($snippet['category_name']); ?></span>
@@ -333,13 +460,11 @@ try {
                            
                            <div class="snippet-content">
                               <p class="snippet-description">
-                                 <?php echo htmlspecialchars(substr($snippet['description'], 0, 150)); ?>
-                                 <?php if (strlen($snippet['description']) > 150): ?>...<?php endif; ?>
+                                 <?php echo htmlspecialchars($description_preview); ?>
                               </p>
                               
                               <div class="snippet-preview">
-                                 <pre><code><?php echo htmlspecialchars(substr($snippet['code'], 0, 300)); ?>
-<?php if (strlen($snippet['code']) > 300): ?>...<?php endif; ?></code></pre>
+                                 <pre><code><?php echo $code_preview; ?></code></pre>
                               </div>
                            </div>
                            
@@ -404,6 +529,8 @@ try {
                               const currentCount = parseInt(countElement.textContent);
                               countElement.textContent = currentCount - 1;
                            }
+                           // Show notification
+                           showNotification('Removed from favorites');
                      }, 300);
                   }
                } else {
@@ -416,5 +543,6 @@ try {
          });
       }
    </script>
+   <script src="./js/notifications.js"></script>
 </body>
 </html>
