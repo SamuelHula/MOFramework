@@ -395,7 +395,10 @@ try {
                <?php endif; ?>
                
                <div class="snippet-actions">
-                  <button class="favorite-btn" onclick="toggleFavorite(this)" data-snippet-id="<?php echo $snippet['id']; ?>">
+                  <button class="favorite-btn" onclick="toggleFavorite(this)" 
+                        data-snippet-id="<?php echo $snippet['id']; ?>"
+                        data-is-favorite="<?php echo $snippet['is_favorite'] ? '1' : '0'; ?>"
+                        style="color: <?php echo $snippet['is_favorite'] ? '#ff6b6b' : '#ccc'; ?>">
                      <i class="<?php echo $snippet['is_favorite'] ? 'fas' : 'far'; ?> fa-heart"></i>
                   </button>
                   
@@ -481,76 +484,46 @@ try {
    <script src="./js/fly-in.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
    <script>
-      // Initialize syntax highlighting
-      document.addEventListener('DOMContentLoaded', function() {
-         hljs.highlightAll();
-      });
-      
       function toggleFavorite(button) {
          const snippetId = button.getAttribute('data-snippet-id');
-         const isFavorite = button.querySelector('i').classList.contains('fas');
+         const isFavorite = button.getAttribute('data-is-favorite') === '1';
+         const action = isFavorite ? 'remove' : 'add';
          
          fetch('./assets/process_toggle_favorite.php', {
-               method: 'POST',
-               headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-               },
-               body: 'snippet_id=' + snippetId + '&action=' + (isFavorite ? 'remove' : 'add')
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'snippet_id=' + snippetId + '&action=' + action
          })
          .then(response => response.json())
          .then(data => {
-               if (data.success) {
-                  const icon = button.querySelector('i');
-                  if (data.is_favorite) {
-                     icon.classList.remove('far');
-                     icon.classList.add('fas');
-                     button.style.color = '#ff6b6b';
-                  } else {
-                     icon.classList.remove('fas');
-                     icon.classList.add('far');
-                     button.style.color = '#ccc';
-                  }
+            if (data.success) {
+               // Update button state
+               const icon = button.querySelector('i');
+               if (data.is_favorite) {
+                  icon.classList.remove('far');
+                  icon.classList.add('fas');
+                  button.style.color = '#ff6b6b';
+                  button.setAttribute('data-is-favorite', '1');
                } else {
-                  alert(data.message || 'An error occurred');
+                  icon.classList.remove('fas');
+                  icon.classList.add('far');
+                  button.style.color = '#ccc';
+                  button.setAttribute('data-is-favorite', '0');
                }
+               // Show notification
+               showNotification(data.message || 'Favorite updated');
+            } else {
+               alert(data.message || 'An error occurred');
+            }
          })
          .catch(error => {
-               console.error('Error:', error);
-               alert('An error occurred. Please try again.');
-         });
-      }
-      
-      function copyCode() {
-         const codeElement = document.querySelector('.code-block code');
-         const code = codeElement.textContent;
-         
-         navigator.clipboard.writeText(code).then(function() {
-               const copyBtn = document.querySelector('.copy-btn');
-               const originalText = copyBtn.innerHTML;
-               
-               copyBtn.classList.add('copied');
-               copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-               
-               setTimeout(function() {
-                  copyBtn.classList.remove('copied');
-                  copyBtn.innerHTML = originalText;
-               }, 2000);
-               
-               // Also update the main copy button
-               const mainBtn = document.querySelector('.action-btn.btn-primary');
-               if (mainBtn) {
-                  const mainOriginal = mainBtn.innerHTML;
-                  mainBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                  
-                  setTimeout(function() {
-                     mainBtn.innerHTML = mainOriginal;
-                  }, 2000);
-               }
-         }).catch(function(err) {
-               console.error('Failed to copy: ', err);
-               alert('Failed to copy code. Please try again.');
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
          });
       }
    </script>
+   <script src="./js/notifications.js"></script>
 </body>
 </html>
