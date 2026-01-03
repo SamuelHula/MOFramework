@@ -1,5 +1,14 @@
 <nav class="admin-nav-bar">
    <a href="admin_dashboard.php" class="admin-nav-brand">Code Library Admin</a>
+   
+   <!-- Burger Menu for Mobile -->
+   <input type="checkbox" id="admin_nav_toggle">
+   <label for="admin_nav_toggle" class="admin-burger">
+      <span></span>
+      <span></span>
+      <span></span>
+   </label>
+   
    <div class="admin-nav-menu">
       <a href="admin_dashboard.php" class="admin-nav-link <?php echo $active_page === 'dashboard' ? 'active' : ''; ?>">
          Dashboard

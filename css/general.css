@@ -764,3 +764,96 @@ footer {
    background: #f44336;
    color: white;
 }
+/* Admin Navbar Responsive Styles */
+.admin-burger {
+   display: none;
+   flex-direction: column;
+   cursor: pointer;
+   padding: 5px;
+   z-index: 1001;
+}
+
+.admin-burger span {
+   width: 25px;
+   height: 3px;
+   background-color: var(--text-color);
+   margin: 3px 0;
+   transition: 0.3s;
+   border-radius: 2px;
+}
+
+#admin_nav_toggle {
+   display: none;
+}
+
+/* Mobile Styles for Admin Navbar */
+@media screen and (max-width: 768px) {
+   .admin-nav-bar {
+      padding: 0.8rem 1rem;
+      height: 70px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+   }
+   
+   .admin-nav-brand {
+      font-size: 1.2rem;
+   }
+   
+   .admin-burger {
+      display: flex;
+   }
+   
+   .admin-nav-menu {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: white;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 1rem 0;
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+   }
+   
+   .admin-nav-link {
+      padding: 1rem 1.5rem;
+      border-radius: 0;
+      display: block;
+      width: 100%;
+      text-align: left;
+   }
+   
+   .admin-nav-link:hover {
+      background: var(--back-light);
+   }
+   
+   .admin-signout-btn {
+      width: calc(100% - 3rem);
+      margin: 0 1.5rem;
+      padding: 1rem;
+      text-align: center;
+   }
+   
+   #admin_nav_toggle:checked ~ .admin-nav-menu {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+   }
+   
+   #admin_nav_toggle:checked ~ .admin-burger span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+   }
+   
+   #admin_nav_toggle:checked ~ .admin-burger span:nth-child(2) {
+      opacity: 0;
+   }
+   
+   #admin_nav_toggle:checked ~ .admin-burger span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+   }
+}
