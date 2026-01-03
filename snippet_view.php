@@ -74,6 +74,9 @@ try {
          min-height: 100vh;
          font-family: var(--text_font);
       }
+      #header{
+         height: 10vh;
+      }
       .snippet-view-container {
          min-height: 100vh;
          padding: 2% 15% 5%;
@@ -328,6 +331,18 @@ try {
          .code-block {
                padding: 1rem;
          }
+         .related-snippets,
+         .snippet-content,
+         .snippet-header{
+            padding: 1rem;
+         }
+         .snippet-description{
+            line-height: 1.5;
+            font-size: .9rem;
+         }     
+         .related-card h4{
+            font-size: 1rem;
+         }    
       }
    </style>
 </head>
