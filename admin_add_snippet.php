@@ -352,6 +352,160 @@ try {
                height: 200px;
          }
       }
+      @media screen and (max-width: 768px) {
+         .snippet-form-container {
+            padding: 1.5rem;
+         }
+         
+         .form-row {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+         }
+         
+         .CodeMirror {
+            height: 200px;
+         }
+         
+         .form-actions {
+            flex-direction: column;
+         }
+         
+         .btn-submit,
+         .btn-cancel {
+            width: 100%;
+            text-align: center;
+         }
+      }
+      @media screen and (max-width: 480px) {
+    .admin-snippet-container {
+        padding: 0.5rem;
+    }
+    
+    .admin-header {
+        padding: 1.5rem;
+    }
+    
+    .admin-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .admin-header p {
+        font-size: 1rem;
+    }
+    
+    .snippet-form-container {
+        padding: 1rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        max-width: 100%;
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 0.8rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .code-editor-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .language-selector,
+    .editor-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .CodeMirror {
+        height: 200px;
+        font-size: 12px;
+    }
+    
+    .tag-input-container {
+        min-height: auto;
+        padding: 0.5rem;
+    }
+    
+    .tag-input {
+        min-width: 50px;
+        font-size: 16px;
+    }
+    
+    .checkbox-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .btn-submit,
+    .btn-cancel {
+        width: 100%;
+        padding: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    body {
+        padding-top: 60px;
+    }
+    
+    .admin-header {
+        padding: 1rem;
+    }
+    
+    .admin-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .admin-header p {
+        font-size: 0.9rem;
+    }
+    
+    .snippet-form-container {
+        padding: 0.8rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 14px;
+        padding: 0.7rem;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+    }
+    
+    .code-editor-header {
+        padding: 0.6rem;
+    }
+    
+    .CodeMirror {
+        height: 180px;
+    }
+    
+    .tag {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
+    }
+    
+    .btn-submit,
+    .btn-cancel {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+}
    </style>
 </head>
 <body>
