@@ -231,6 +231,175 @@ require_once './assets/config.php';
             font-size: 2.2rem;
          }
       }
+      @media screen and (max-width: 1024px) {
+         .terms-container {
+            padding: 2.5% 8% 5%;
+         }
+         .terms-content {
+            padding: 2.5rem;
+         }
+         .terms-header h1 {
+            font-size: 2.5rem;
+         }
+         .table-of-contents {
+            padding: 1.25rem;
+         }
+      }
+
+      @media screen and (max-width: 768px) {
+         .terms-container {
+            padding: 2.5% 5% 5%;
+         }
+         .terms-content {
+            padding: 2rem;
+         }
+         .terms-header h1 {
+            font-size: 2.2rem;
+         }
+         .terms-section h2 {
+            font-size: 1.6rem;
+         }
+         .terms-section h3 {
+            font-size: 1.2rem;
+         }
+         .table-of-contents h3 {
+            font-size: 1.3rem;
+         }
+         .toc-list a {
+            font-size: 0.95rem;
+         }
+         .notice-box,
+         .warning-box,
+         .info-box {
+            padding: 1.25rem;
+         }
+         .agreement-check {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+         }
+      }
+
+      @media screen and (max-width: 480px) {
+         .terms-container {
+            padding: 2.5% 3% 5%;
+         }
+         .terms-content {
+            padding: 1.5rem;
+         }
+         .terms-header h1 {
+            font-size: 1.8rem;
+         }
+         .terms-header p {
+            font-size: 1rem;
+         }
+         .terms-section h2 {
+            font-size: 1.4rem;
+         }
+         .terms-section h3 {
+            font-size: 1.1rem;
+         }
+         .terms-section p,
+         .terms-list li {
+            font-size: 0.95rem;
+            line-height: 1.5;
+         }
+         .table-of-contents {
+            padding: 1rem;
+         }
+         .table-of-contents h3 {
+            font-size: 1.1rem;
+         }
+         .toc-list li {
+            margin-bottom: 0.75rem;
+         }
+         .toc-list a {
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+         }
+         .notice-box,
+         .warning-box,
+         .info-box {
+            padding: 1rem;
+         }
+         .notice-box h3,
+         .warning-box h3,
+         .info-box h3 {
+            font-size: 1.1rem;
+         }
+         .agreement-check {
+            padding: 1rem;
+         }
+         .agreement-check label {
+            font-size: 0.95rem;
+         }
+         .contact-email {
+            font-size: 1rem;
+            padding: 0.5rem 0.875rem;
+         }
+         .update-info {
+            padding: 0.875rem;
+         }
+      }
+
+      @media screen and (max-width: 360px) {
+         .terms-container {
+            padding: 2.5% 2% 5%;
+         }
+         .terms-content {
+            padding: 1rem;
+         }
+         .terms-header h1 {
+            font-size: 1.6rem;
+         }
+         .terms-section h2 {
+            font-size: 1.3rem;
+         }
+         .table-of-contents {
+            padding: 0.875rem;
+         }
+         .toc-list a svg {
+            width: 14px;
+            height: 14px;
+         }
+         .agreement-check label {
+            font-size: 0.9rem;
+         }
+      }
+
+      /* Touch-friendly improvements */
+      @media (hover: none) and (pointer: coarse) {
+         .toc-list a {
+            padding: 0.5rem 0;
+            min-height: 44px;
+         }
+         .agreement-check {
+            min-height: 44px;
+         }
+         .agreement-check input[type="checkbox"] {
+            min-width: 20px;
+            min-height: 20px;
+         }
+      }
+
+      /* Print button responsiveness */
+      @media screen and (max-width: 768px) {
+         .terms-content + button {
+            bottom: 10px;
+            right: 10px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+         }
+      }
+
+      @media screen and (max-width: 480px) {
+         .terms-content + button {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            bottom: 5px;
+            right: 5px;
+         }
+      }
    </style>
 </head>
 <body>
