@@ -104,6 +104,7 @@ try {
          display: flex;
          justify-content: space-between;
          align-items: center;
+         text-align: center;
       }
       .admin-table {
          width: 100%;
@@ -159,6 +160,7 @@ try {
       .admin-btn {
          padding: 0.6rem 1rem;
          border-radius: 8px;
+         margin-bottom: 1rem;
          text-decoration: none;
          font-weight: 600;
          transition: all 0.3s;
@@ -216,6 +218,7 @@ try {
          margin-bottom: 1.5rem;
          font-size: 1.8rem;
          font-family: var(--heading);
+         text-align: center;
       }
       .form-group {
          margin-bottom: 1.5rem;
@@ -380,6 +383,35 @@ try {
             display: none;
          }
       }
+      /* Add to existing media query in manage_admin.php */
+@media screen and (max-width: 768px) {
+   .admin-table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+   }
+   
+   .admin-table th,
+   .admin-table td {
+      padding: 0.8rem;
+      font-size: 0.9rem;
+   }
+   
+   .action-buttons {
+      flex-direction: column;
+      gap: 0.3rem;
+   }
+   
+   .table-header-actions {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+   }
+   
+   .table-header-actions a {
+      align-self: flex-start;
+   }
+}  
    </style>
 </head>
 <body>
@@ -406,7 +438,7 @@ try {
          <?php if ($action === 'add' || $action === 'edit'): ?>
          <div class="add-admin-form scroll-effect">
                <div class="form-card-decor"></div>
-               <h3><?php echo $action === 'edit' ? '✏️ Edit Administrator' : '👥 Add New Administrator'; ?></h3>
+               <h3><?php echo $action === 'edit' ? 'Edit Administrator' : 'Add New Administrator'; ?></h3>
                <form action="./assets/process_admin_<?php echo $action === 'edit' ? 'edit' : 'add'; ?>.php" method="POST">
                   <?php if ($action === 'edit'): ?>
                      <input type="hidden" name="admin_id" value="<?php echo $editAdmin['id']; ?>">
