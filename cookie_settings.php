@@ -156,6 +156,120 @@ if (!isset($_SESSION['cookie_consent']) || !$_SESSION['cookie_consent']['accepte
                width: 100%;
          }
       }
+      @media screen and (max-width: 1024px) {
+         .cookie-settings-container {
+            padding: 2.5% 8% 5%;
+         }
+         .cookie-settings-content {
+            padding: 2.5rem;
+         }
+         .cookie-settings-header h1 {
+            font-size: 2.5rem;
+         }
+      }
+
+      @media screen and (max-width: 768px) {
+         .cookie-settings-container {
+            padding: 2.5% 5% 5%;
+         }
+         .cookie-settings-content {
+            padding: 2rem;
+         }
+         .cookie-settings-header h1 {
+            font-size: 2.2rem;
+         }
+         .current-settings h3 {
+            font-size: 1.3rem;
+         }
+         .settings-list li {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.75rem 0;
+         }
+         .setting-status {
+            align-self: flex-start;
+         }
+         .cookie-buttons {
+            flex-direction: column;
+         }
+         .cookie-btn {
+            width: 100%;
+            text-align: center;
+         }
+      }
+
+      @media screen and (max-width: 480px) {
+         .cookie-settings-container {
+            padding: 2.5% 3% 5%;
+         }
+         .cookie-settings-content {
+            padding: 1.5rem;
+         }
+         .cookie-settings-header h1 {
+            font-size: 1.8rem;
+         }
+         .cookie-settings-header p {
+            font-size: 1rem;
+         }
+         .current-settings {
+            padding: 1rem;
+         }
+         .current-settings h3 {
+            font-size: 1.1rem;
+         }
+         .settings-list li {
+            font-size: 0.95rem;
+         }
+         .setting-status {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.6rem;
+         }
+         .cookie-btn {
+            padding: 0.875rem 1.5rem;
+            font-size: 0.95rem;
+         }
+         .gdpr-info {
+            padding: 1.25rem;
+         }
+         .gdpr-info h3 {
+            font-size: 1.1rem;
+         }
+      }
+
+      @media screen and (max-width: 360px) {
+         .cookie-settings-container {
+            padding: 2.5% 2% 5%;
+         }
+         .cookie-settings-content {
+            padding: 1rem;
+         }
+         .cookie-settings-header h1 {
+            font-size: 1.6rem;
+         }
+         .current-settings h3 {
+            font-size: 1rem;
+         }
+         .cookie-btn {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.9rem;
+         }
+      }
+
+      /* Touch-friendly improvements */
+      @media (hover: none) and (pointer: coarse) {
+         .cookie-btn {
+            min-height: 44px; /* Minimum touch target size */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+         }
+         .settings-list li {
+            padding: 0.75rem 0;
+            min-height: 44px;
+            justify-content: center;
+         }
+      }
    </style>
 </head>
 <body>
