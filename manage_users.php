@@ -303,6 +303,203 @@ try {
                grid-template-columns: 1fr;
          }
       }
+            @media screen and (max-width: 768px) {
+         .users-table-container {
+            padding: 1rem;
+            overflow-x: auto;
+         }
+         
+         .users-table {
+            min-width: 800px; /* Allow horizontal scroll on small screens */
+         }
+         
+         .users-actions {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+         }
+         
+         .search-box {
+            width: 100%;
+            max-width: 100%;
+         }
+         
+         .stats-cards {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+         }
+         
+         .stat-card {
+            padding: 1rem;
+         }
+         
+         .stat-number {
+            font-size: 2rem;
+         }
+         
+         .bulk-actions {
+            flex-wrap: wrap;
+         }
+      }
+      @media screen and (max-width: 480px) {
+         .manage-users-container {
+            padding: 0.5rem;
+         }
+         
+         .page-header {
+            padding: 1.5rem;
+         }
+         
+         .page-header h1 {
+            font-size: 1.8rem;
+         }
+         
+         .page-header p {
+            font-size: 1rem;
+         }
+         
+         .users-actions {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+         }
+         
+         .search-box {
+            flex-direction: column;
+            gap: 0.8rem;
+            width: 100%;
+         }
+         
+         .search-box input {
+            width: 100%;
+            font-size: 16px;
+            padding: 0.8rem;
+         }
+         
+         .search-btn,
+         .add-user-btn {
+            width: 100%;
+            text-align: center;
+            padding: 0.9rem;
+         }
+         
+         .users-table-container {
+            padding: 0.8rem;
+            overflow-x: auto;
+         }
+         
+         .users-table {
+            min-width: 600px;
+            font-size: 0.85rem;
+         }
+         
+         .users-table th,
+         .users-table td {
+            padding: 0.6rem;
+         }
+         
+         .user-avatar {
+            width: 30px;
+            height: 30px;
+            font-size: 0.9rem;
+         }
+         
+         .role-badge {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.6rem;
+         }
+         
+         .action-buttons {
+            flex-direction: column;
+            gap: 0.3rem;
+         }
+         
+         .btn-edit,
+         .btn-delete {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+         }
+         
+         .stats-cards {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+         }
+         
+         .stat-card {
+            padding: 1rem;
+         }
+         
+         .stat-number {
+            font-size: 1.8rem;
+         }
+         
+         .stat-label {
+            font-size: 0.9rem;
+         }
+         
+         .bulk-actions {
+            flex-wrap: wrap;
+            gap: 0.5rem;
+         }
+      }
+
+      /* Extra small screens below 350px */
+      @media screen and (max-width: 350px) {
+         body {
+            padding-top: 60px;
+         }
+         
+         .page-header {
+            padding: 1rem;
+         }
+         
+         .page-header h1 {
+            font-size: 1.5rem;
+         }
+         
+         .page-header p {
+            font-size: 0.9rem;
+         }
+         
+         .search-box input {
+            font-size: 14px;
+            padding: 0.7rem;
+         }
+         
+         .search-btn,
+         .add-user-btn {
+            padding: 0.8rem;
+            font-size: 0.9rem;
+         }
+         
+         .users-table {
+            min-width: 500px;
+            font-size: 0.8rem;
+         }
+         
+         .users-table th,
+         .users-table td {
+            padding: 0.5rem;
+         }
+         
+         .stats-cards {
+            grid-template-columns: 1fr;
+         }
+         
+         .stat-number {
+            font-size: 1.5rem;
+         }
+         
+         .bulk-actions {
+            flex-direction: column;
+         }
+         
+         .bulk-select-btn,
+         .btn-danger {
+            width: 100%;
+            padding: 0.6rem;
+         }
+      }
    </style>
 </head>
 <body>
