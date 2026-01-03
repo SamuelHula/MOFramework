@@ -286,7 +286,7 @@
          }
       }
 
-      @media screen and (max-width: 480px) {
+      @media screen and (max-width: 670px) {
          body {
             padding: 1rem;
          }
@@ -307,6 +307,21 @@
          /* Hide some balls on mobile for better performance */
          .auth-ball-3, .auth-ball-5 {
             display: none;
+         }
+      }
+      @media screen and (max-width: 432px){
+         .form-group{
+            margin-bottom: 1rem;
+         }
+         .form-group input{
+            padding: .5rem;
+            border-radius: 5px;
+         }
+         .auth-submit{
+            padding: 0.5rem;
+         }
+         .social-btn{
+            padding: 0.5rem;
          }
       }
    </style>
