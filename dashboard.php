@@ -102,6 +102,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
          align-items: center;
          gap: 20px;
       }
+      @media screen and (max-width: 742px){
+         .dashboard-container{
+            padding: 5%;
+         }
+         .dashboard-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+         }
+      }
    </style>
 </head>
 <body>
