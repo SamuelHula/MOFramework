@@ -230,6 +230,32 @@ try {
                flex-direction: column;
          }
       }
+      @media screen and (max-width: 768px) {
+         .add-user-container,
+         .edit-user-container {
+            padding: 1.5rem;
+            margin: 1rem;
+            width: calc(100% - 2rem);
+         }
+         
+         .page-header h1 {
+            font-size: 2rem;
+         }
+         
+         .user-form {
+            gap: 1rem;
+         }
+         
+         .form-actions {
+            flex-direction: column;
+         }
+         
+         .form-actions a,
+         .form-actions button {
+            width: 100%;
+            text-align: center;
+         }
+      }
    </style>
 </head>
 <body>
