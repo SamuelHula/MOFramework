@@ -338,6 +338,24 @@ try {
                flex-direction: column;
          }
       }
+      @media screen and (max-width: 768px) {
+         .snippets-table {
+            display: block;
+            overflow-x: auto;
+         }
+         
+         .snippets-table th,
+         .snippets-table td {
+            padding: 0.8rem;
+            font-size: 0.9rem;
+         }
+         
+         .table-header {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+         }
+      }
    </style>
 </head>
 <body>
