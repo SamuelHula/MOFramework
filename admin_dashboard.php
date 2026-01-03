@@ -126,6 +126,7 @@ try {
          border-color: var(--primary);
       }
       .admin-card h3 {
+         text-align: center;
          color: var(--text-color);
          margin-bottom: 1.2rem;
          font-size: 1.6rem;
@@ -141,6 +142,7 @@ try {
          margin-bottom: 1.5rem;
       }
       .stat-number {
+         text-align: center;
          font-size: 3rem;
          font-weight: 700;
          color: var(--primary);
@@ -411,42 +413,77 @@ try {
          opacity: 0.1;
       }
       
-      @media screen and (max-width: 768px) {
-         body {
-            padding-top: 120px;
-         }
-         .admin-nav-bar {
-            width: 95%;
-            padding: 0.8rem;
-            flex-direction: column;
-            gap: 1rem;
-            border-radius: 0 0 10px 10px;
-         }
-         .admin-nav-menu {
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-         }
-         .admin-dashboard-container {
-            padding: 1rem;
-         }
-         .admin-header {
-            padding: 1.5rem;
-         }
-         .admin-header h1 {
-            font-size: 2rem;
-         }
-         .admin-greeting {
-            font-size: 1.4rem;
-         }
-         .recent-activities {
-            padding: 1.5rem;
-         }
-         /* Hide some balls on mobile for better performance */
-         .auth-ball-3, .auth-ball-5 {
-            display: none;
-         }
-      }
+      /* In the existing media query, update these styles */
+@media screen and (max-width: 768px) {
+   body {
+      padding-top: 70px;
+   }
+   
+   .admin-dashboard-container {
+      padding: 1rem;
+   }
+   
+   .admin-header {
+      padding: 1.5rem 1rem;
+      margin-bottom: 1.5rem;
+   }
+   
+   .admin-header h1 {
+      font-size: 2rem;
+   }
+   
+   .admin-greeting {
+      font-size: 1.3rem;
+   }
+   
+   .admin-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+   }
+   
+   .admin-card {
+      padding: 1.5rem;
+   }
+   
+   .stat-number {
+      font-size: 2.5rem;
+   }
+   
+   .recent-activities {
+      padding: 1.5rem 1rem;
+      margin-bottom: 1.5rem;
+   }
+   
+   .activity-item {
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem 0;
+   }
+   
+   .activity-icon {
+      display: none;
+   }
+   
+   .activity-meta {
+      flex-direction: column;
+      gap: 0.3rem;
+   }
+   
+   .security-notes {
+      padding: 1.5rem 1rem;
+   }
+   
+   /* Reduce floating balls on mobile */
+   .auth-ball-1, .auth-ball-2, .auth-ball-3, .auth-ball-4, .auth-ball-5, .auth-ball-6 {
+      width: 80px !important;
+      height: 80px !important;
+   }
+   
+   .auth-ball-3, .auth-ball-5 {
+      display: none;
+   }
+}
    </style>
 </head>
 <body>
