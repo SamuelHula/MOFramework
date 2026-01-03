@@ -252,6 +252,25 @@
       .auth-ball-3, .auth-ball-5 {
          display: none;
       }
+      .form-group{
+            margin-bottom: 1rem;
+         }
+         .form-group input{
+            padding: .5rem;
+            border-radius: 5px;
+         }
+         .auth-submit{
+            padding: 0.5rem;
+         }
+         .social-btn{
+            padding: 0.5rem;
+         }
+         .login-info h4{
+            font-size: 1rem;
+         }
+         .admin-submit{
+            padding: .5rem;
+         }
    }
 </style>
 </head>
