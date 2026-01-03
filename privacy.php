@@ -205,6 +205,144 @@ require_once './assets/config.php';
             font-size: 2.2rem;
          }
       }
+      @media screen and (max-width: 1024px) {
+         .privacy-container {
+            padding: 2.5% 8% 5%;
+         }
+         .policy-content {
+            padding: 2.5rem;
+         }
+         .privacy-header h1 {
+            font-size: 2.5rem;
+         }
+         .table-of-contents {
+            padding: 1.25rem;
+         }
+      }
+
+      @media screen and (max-width: 768px) {
+         .privacy-container {
+            padding: 2.5% 5% 5%;
+         }
+         .policy-content {
+            padding: 2rem;
+         }
+         .privacy-header h1 {
+            font-size: 2.2rem;
+         }
+         .policy-section h2 {
+            font-size: 1.6rem;
+         }
+         .policy-section h3 {
+            font-size: 1.2rem;
+         }
+         .table-of-contents h3 {
+            font-size: 1.3rem;
+         }
+         .toc-list a {
+            font-size: 0.95rem;
+         }
+         .data-type {
+            display: block;
+            width: fit-content;
+            margin-bottom: 0.5rem;
+         }
+         .highlight-box,
+         .contact-card {
+            padding: 1.25rem;
+         }
+      }
+
+      @media screen and (max-width: 480px) {
+         .privacy-container {
+            padding: 2.5% 3% 5%;
+         }
+         .policy-content {
+            padding: 1.5rem;
+         }
+         .privacy-header h1 {
+            font-size: 1.8rem;
+         }
+         .privacy-header p {
+            font-size: 1rem;
+         }
+         .policy-section h2 {
+            font-size: 1.4rem;
+         }
+         .policy-section h3 {
+            font-size: 1.1rem;
+         }
+         .policy-section p,
+         .policy-list li {
+            font-size: 0.95rem;
+            line-height: 1.5;
+         }
+         .table-of-contents {
+            padding: 1rem;
+         }
+         .table-of-contents h3 {
+            font-size: 1.1rem;
+         }
+         .toc-list li {
+            margin-bottom: 0.75rem;
+         }
+         .toc-list a {
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+         }
+         .data-type {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+         }
+         .contact-email {
+            font-size: 1rem;
+            padding: 0.5rem 0.875rem;
+         }
+         .update-info {
+            padding: 0.875rem;
+         }
+      }
+
+      @media screen and (max-width: 360px) {
+         .privacy-container {
+            padding: 2.5% 2% 5%;
+         }
+         .policy-content {
+            padding: 1rem;
+         }
+         .privacy-header h1 {
+            font-size: 1.6rem;
+         }
+         .policy-section h2 {
+            font-size: 1.3rem;
+         }
+         .table-of-contents {
+            padding: 0.875rem;
+         }
+         .toc-list a svg {
+            width: 14px;
+            height: 14px;
+         }
+      }
+
+      /* Touch-friendly improvements for table of contents */
+      @media (hover: none) and (pointer: coarse) {
+         .toc-list a {
+            padding: 0.5rem 0;
+            min-height: 44px;
+         }
+         .toc-list li {
+            margin-bottom: 0.5rem;
+         }
+      }
+
+      /* Improve text readability on small screens */
+      @media screen and (max-width: 480px) {
+         .policy-section p {
+            text-align: justify;
+            hyphens: auto;
+         }
+      }
    </style>
 </head>
 <body>
