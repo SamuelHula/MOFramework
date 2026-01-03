@@ -156,6 +156,116 @@ if (session_status() == PHP_SESSION_NONE) {
             overflow-x: auto;
          }
       }
+      @media screen and (max-width: 1024px) {
+         .cookie-policy-container {
+            padding: 2.5% 8% 5%;
+         }
+         .policy-content {
+            padding: 2.5rem;
+         }
+         .cookie-policy-header h1 {
+            font-size: 2.5rem;
+         }
+      }
+
+      @media screen and (max-width: 768px) {
+         .cookie-policy-container {
+            padding: 2.5% 5% 5%;
+         }
+         .policy-content {
+            padding: 2rem;
+         }
+         .cookie-policy-header h1 {
+            font-size: 2.2rem;
+         }
+         .policy-section h2 {
+            font-size: 1.6rem;
+         }
+         .policy-section h3 {
+            font-size: 1.2rem;
+         }
+         .cookie-table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+         }
+         .cookie-table th,
+         .cookie-table td {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+         }
+         .cookie-type {
+            display: block;
+            margin-bottom: 0.25rem;
+            width: fit-content;
+         }
+      }
+
+      @media screen and (max-width: 480px) {
+         .cookie-policy-container {
+            padding: 2.5% 3% 5%;
+         }
+         .policy-content {
+            padding: 1.5rem;
+         }
+         .cookie-policy-header h1 {
+            font-size: 1.8rem;
+         }
+         .cookie-policy-header p {
+            font-size: 1rem;
+         }
+         .policy-section h2 {
+            font-size: 1.4rem;
+         }
+         .policy-section h3 {
+            font-size: 1.1rem;
+         }
+         .policy-section p,
+         .policy-list li {
+            font-size: 0.95rem;
+            line-height: 1.5;
+         }
+         .cookie-table {
+            font-size: 0.85rem;
+         }
+         .cookie-table th,
+         .cookie-table td {
+            padding: 0.5rem;
+         }
+         .update-date,
+         .contact-gdpr {
+            padding: 1rem;
+         }
+      }
+
+      @media screen and (max-width: 360px) {
+         .cookie-policy-container {
+            padding: 2.5% 2% 5%;
+         }
+         .policy-content {
+            padding: 1rem;
+         }
+         .cookie-policy-header h1 {
+            font-size: 1.6rem;
+         }
+         .policy-section h2 {
+            font-size: 1.3rem;
+         }
+      }
+
+      /* Touch-friendly improvements */
+      @media (hover: none) and (pointer: coarse) {
+         .policy-list li {
+            padding: 0.25rem 0;
+         }
+         .cookie-table th,
+         .cookie-table td {
+            min-height: 44px; /* Minimum touch target size */
+            display: flex;
+            align-items: center;
+         }
+      }
    </style>
 </head>
 <body>
