@@ -224,3 +224,33 @@ Email: samko.hula@gmail.com
 IP: 127.0.0.1
 =================================
 
+=== SUCCESSFUL LOGIN ===
+Time: 2026-01-08 09:21:20
+User ID: 1
+Email: samko.hula@gmail.com
+Remember: No
+IP: 127.0.0.1
+=================================
+
+=== USER LOGOUT ===
+Time: 2026-01-08 09:21:52
+User ID: 1
+Email: samko.hula@gmail.com
+IP: 127.0.0.1
+=================================
+
+=== SUCCESSFUL LOGIN ===
+Time: 2026-01-09 08:22:49
+User ID: 1
+Email: samko.hula@gmail.com
+Remember: No
+IP: 127.0.0.1
+=================================
+
+=== USER LOGOUT ===
+Time: 2026-01-09 09:03:43
+User ID: 1
+Email: samko.hula@gmail.com
+IP: 127.0.0.1
+=================================
+
