@@ -188,6 +188,15 @@ try {
       .section-title i {
          color: var(--primary);
       }
+      h4 i{
+         color: var(--primary);
+      }
+      .copy-btn i {
+         color: var(--primary);
+      }
+      .copy-btn.copied i {
+         color: white;
+      }
       .snippet-description {
          color: var(--text-color);
          line-height: 1.8;
@@ -538,6 +547,36 @@ try {
             alert('An error occurred. Please try again.');
          });
       }
+      function copyCode() {
+         const codeElement = document.querySelector('.code-block code');
+         const codeText = codeElement.textContent;
+         const copyButtons = document.querySelectorAll('.copy-btn, .action-btn.btn-primary');
+         
+         navigator.clipboard.writeText(codeText).then(() => {
+            // Update all copy buttons
+            copyButtons.forEach(button => {
+               const originalHTML = button.innerHTML;
+               button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+               button.classList.add('copied');
+               
+               setTimeout(() => {
+                  button.innerHTML = originalHTML;
+                  button.classList.remove('copied');
+               }, 2000);
+            });
+            
+            // Show notification
+            showNotification('Code copied to clipboard!');
+         }).catch(err => {
+            console.error('Failed to copy: ', err);
+            showNotification('Failed to copy code', 'error');
+         });
+      }
+      
+      // Highlight.js initialization
+      document.addEventListener('DOMContentLoaded', function() {
+         hljs.highlightAll();
+      });
    </script>
    <script src="./js/notifications.js"></script>
 </body>
