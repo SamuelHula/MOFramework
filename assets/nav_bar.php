@@ -48,11 +48,7 @@ if ($needs_consent && $current_page !== 'cookie_consent.php') {
 }
 ?>
 <nav id="nav_bar">
-    <a href="index.php">
-        <figure class="logo">
-            <img src="" alt="Project Logo" title="Project Logo">
-        </figure>
-    </a>
+    <a href="index.php" class="admin-nav-brand" style="color: white;">Code Library</a>
     <input type="checkbox" id="nav_toggle">
     <label for="nav_toggle" class="burger">
         <span></span>
