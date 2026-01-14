@@ -59,6 +59,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
          border-radius: 15px;
          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
          transition: transform 0.3s ease;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         text-align: center;
       }
       .dashboard-card:hover {
          transform: translateY(-5px);
@@ -141,16 +146,19 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
          
          <div class="dashboard-grid scroll-effect">
             <div class="dashboard-card">
-               <h3>My Snippets</h3>
+               <h3>Snippets</h3>
                <p>View and manage all your saved code snippets in one place.</p>
+               <a href="snippets_catalog.php" class="primary_btn" style="margin-top: 1rem; padding: .5rem 1.5rem; font-size: 1rem; ">My Snippets</a>
             </div>
             <div class="dashboard-card">
                <h3>Favorites</h3>
                <p>Quick access to your most-used code snippets and components.</p>
+               <a href="favorites.php" class="primary_btn" style="margin-top: 1rem; padding: .5rem 1.5rem; font-size: 1rem; ">My Favorites</a>
             </div>
             <div class="dashboard-card">
                <h3>Recent Activity</h3>
                <p>Track your recent views and interactions with the library.</p>
+               <a href="#" class="primary_btn" style="margin-top: 1rem; padding: .5rem 1.5rem; font-size: 1rem; "> Web Tools</a>
             </div>
             <div class="dashboard-card">
                <h3>Profile Settings</h3>
@@ -167,7 +175,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                <a href="index.php" class="primary_btn">
                   <span>Back to Home</span>
                </a>
-               <a href="#contact_form" class="secondary_btn">
+               <a href="index.php#contact_form" class="secondary_btn">
                   <span>Give Feedback</span>
                </a>
             </div>
