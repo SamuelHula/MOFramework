@@ -440,112 +440,223 @@
       gap: 1rem;
    }
 }
-/*Top Snippets Section*/
 #top_snippets {
-   background-color: var(--back-light);
+   background: linear-gradient(135deg, var(--back-light) 0%, #e8f4f8 50%, var(--back-dark) 100%);
+   padding: 5% 15%;
 }
+
 #top_snippets h2 {
    text-align: center;
    margin-bottom: 3rem;
-   font-family: var(--heading);
-   font-size: 2.5rem;
+   font-size: 3rem;
    color: var(--text-color);
 }
-.snippet-wrapper {
+
+.recent-snippets-grid {
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));;
+   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
    gap: 2rem;
+   margin-bottom: 3rem;
+   align-items: start;
 }
-.snippet-wrapper aside {
-   background-color: white;
+
+.recent-snippet-card {
+   background: white;
    border-radius: 15px;
-   padding: 2rem;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   overflow: hidden;
+   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
    transition: all 0.3s ease;
    display: grid;
+   grid-template-rows: auto auto 1fr auto;
    grid-template-rows: subgrid;
-   grid-row: span 3;
-   height: 100%;
+   grid-row: span 4;
+   min-height: 450px;
 }
-.snippet-wrapper aside:hover {
+
+.recent-snippet-card:hover {
    transform: translateY(-5px);
-   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
-.snippet-img {
-   width: 100%;
-   height: 200px;
-   background: linear-gradient(135deg, var(--primary), var(--secondary));
-   border-radius: 10px;
-   margin-bottom: 1.5rem;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   color: white;
-   font-family: var(--heading);
-   font-size: 1.2rem;
-   font-weight: 600;
-}
-.snippet-content h3 {
-   font-family: var(--heading);
-   font-size: 1.5rem;
-   color: var(--text-color);
-   margin-bottom: 1rem;
-}
-.snippet-content p {
-   font-family: var(--text_font);
-   color: var(--text-color);
-   line-height: 1.6;
-   flex-grow: 1;
-}
-.snippet-meta {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding-top: 1rem;
-   border-top: 1px solid var(--back-dark);
-}
-.snippet-tags {
-   display: flex;
+
+.recent-snippet-header {
+   padding: 1.5rem 1.5rem 1rem;
+   border-bottom: 1px solid var(--back-dark);
+   grid-row: 1;
+   display: grid;
+   grid-template-columns: 1fr auto;
+   grid-template-rows: auto auto;
    gap: 0.5rem;
-   flex-wrap: wrap;
+   align-items: center;
 }
-.tag {
-   background-color: var(--back-dark);
+
+.recent-snippet-title {
+   font-size: 1.3rem;
+   font-weight: 600;
    color: var(--text-color);
-   padding: 0.3rem 0.8rem;
+   grid-column: 1;
+   grid-row: 1;
+   display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.recent-language-badge {
+   grid-column: 2;
+   grid-row: 1;
+   display: inline-block;
+   padding: 0.2rem 0.8rem;
+   background: var(--primary);
+   color: white;
    border-radius: 20px;
    font-size: 0.8rem;
-   font-family: var(--text_font);
    font-weight: 500;
+   justify-self: end;
 }
-.snippet-views {
-   font-family: var(--text_font);
+
+.recent-snippet-meta {
+   grid-column: 1 / -1;
+   grid-row: 2;
+   display: grid;
+   grid-template-columns: 1fr auto auto;
+   gap: 1rem;
    font-size: 0.9rem;
-   color: var(--secondary);
+   color: var(--text-color);
+   opacity: 0.7;
+   align-items: center;
+}
+
+.recent-snippet-content {
+   padding: 1rem 1.5rem;
+   grid-row: 2 / 4;
+   display: grid;
+   grid-template-rows: auto 1fr;
+   gap: 1rem;
+   min-height: 250px;
+}
+
+.recent-snippet-description {
+   color: var(--text-color);
+   opacity: 0.8;
+   line-height: 1.5;
+   font-size: 0.95rem;
+   display: -webkit-box;
+   -webkit-line-clamp: 3;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   min-height: 4.5em;
+   grid-row: 1;
+}
+
+.recent-snippet-preview {
+   background: #f8f9fa;
+   border-radius: 8px;
+   padding: 1rem;
+   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+   font-size: 0.85rem;
+   color: #333;
+   overflow: hidden;
+   position: relative;
+   grid-row: 2;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+}
+
+.recent-snippet-preview pre {
+   margin: 0;
+   white-space: pre-wrap;
+   word-wrap: break-word;
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   min-height: 0;
+}
+
+.recent-snippet-preview code {
+   display: block;
+   font-family: inherit;
+   line-height: 1.5;
+   min-height: 12em;
+   max-height: 12em;
+   overflow: hidden;
+}
+
+/* This ensures ALL snippets end at the same visual line */
+.recent-snippet-preview code::after {
+   content: '';
+   position: absolute;
+   bottom: 1rem;
+   left: 1rem;
+   right: 1rem;
+   height: 1.5em;
+   background: linear-gradient(to top, #f8f9fa 0%, rgba(248, 249, 250, 0.8) 50%, transparent 100%);
+   pointer-events: none;
+   z-index: 1;
+}
+
+.recent-snippet-actions {
+   padding: 1rem 1.5rem;
+   border-top: 1px solid var(--back-dark);
+   grid-row: 4;
+   display: grid;
+   grid-template-columns: 1fr auto;
+   gap: 1rem;
+   align-items: center;
+}
+
+.recent-view-btn {
+   padding: 0.6rem 1.2rem;
+   background: var(--primary);
+   color: white;
+   text-decoration: none;
+   border-radius: 8px;
    font-weight: 500;
+   transition: all 0.3s;
+   text-align: center;
 }
+
+.recent-view-btn:hover {
+   background: var(--secondary);
+}
+
+.recent-favorite-btn {
+   display: none;
+}
+
+.see-all-btn-container {
+   text-align: center;
+   margin-top: 2rem;
+}
+
+@media screen and (max-width: 1200px) {
+   #top_snippets {
+         padding: 2% 5% 5%;
+   }
+}
+
+@media screen and (max-width: 968px) {
+   .recent-snippets-grid {
+         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+   }
+}
+
 @media screen and (max-width: 768px) {
+   #top_snippets {
+         padding: 2% 1rem 5%;
+   }
+   
    #top_snippets h2 {
-      font-size: 2rem;
-      margin-bottom: 2rem;
-   }  
-   .snippet-wrapper aside {
-      padding: 1.5rem;
+         font-size: 2.2rem;
    }
-}
-@media screen and (max-width: 480px) {
-   .snippet-wrapper {
-      grid-template-columns: 1fr;
-      gap: 1rem;
+   
+   .recent-snippets-grid {
+         grid-template-columns: 1fr;
    }
-   .snippet-img {
-      height: 150px;
-      font-size: 1rem;
-   }
-   .snippet-meta {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
+   
+   .recent-snippet-card {
+         min-height: 400px;
    }
 }
 /*Hero Section*/

@@ -7,6 +7,81 @@ if (needs_cookie_consent() && basename($_SERVER['PHP_SELF']) !== 'cookie_consent
    header("Location: cookie_consent.php");
    exit;
 }
+try {
+   $recentStmt = $pdo->prepare("
+      SELECT s.*, c.name as category_name 
+      FROM snippets s 
+      LEFT JOIN categories c ON s.category_id = c.id 
+      WHERE s.is_public = 1 
+      ORDER BY s.created_at DESC 
+      LIMIT 3
+   ");
+   $recentStmt->execute();
+   $recentSnippets = $recentStmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+   error_log("Failed to fetch recent snippets: " . $e->getMessage());
+   $recentSnippets = [];
+}
+
+// Function to normalize code for preview (same as in snippets_catalog.php)
+function normalizeCodeToSameHeight($code, $target_lines = 8) {
+   // Split code into lines
+   $lines = explode("\n", $code);
+   $total_original_lines = count($lines);
+   
+   // Take exactly $target_lines lines
+   $selected_lines = array_slice($lines, 0, $target_lines);
+   
+   // If we have fewer lines than target, add empty lines
+   if (count($selected_lines) < $target_lines) {
+      $missing_lines = $target_lines - count($selected_lines);
+      for ($i = 0; $i < $missing_lines; $i++) {
+         $selected_lines[] = "";
+      }
+   }
+   
+   // Check for incomplete tags at the end of the LAST line
+   $last_line = end($selected_lines);
+   $last_tag_open = strrpos($last_line, '<');
+   $last_tag_close = strrpos($last_line, '>');
+   
+   if ($last_tag_open !== false && ($last_tag_close === false || $last_tag_open > $last_tag_close)) {
+      // We're inside a tag on the last line, replace with placeholder
+      array_pop($selected_lines);
+      $selected_lines[] = "&lt;...&gt;";
+      // Add one more empty line to maintain count
+      if (count($selected_lines) < $target_lines) {
+         $selected_lines[] = "";
+      }
+   }
+   
+   // Check for incomplete PHP tags
+   $last_php_open = strrpos($last_line, '<?php');
+   $last_php_close = strrpos($last_line, '?>');
+   
+   if ($last_php_open !== false && ($last_php_close === false || $last_php_open > $last_php_close)) {
+      // We're inside PHP code, replace with placeholder
+      array_pop($selected_lines);
+      $selected_lines[] = "&lt;?php ... ?&gt;";
+      // Add one more empty line to maintain count
+      if (count($selected_lines) < $target_lines) {
+         $selected_lines[] = "";
+      }
+   }
+   
+   // IMPORTANT: Add visual indicator that code continues ONLY if original had more lines
+   // We'll add an ellipsis line at the EXACT SAME POSITION for all snippets
+   if ($total_original_lines > $target_lines) {
+      // Replace the last line with ellipsis to maintain visual consistency
+      array_pop($selected_lines);
+      $selected_lines[] = "...";
+   }
+   
+   // Ensure we have exactly $target_lines
+   $selected_lines = array_slice($selected_lines, 0, $target_lines);
+   
+   return implode("\n", $selected_lines);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -210,51 +285,70 @@ if (needs_cookie_consent() && basename($_SERVER['PHP_SELF']) !== 'cookie_consent
             <div class="ball"></div>
             <div class="ball"></div>
          </div>
-         <h2>Top Code Snippets</h2>
-         <article class="snippet-wrapper">
-            <aside>
-               <div class="snippet-img">Responsive Navbar</div>
-               <div class="snippet-content">
-                  <h3>CSS Grid Layout System</h3>
-                  <p>A modern CSS Grid layout system that creates responsive, flexible layouts without media queries. Perfect for complex web applications and dashboards.</p>
-               </div>
-               <div class="snippet-meta">
-                  <div class="snippet-tags">
-                     <span class="tag">CSS</span>
-                     <span class="tag">Grid</span>
-                  </div>
-                  <div class="snippet-views">1.2K views</div>
-               </div>
-            </aside>
-            <aside>
-               <div class="snippet-img">Form Validation</div>
-               <div class="snippet-content">
-                  <h3>JavaScript Form Validation</h3>
-                  <p>Clean and accessible form validation with real-time feedback. Includes custom error messages and accessibility features for screen readers.</p>
-               </div>
-               <div class="snippet-meta">
-                  <div class="snippet-tags">
-                     <span class="tag">JavaScript</span>
-                     <span class="tag">Forms</span>
-                  </div>
-                  <div class="snippet-views">894 views</div>
-               </div>
-            </aside>
-            <aside>
-               <div class="snippet-img">Dark Mode</div>
-               <div class="snippet-content">
-                  <h3>Dark Mode Toggle</h3>
-                  <p>Elegant dark mode implementation with system preference detection and manual toggle. Saves user preference in local storage.</p>
-               </div>
-               <div class="snippet-meta">
-                  <div class="snippet-tags">
-                     <span class="tag">CSS</span>
-                     <span class="tag">JavaScript</span>
-                  </div>
-                  <div class="snippet-views">1.5K views</div>
-               </div>
-            </aside>
-         </article>
+         <h2>Recent Code Snippets</h2>
+         
+         <?php if (empty($recentSnippets)): ?>
+            <div class="no-results" style="text-align: center; padding: 4rem; background: white; border-radius: 15px; grid-column: 1 / -1;">
+                  <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-color);">No recent snippets available</h3>
+                  <p style="color: var(--text-color); opacity: 0.7; margin-bottom: 2rem;">Check back later for new additions.</p>
+            </div>
+         <?php else: ?>
+            <div class="recent-snippets-grid">
+                  <?php foreach ($recentSnippets as $snippet): ?>
+                     <?php 
+                     $code_preview = normalizeCodeToSameHeight($snippet['code'], 8);
+                     $description_preview = strlen($snippet['description']) > 150 ? 
+                        substr($snippet['description'], 0, 150) . '...' : 
+                        $snippet['description'];
+                     ?>
+                     <div class="recent-snippet-card">
+                        <div class="recent-snippet-header">
+                              <div class="recent-snippet-title">
+                                 <?php echo htmlspecialchars($snippet['title']); ?>
+                              </div>
+                              <span class="recent-language-badge"><?php echo htmlspecialchars($snippet['language']); ?></span>
+                              <div class="recent-snippet-meta">
+                                 <?php if ($snippet['category_name']): ?>
+                                    <span><?php echo htmlspecialchars($snippet['category_name']); ?></span>
+                                 <?php endif; ?>
+                                 <span><?php echo date('M j, Y', strtotime($snippet['created_at'])); ?></span>
+                                 <span><?php echo $snippet['views']; ?> views</span>
+                              </div>
+                        </div>
+                        
+                        <div class="recent-snippet-content">
+                              <p class="recent-snippet-description">
+                                 <?php echo htmlspecialchars($description_preview); ?>
+                              </p>
+                              
+                              <div class="recent-snippet-preview">
+                                 <pre><code><?php echo $code_preview; ?></code></pre>
+                              </div>
+                        </div>
+                        
+                        <div class="recent-snippet-actions">
+                              <a href="snippet_view.php?id=<?php echo $snippet['id']; ?>" class="recent-view-btn">
+                                 View Full Code
+                              </a>
+                              <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                                 <!-- Note: Favorite functionality would require additional logic -->
+                                 <button class="recent-favorite-btn" onclick="alert('Login to add favorites')">
+                                    <i class="far fa-heart"></i>
+                                 </button>
+                              <?php else: ?>
+                                 <button class="recent-favorite-btn" onclick="location.href='signin.php'">
+                                    <i class="far fa-heart"></i>
+                                 </button>
+                              <?php endif; ?>
+                        </div>
+                     </div>
+                  <?php endforeach; ?>
+            </div>
+            
+            <div class="see-all-btn-container">
+                  <a href="snippets_catalog.php" class="primary_btn">View All Snippets</a>
+            </div>
+         <?php endif; ?>
       </section>
       <section id="hero">
          <div class="floating-balls">
@@ -280,71 +374,71 @@ if (needs_cookie_consent() && basename($_SERVER['PHP_SELF']) !== 'cookie_consent
       </section>
       <section id="categories">      
          <div class="floating-balls">
-            <div class="ball"></div>
-            <div class="ball"></div>
-            <div class="ball"></div>
-            <div class="ball"></div>
-            <div class="ball"></div>
-            <div class="ball"></div>
+               <div class="ball"></div>
+               <div class="ball"></div>
+               <div class="ball"></div>
+               <div class="ball"></div>
+               <div class="ball"></div>
+               <div class="ball"></div>
          </div>
-         <h2 >Browse Categories</h2>
+         <h2>Browse Categories</h2>
          <article class="categories_art_wrapper scroll-effect">
-            <aside>
-               <figure>
-                  <div class="category-icon">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="40" height="40">
-                        <path fill="var(--back-light)" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM96 48c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16zm-6.3 71.8c3.7-14 16.4-23.8 30.9-23.8h14.8c14.5 0 27.2 9.7 30.9 23.8l23.5 88.2c1.4 5.4 2.1 10.9 2.1 16.4c0 35.2-28.8 63.7-64 63.7s-64-28.5-64-63.7c0-5.5 .7-11.1 2.1-16.4l23.5-88.2zM112 336c8.8 0 16 7.2 16 16s-7.2 16-16 16s-16-7.2-16-16s7.2-16 16-16zM256 64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16H256c8.8 0 16-7.2 16-16s-7.2-16-16-16zm0 64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16H256c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/>
-                     </svg>
+               <aside>
+                  <figure>
+                     <div class="category-icon">
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="40" height="40">
+                              <path fill="var(--back-light)" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM96 48c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16zm-6.3 71.8c3.7-14 16.4-23.8 30.9-23.8h14.8c14.5 0 27.2 9.7 30.9 23.8l23.5 88.2c1.4 5.4 2.1 10.9 2.1 16.4c0 35.2-28.8 63.7-64 63.7s-64-28.5-64-63.7c0-5.5 .7-11.1 2.1-16.4l23.5-88.2zM112 336c8.8 0 16 7.2 16 16s-7.2 16-16 16s-16-7.2-16-16s7.2-16 16-16zM256 64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16H256c8.8 0 16-7.2 16-16s-7.2-16-16-16zm0 64H112c-8.8 0-16 7.2-16 16s7.2 16 16 16H256c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/>
+                           </svg>
+                     </div>
+                  </figure>
+                  <div class="content">
+                     <h3>Assets</h3>
+                     <p>PHP utilities, server-side scripts, and backend functionality for dynamic web applications</p>
+                     <a href="snippets_catalog.php?category=<?php echo $categoryMap['Assets'] ?? ''; ?>" class="primary_btn">Explore Assets</a>
                   </div>
-               </figure>
-               <div class="content">
-                  <h3>Assets</h3>
-                  <p>PHP utilities, server-side scripts, and backend functionality for dynamic web applications</p>
-                  <a href="assets.php" class="primary_btn">Explore Assets</a>
-               </div>
-            </aside>
-            <aside>
-               <figure>
-                  <div class="category-icon">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40" height="40">
-                        <path fill="var(--back-light)" d="M78.6 5C69.1-2.4 55.6-1.5 47 7L7 47c-8.5 8.5-9.4 22-2.1 31.6l80 104c4.5 5.9 11.6 9.4 19 9.4h54.1l109 109c-14.7 29-10 65.4 14.3 89.6l112 112c12.5 12.5 32.8 12.5 45.3 0l64-64c12.5-12.5 12.5-32.8 0-45.3l-112-112c-24.2-24.2-60.6-29-89.6-14.3l-109-109V104c0-7.5-3.5-14.5-9.4-19L78.6 5zM19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L233.7 374.3c-7.8-20.9-9-43.6-3.6-65.1l-61.7-61.7L19.9 396.1zM512 144c0-10.5-1.1-20.7-3.2-30.5c-2.4-11.2-16.1-14.1-24.2-6l-63.9 63.9c-3 3-7.1 4.7-11.3 4.7H352c-8.8 0-16-7.2-16-16V102.6c0-4.2 1.7-8.3 4.7-11.3l63.9-63.9c8.1-8.1 5.2-21.8-6-24.2C388.7 1.1 378.5 0 368 0C288.5 0 224 64.5 224 144l0 .8 85.3 85.3c36-9.1 75.8 .5 104 28.7L429 274.5c49-23 83-72.8 83-130.5zM424 144a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/>
-                     </svg>
+               </aside>
+               <aside>
+                  <figure>
+                     <div class="category-icon">
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40" height="40">
+                              <path fill="var(--back-light)" d="M78.6 5C69.1-2.4 55.6-1.5 47 7L7 47c-8.5 8.5-9.4 22-2.1 31.6l80 104c4.5 5.9 11.6 9.4 19 9.4h54.1l109 109c-14.7 29-10 65.4 14.3 89.6l112 112c12.5 12.5 32.8 12.5 45.3 0l64-64c12.5-12.5 12.5-32.8 0-45.3l-112-112c-24.2-24.2-60.6-29-89.6-14.3l-109-109V104c0-7.5-3.5-14.5-9.4-19L78.6 5zM19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L233.7 374.3c-7.8-20.9-9-43.6-3.6-65.1l-61.7-61.7L19.9 396.1zM512 144c0-10.5-1.1-20.7-3.2-30.5c-2.4-11.2-16.1-14.1-24.2-6l-63.9 63.9c-3 3-7.1 4.7-11.3 4.7H352c-8.8 0-16-7.2-16-16V102.6c0-4.2 1.7-8.3 4.7-11.3l63.9-63.9c8.1-8.1 5.2-21.8-6-24.2C388.7 1.1 378.5 0 368 0C288.5 0 224 64.5 224 144l0 .8 85.3 85.3c36-9.1 75.8 .5 104 28.7L429 274.5c49-23 83-72.8 83-130.5zM424 144a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/>
+                           </svg>
+                     </div>
+                  </figure>
+                  <div class="content">
+                     <h3>Components</h3>
+                     <p>Essential tools and utilities including CSS reset, frameworks, and development helpers</p>
+                     <a href="snippets_catalog.php?category=<?php echo $categoryMap['Components'] ?? ''; ?>" class="primary_btn">Explore Components</a>
                   </div>
-               </figure>
-               <div class="content">
-                  <h3>Components</h3>
-                  <p>Essential tools and utilities including CSS reset, frameworks, and development helpers</p>
-                  <a href="components.php" class="primary_btn">Explore Components</a>
-               </div>
-            </aside>
-            <aside>
-               <figure>
-                  <div class="category-icon">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="40" height="40">
-                        <path fill="var(--back-light)" d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/>
-                     </svg>
+               </aside>
+               <aside>
+                  <figure>
+                     <div class="category-icon">
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="40" height="40">
+                              <path fill="var(--back-light)" d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/>
+                           </svg>
+                     </div>
+                  </figure>
+                  <div class="content">
+                     <h3>Elements</h3>
+                     <p>Beautifully designed HTML & CSS elements including buttons, forms, cards and navigation</p>
+                     <a href="snippets_catalog.php?category=<?php echo $categoryMap['Elements'] ?? ''; ?>" class="primary_btn">Explore Elements</a>
                   </div>
-               </figure>
-               <div class="content">
-                  <h3>Elements</h3>
-                  <p>Beautifully designed HTML & CSS elements including buttons, forms, cards and navigation</p>
-                  <a href="elements.php" class="primary_btn">Explore Elements</a>
-               </div>
-            </aside>
-            <aside>
-               <figure>
-                  <div class="category-icon">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="40" height="40">
-                        <path fill="var(--back-light)" d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/>
-                     </svg>
+               </aside>
+               <aside>
+                  <figure>
+                     <div class="category-icon">
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="40" height="40">
+                              <path fill="var(--back-light)" d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/>
+                           </svg>
+                     </div>
+                  </figure>
+                  <div class="content">
+                     <h3>JS Effects</h3>
+                     <p>Interactive JavaScript DOM effects, animations, and dynamic user interface enhancements</p>
+                     <a href="snippets_catalog.php?category=<?php echo $categoryMap['JS Effects'] ?? ''; ?>" class="primary_btn">Explore JS Effects</a>
                   </div>
-               </figure>
-               <div class="content">
-                  <h3>JS Effects</h3>
-                  <p>Interactive JavaScript DOM effects, animations, and dynamic user interface enhancements</p>
-                  <a href="js-effects.php" class="primary_btn">Explore JS Effects</a>
-               </div>
-            </aside>
+               </aside>
          </article>
       </section>
       <section id="process">
