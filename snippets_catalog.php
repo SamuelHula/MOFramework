@@ -241,6 +241,7 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
          cursor: pointer;
          font-weight: 600;
          transition: all 0.3s;
+         text-decoration: none;
       }
       .filter-btn:hover {
          background: var(--secondary);
