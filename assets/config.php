@@ -3,7 +3,7 @@
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'codelibrary');
 define('DB_USER', 'root'); // Change as needed
-define('DB_PASS', ''); // Change as needed
+define('DB_PASS', 'root'); // Change as needed
 
 // Cookie consent configuration
 define('COOKIE_CONSENT_VERSION', '1.0');
@@ -75,17 +75,26 @@ header("Location: ../error.php?code=500&message=Database+connection+failed");
 exit;
 }
 
-// Function to log admin activities
-function logAdminActivity($admin_id, $activity_type, $description) {
+function logAdminActivity($admin_id, $activity_type, $description = '') {
    global $pdo;
+   
+   if (!$pdo) {
+      error_log("Database connection not available for logging activity");
+      return false;
+   }
+   
    try {
-      $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-      $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+      $ip_address = $_SERVER['REMOTE_ADDR'] ?? 'Unknown';
+      $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
       
-      $stmt = $pdo->prepare("INSERT INTO admin_activities (admin_id, activity_type, description, ip_address, user_agent) VALUES (?, ?, ?, ?, ?)");
-      $stmt->execute([$admin_id, $activity_type, $description, $ip, $user_agent]);
+      $sql = "INSERT INTO admin_activities (admin_id, activity_type, description, ip_address, user_agent, created_at) 
+               VALUES (?, ?, ?, ?, ?, NOW())";
+      
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute([$admin_id, $activity_type, $description, $ip_address, $user_agent]);
+      
       return true;
-   } catch(PDOException $e) {
+   } catch (PDOException $e) {
       error_log("Failed to log admin activity: " . $e->getMessage());
       return false;
    }
