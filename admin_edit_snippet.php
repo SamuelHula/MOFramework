@@ -47,6 +47,11 @@ try {
    error_log("Failed to fetch categories: " . $e->getMessage());
    $categories = [];
 }
+
+// Fetch languages from database
+$languages = getAllLanguages($pdo);
+// Get the CodeMirror mode for the current snippet language
+$currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -830,16 +835,12 @@ try {
                            <label for="language">Programming Language *</label>
                            <select id="language" name="language" required>
                               <option value="">Select Language</option>
-                              <option value="html" <?php echo $snippet['language'] == 'html' ? 'selected' : ''; ?>>HTML</option>
-                              <option value="css" <?php echo $snippet['language'] == 'css' ? 'selected' : ''; ?>>CSS</option>
-                              <option value="javascript" <?php echo $snippet['language'] == 'javascript' ? 'selected' : ''; ?>>JavaScript</option>
-                              <option value="php" <?php echo $snippet['language'] == 'php' ? 'selected' : ''; ?>>PHP</option>
-                              <option value="python" <?php echo $snippet['language'] == 'python' ? 'selected' : ''; ?>>Python</option>
-                              <option value="sql" <?php echo $snippet['language'] == 'sql' ? 'selected' : ''; ?>>SQL</option>
-                              <option value="java" <?php echo $snippet['language'] == 'java' ? 'selected' : ''; ?>>Java</option>
-                              <option value="csharp" <?php echo $snippet['language'] == 'csharp' ? 'selected' : ''; ?>>C#</option>
-                              <option value="cpp" <?php echo $snippet['language'] == 'cpp' ? 'selected' : ''; ?>>C++</option>
-                              <option value="ruby" <?php echo $snippet['language'] == 'ruby' ? 'selected' : ''; ?>>Ruby</option>
+                              <?php foreach ($languages as $lang): ?>
+                                 <option value="<?php echo htmlspecialchars(strtolower($lang)); ?>" 
+                                       <?php echo strtolower($lang) === strtolower($snippet['language']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($lang); ?>
+                                 </option>
+                              <?php endforeach; ?>
                            </select>
                      </div>
                   </div>
@@ -869,12 +870,12 @@ try {
                               <div class="language-selector">
                                  <span style="color: #fff;">Language:</span>
                                  <select id="editorLanguage">
-                                       <option value="html" <?php echo $snippet['language'] == 'html' ? 'selected' : ''; ?>>HTML</option>
-                                       <option value="css" <?php echo $snippet['language'] == 'css' ? 'selected' : ''; ?>>CSS</option>
-                                       <option value="javascript" <?php echo $snippet['language'] == 'javascript' ? 'selected' : ''; ?>>JavaScript</option>
-                                       <option value="php" <?php echo $snippet['language'] == 'php' ? 'selected' : ''; ?>>PHP</option>
-                                       <option value="python" <?php echo $snippet['language'] == 'python' ? 'selected' : ''; ?>>Python</option>
-                                       <option value="sql" <?php echo $snippet['language'] == 'sql' ? 'selected' : ''; ?>>SQL</option>
+                                       <?php foreach ($languages as $lang): ?>
+                                          <option value="<?php echo htmlspecialchars(strtolower($lang)); ?>" 
+                                                <?php echo strtolower($lang) === strtolower($snippet['language']) ? 'selected' : ''; ?>>
+                                             <?php echo htmlspecialchars($lang); ?>
+                                          </option>
+                                       <?php endforeach; ?>
                                  </select>
                               </div>
                               <div class="editor-actions">
@@ -947,13 +948,41 @@ try {
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/php/php.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/sql/sql.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/clike/clike.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/ruby/ruby.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/jsx/jsx.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/xml/xml.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/markdown/markdown.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/shell/shell.min.js"></script>
    <script>
+      // Comprehensive mode mapping
+      const modeMap = {
+         'html': 'htmlmixed',
+         'css': 'css',
+         'javascript': 'javascript',
+         'php': 'php',
+         'python': 'python',
+         'sql': 'sql',
+         'java': 'clike',
+         'csharp': 'clike',
+         'cpp': 'clike',
+         'ruby': 'ruby',
+         'typescript': 'javascript',
+         'jsx': 'jsx',
+         'tsx': 'jsx',
+         'json': 'javascript',
+         'xml': 'xml',
+         'markdown': 'markdown',
+         'bash': 'shell',
+         'shell': 'shell'
+      };
+      
       // Initialize tags array from existing tags
       let tags = <?php echo json_encode($tags); ?>;
       
       // Initialize CodeMirror editor with existing code
       const codeEditor = CodeMirror(document.getElementById('codeEditor'), {
-         mode: '<?php echo $snippet['language'] == 'html' ? 'htmlmixed' : $snippet['language']; ?>',
+         mode: '<?php echo $currentCodeMirrorMode; ?>',
          theme: 'monokai',
          lineNumbers: true,
          indentUnit: 4,
@@ -970,34 +999,18 @@ try {
       
       // Update editor mode based on language selection
       document.getElementById('editorLanguage').addEventListener('change', function() {
-         const mode = this.value;
-         const modeMap = {
-               'html': 'htmlmixed',
-               'css': 'css',
-               'javascript': 'javascript',
-               'php': 'php',
-               'python': 'python',
-               'sql': 'sql'
-         };
-         codeEditor.setOption('mode', modeMap[mode] || 'htmlmixed');
-         document.getElementById('language').value = mode;
+         const language = this.value;
+         const mode = modeMap[language] || 'htmlmixed';
+         codeEditor.setOption('mode', mode);
+         document.getElementById('language').value = language;
       });
       
       // Also update editor when main language select changes
       document.getElementById('language').addEventListener('change', function() {
-         const mode = this.value;
-         const modeMap = {
-               'html': 'htmlmixed',
-               'css': 'css',
-               'javascript': 'javascript',
-               'php': 'php',
-               'python': 'python',
-               'sql': 'sql'
-         };
-         if (modeMap[mode]) {
-               codeEditor.setOption('mode', modeMap[mode]);
-               document.getElementById('editorLanguage').value = mode;
-         }
+         const language = this.value;
+         const mode = modeMap[language] || 'htmlmixed';
+         codeEditor.setOption('mode', mode);
+         document.getElementById('editorLanguage').value = language;
       });
       
       // Tag management

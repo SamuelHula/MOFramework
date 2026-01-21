@@ -551,13 +551,25 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                   <div class="filter-group">
                      <label for="language">Language</label>
                      <select id="language" name="language">
-                           <option value="">All Languages</option>
-                           <?php foreach ($languages as $lang): ?>
-                              <option value="<?php echo htmlspecialchars($lang['language']); ?>"
-                                 <?php echo ($language == $lang['language']) ? 'selected' : ''; ?>>
-                                 <?php echo htmlspecialchars(ucfirst($lang['language'])); ?>
+                        <option value="">All Languages</option>
+                        <?php 
+                        try {
+                              // Fetch languages from database
+                              $langQuery = "SELECT DISTINCT language FROM snippets WHERE language IS NOT NULL AND language != '' ORDER BY language";
+                              $langStmt = $pdo->query($langQuery);
+                              $languages = $langStmt->fetchAll(PDO::FETCH_COLUMN);
+                              
+                              foreach ($languages as $lang): 
+                                 $langName = ucfirst(strtolower($lang));
+                        ?>
+                              <option value="<?php echo htmlspecialchars($lang); ?>" 
+                                 <?php echo ($language == $lang) ? 'selected' : ''; ?>>
+                                 <?php echo htmlspecialchars($langName); ?>
                               </option>
-                           <?php endforeach; ?>
+                        <?php endforeach; 
+                        } catch (PDOException $e) {
+                              error_log("Failed to fetch languages: " . $e->getMessage());
+                        } ?>
                      </select>
                   </div>
                   

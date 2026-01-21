@@ -21,6 +21,9 @@ try {
    error_log("Failed to fetch categories: " . $e->getMessage());
    $categories = [];
 }
+
+// Fetch languages from database
+$languages = getAllLanguages($pdo);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -554,20 +557,15 @@ try {
                            <input type="text" id="title" name="title" required placeholder="e.g., Responsive Navbar with CSS Grid">
                      </div>
                      <div class="form-group">
-                           <label for="language">Programming Language *</label>
-                           <select id="language" name="language" required>
-                              <option value="">Select Language</option>
-                              <option value="html">HTML</option>
-                              <option value="css">CSS</option>
-                              <option value="javascript">JavaScript</option>
-                              <option value="php">PHP</option>
-                              <option value="python">Python</option>
-                              <option value="sql">SQL</option>
-                              <option value="java">Java</option>
-                              <option value="csharp">C#</option>
-                              <option value="cpp">C++</option>
-                              <option value="ruby">Ruby</option>
-                           </select>
+                        <label for="language">Programming Language *</label>
+                        <select id="language" name="language" required>
+                           <option value="">Select Language</option>
+                           <?php foreach ($languages as $lang): ?>
+                                 <option value="<?php echo htmlspecialchars(strtolower($lang)); ?>">
+                                    <?php echo htmlspecialchars($lang); ?>
+                                 </option>
+                           <?php endforeach; ?>
+                        </select>
                      </div>
                   </div>
                   
@@ -595,12 +593,11 @@ try {
                               <div class="language-selector">
                                  <span style="color: #fff;">Language:</span>
                                  <select id="editorLanguage">
-                                       <option value="html">HTML</option>
-                                       <option value="css">CSS</option>
-                                       <option value="javascript">JavaScript</option>
-                                       <option value="php">PHP</option>
-                                       <option value="python">Python</option>
-                                       <option value="sql">SQL</option>
+                                       <?php foreach ($languages as $lang): ?>
+                                          <option value="<?php echo htmlspecialchars(strtolower($lang)); ?>">
+                                             <?php echo htmlspecialchars($lang); ?>
+                                          </option>
+                                       <?php endforeach; ?>
                                  </select>
                               </div>
                               <div class="editor-actions">
@@ -648,7 +645,35 @@ try {
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/php/php.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/sql/sql.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/clike/clike.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/ruby/ruby.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/jsx/jsx.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/xml/xml.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/markdown/markdown.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/shell/shell.min.js"></script>
    <script>
+      // Comprehensive mode mapping
+      const modeMap = {
+         'html': 'htmlmixed',
+         'css': 'css',
+         'javascript': 'javascript',
+         'php': 'php',
+         'python': 'python',
+         'sql': 'sql',
+         'java': 'clike',
+         'csharp': 'clike',
+         'cpp': 'clike',
+         'ruby': 'ruby',
+         'typescript': 'javascript',
+         'jsx': 'jsx',
+         'tsx': 'jsx',
+         'json': 'javascript',
+         'xml': 'xml',
+         'markdown': 'markdown',
+         'bash': 'shell',
+         'shell': 'shell'
+      };
+      
       // Initialize CodeMirror editor
       const codeEditor = CodeMirror(document.getElementById('codeEditor'), {
          mode: 'htmlmixed',
@@ -668,34 +693,18 @@ try {
       
       // Update editor mode based on language selection
       document.getElementById('editorLanguage').addEventListener('change', function() {
-         const mode = this.value;
-         const modeMap = {
-               'html': 'htmlmixed',
-               'css': 'css',
-               'javascript': 'javascript',
-               'php': 'php',
-               'python': 'python',
-               'sql': 'sql'
-         };
-         codeEditor.setOption('mode', modeMap[mode] || 'htmlmixed');
-         document.getElementById('language').value = mode;
+         const language = this.value;
+         const mode = modeMap[language] || 'htmlmixed';
+         codeEditor.setOption('mode', mode);
+         document.getElementById('language').value = language;
       });
       
       // Also update editor when main language select changes
       document.getElementById('language').addEventListener('change', function() {
-         const mode = this.value;
-         const modeMap = {
-               'html': 'htmlmixed',
-               'css': 'css',
-               'javascript': 'javascript',
-               'php': 'php',
-               'python': 'python',
-               'sql': 'sql'
-         };
-         if (modeMap[mode]) {
-               codeEditor.setOption('mode', modeMap[mode]);
-               document.getElementById('editorLanguage').value = mode;
-         }
+         const language = this.value;
+         const mode = modeMap[language] || 'htmlmixed';
+         codeEditor.setOption('mode', mode);
+         document.getElementById('editorLanguage').value = language;
       });
       
       // Tag management

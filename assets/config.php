@@ -75,6 +75,44 @@ header("Location: ../error.php?code=500&message=Database+connection+failed");
 exit;
 }
 
+// Function to get all languages from database
+function getAllLanguages($pdo) {
+   try {
+      $stmt = $pdo->query("SELECT name FROM languages ORDER BY display_order, name");
+      return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+   } catch (PDOException $e) {
+      error_log("Failed to fetch languages: " . $e->getMessage());
+      return ['HTML', 'CSS', 'JavaScript', 'PHP', 'Python', 'SQL']; // Fallback default languages
+   }
+}
+
+// Function to get CodeMirror mode for a language
+function getCodeMirrorMode($language) {
+   $modeMap = [
+      'html' => 'htmlmixed',
+      'css' => 'css',
+      'javascript' => 'javascript',
+      'php' => 'php',
+      'python' => 'python',
+      'sql' => 'sql',
+      'java' => 'clike',
+      'csharp' => 'clike',
+      'cpp' => 'clike',
+      'ruby' => 'ruby',
+      'typescript' => 'javascript',
+      'jsx' => 'jsx',
+      'tsx' => 'jsx',
+      'json' => 'javascript',
+      'xml' => 'xml',
+      'markdown' => 'markdown',
+      'bash' => 'shell',
+      'shell' => 'shell'
+   ];
+   
+   $lowerLang = strtolower($language);
+   return isset($modeMap[$lowerLang]) ? $modeMap[$lowerLang] : 'htmlmixed';
+}
+
 function logAdminActivity($admin_id, $activity_type, $description = '') {
    global $pdo;
    

@@ -7,6 +7,23 @@ if (needs_cookie_consent() && basename($_SERVER['PHP_SELF']) !== 'cookie_consent
    header("Location: cookie_consent.php");
    exit;
 }
+
+// First, let's fetch the categories to get their IDs
+try {
+   $categoryStmt = $pdo->prepare("SELECT id, name FROM categories ORDER BY name");
+   $categoryStmt->execute();
+   $allCategories = $categoryStmt->fetchAll(PDO::FETCH_ASSOC);
+   
+   // Create a category name to ID mapping
+   $categoryMap = [];
+   foreach ($allCategories as $cat) {
+      $categoryMap[$cat['name']] = $cat['id'];
+   }
+} catch (PDOException $e) {
+   error_log("Failed to fetch categories: " . $e->getMessage());
+   $categoryMap = [];
+}
+
 try {
    $recentStmt = $pdo->prepare("
       SELECT s.*, c.name as category_name 
@@ -394,7 +411,7 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                   <div class="content">
                      <h3>Assets</h3>
                      <p>PHP utilities, server-side scripts, and backend functionality for dynamic web applications</p>
-                     <a href="snippets_catalog.php?category=<?php echo $categoryMap['Assets'] ?? ''; ?>" class="primary_btn">Explore Assets</a>
+                     <a href="snippets_catalog.php?category=<?php echo isset($categoryMap['Assets']) ? $categoryMap['Assets'] : ''; ?>" class="primary_btn">Explore Assets</a>
                   </div>
                </aside>
                <aside>
@@ -408,7 +425,7 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                   <div class="content">
                      <h3>Components</h3>
                      <p>Essential tools and utilities including CSS reset, frameworks, and development helpers</p>
-                     <a href="snippets_catalog.php?category=<?php echo $categoryMap['Components'] ?? ''; ?>" class="primary_btn">Explore Components</a>
+                     <a href="snippets_catalog.php?category=<?php echo isset($categoryMap['Components']) ? $categoryMap['Components'] : ''; ?>" class="primary_btn">Explore Components</a>
                   </div>
                </aside>
                <aside>
@@ -422,7 +439,7 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                   <div class="content">
                      <h3>Elements</h3>
                      <p>Beautifully designed HTML & CSS elements including buttons, forms, cards and navigation</p>
-                     <a href="snippets_catalog.php?category=<?php echo $categoryMap['Elements'] ?? ''; ?>" class="primary_btn">Explore Elements</a>
+                     <a href="snippets_catalog.php?category=<?php echo isset($categoryMap['Elements']) ? $categoryMap['Elements'] : ''; ?>" class="primary_btn">Explore Elements</a>
                   </div>
                </aside>
                <aside>
@@ -436,7 +453,7 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                   <div class="content">
                      <h3>JS Effects</h3>
                      <p>Interactive JavaScript DOM effects, animations, and dynamic user interface enhancements</p>
-                     <a href="snippets_catalog.php?category=<?php echo $categoryMap['JS Effects'] ?? ''; ?>" class="primary_btn">Explore JS Effects</a>
+                     <a href="snippets_catalog.php?category=<?php echo isset($categoryMap['JS Effects']) ? $categoryMap['JS Effects'] : ''; ?>" class="primary_btn">Explore JS Effects</a>
                   </div>
                </aside>
          </article>
@@ -465,7 +482,7 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
             <aside>
                <div class="step-number">02</div>
                <div class="step-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="40" height="40">
+                  <svg xmlns="http://www.w3.org2000/svg" viewBox="0 0 384 512" width="40" height="40">
                      <path fill="var(--back-light)" d="M192 0c-41.8 0-77.4 26.7-90.5 64H64C28.7 64 0 92.7 0 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H282.5C269.4 26.7 233.8 0 192 0zm0 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM112 192H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/>
                   </svg>
                </div>
