@@ -18,12 +18,11 @@ $snippet_id = intval($_GET['id']);
 // Fetch snippet details
 try {
    $stmt = $pdo->prepare("
-      SELECT s.*, c.name as category_name, l.name as language_name,
+      SELECT s.*, c.name as category_name,
             a.first_name as admin_first, a.last_name as admin_last,
             (SELECT COUNT(*) FROM user_favorites WHERE snippet_id = s.id AND user_id = ?) as is_favorite
       FROM snippets s 
       LEFT JOIN categories c ON s.category_id = c.id 
-      LEFT JOIN languages l ON s.language_id = l.id
       LEFT JOIN admins a ON s.admin_id = a.id 
       WHERE s.id = ? AND s.is_public = 1
    ");
@@ -381,7 +380,7 @@ try {
                <div class="snippet-meta">
                   <span class="meta-item">
                      <i class="fas fa-code"></i>
-                     <span class="language-badge"><?php echo htmlspecialchars($snippet['language_name']); ?></span>
+                     <span class="language-badge"><?php echo htmlspecialchars($snippet['language']); ?></span>
                   </span>
                   
                   <?php if ($snippet['category_name']): ?>
@@ -461,7 +460,7 @@ try {
                      </div>
                   </div>
                   <div class="code-block">
-                     <pre><code class="language-<?php echo htmlspecialchars(strtolower($snippet['language_name'])); ?>"><?php echo htmlspecialchars($snippet['code']); ?></code></pre>
+                     <pre><code class="language-<?php echo htmlspecialchars(strtolower($snippet['language'])); ?>"><?php echo htmlspecialchars($snippet['code']); ?></code></pre>
                   </div>
                </div>
          </div>
@@ -470,16 +469,15 @@ try {
          // Fetch related snippets
          try {
                $stmt = $pdo->prepare("
-                  SELECT s.id, s.title, l.name as language_name, s.views, s.created_at
+                  SELECT s.id, s.title, s.language, s.views, s.created_at
                   FROM snippets s
-                  LEFT JOIN languages l ON s.language_id = l.id
                   WHERE s.id != ? 
                   AND s.is_public = 1 
-                  AND (s.category_id = ? OR s.language_id = ?)
+                  AND (s.category_id = ? OR s.language = ?)
                   ORDER BY s.views DESC
                   LIMIT 3
                ");
-               $stmt->execute([$snippet_id, $snippet['category_id'], $snippet['language_id']]);
+               $stmt->execute([$snippet_id, $snippet['category_id'], $snippet['language']]);
                $related_snippets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                
                if (!empty($related_snippets)):
@@ -493,7 +491,7 @@ try {
                   <a href="snippet_view.php?id=<?php echo $related['id']; ?>" class="related-card">
                      <h4><?php echo htmlspecialchars($related['title']); ?></h4>
                      <div class="related-meta">
-                           <span class="language-badge"><?php echo htmlspecialchars($related['language_name']); ?></span>
+                           <span class="language-badge"><?php echo htmlspecialchars($related['language']); ?></span>
                            <span><?php echo $related['views']; ?> views</span>
                      </div>
                   </a>

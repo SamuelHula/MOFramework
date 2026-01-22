@@ -20,16 +20,6 @@ try {
    $categories = [];
 }
 
-// Fetch distinct languages for filter
-try {
-   $languageQuery = "SELECT DISTINCT language FROM snippets WHERE language IS NOT NULL AND language != '' ORDER BY language";
-   $languageStmt = $pdo->query($languageQuery);
-   $languages = $languageStmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-   error_log("Failed to fetch languages: " . $e->getMessage());
-   $languages = [];
-}
-
 // Get filter parameters
 $category = isset($_GET['category']) ? intval($_GET['category']) : null;
 $language = isset($_GET['language']) ? $_GET['language'] : null;
@@ -148,6 +138,16 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
    $selected_lines = array_slice($selected_lines, 0, $target_lines);
    
    return implode("\n", $selected_lines);
+}
+
+// Fetch distinct languages for filter dropdown
+try {
+   $languageQuery = "SELECT DISTINCT language FROM snippets WHERE language IS NOT NULL AND language != '' ORDER BY language";
+   $languageStmt = $pdo->query($languageQuery);
+   $languages = $languageStmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+   error_log("Failed to fetch languages: " . $e->getMessage());
+   $languages = [];
 }
 ?>
 <!DOCTYPE html>
@@ -375,7 +375,8 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
          content: '';
          position: absolute;
          bottom: 1rem; /* Match the padding */
-         left: 1rem;
+ 
+            left: 1rem;
          right: 1rem;
          height: 1.5em; /* Exactly one line height */
          background: linear-gradient(to top, #f8f9fa 0%, rgba(248, 249, 250, 0.8) 50%, transparent 100%);
@@ -552,24 +553,14 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                      <label for="language">Language</label>
                      <select id="language" name="language">
                         <option value="">All Languages</option>
-                        <?php 
-                        try {
-                              // Fetch languages from database
-                              $langQuery = "SELECT DISTINCT language FROM snippets WHERE language IS NOT NULL AND language != '' ORDER BY language";
-                              $langStmt = $pdo->query($langQuery);
-                              $languages = $langStmt->fetchAll(PDO::FETCH_COLUMN);
-                              
-                              foreach ($languages as $lang): 
-                                 $langName = ucfirst(strtolower($lang));
+                        <?php foreach ($languages as $lang): 
+                           $langName = ucfirst(strtolower($lang['language']));
                         ?>
-                              <option value="<?php echo htmlspecialchars($lang); ?>" 
-                                 <?php echo ($language == $lang) ? 'selected' : ''; ?>>
+                              <option value="<?php echo htmlspecialchars($lang['language']); ?>" 
+                                 <?php echo ($language == $lang['language']) ? 'selected' : ''; ?>>
                                  <?php echo htmlspecialchars($langName); ?>
                               </option>
-                        <?php endforeach; 
-                        } catch (PDOException $e) {
-                              error_log("Failed to fetch languages: " . $e->getMessage());
-                        } ?>
+                        <?php endforeach; ?>
                      </select>
                   </div>
                   
