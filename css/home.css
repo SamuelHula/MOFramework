@@ -8,14 +8,7 @@
    position: relative;
    overflow: hidden;
 }
-#landing_page > *:not(.floating-balls) ,
-#stats > *:not(.floating-balls),
-#top_snippets > *:not(.floating-balls),
-#hero > *:not(.floating-balls),
-#categories > *:not(.floating-balls),
-#process > *:not(.floating-balls),
-#faq > *:not(.floating-balls),
-#contact_form > *:not(.floating-balls) {
+section > *:not(.floating-balls){
    position: relative;
    z-index: 2;
 }

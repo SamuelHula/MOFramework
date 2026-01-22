@@ -244,8 +244,8 @@ $current_page = 'web_tools';
                      <h3>Code Formatter</h3>
                      <p>Format and beautify your HTML, CSS, and JavaScript code with proper indentation and structure.</p>
                      <div class="tool-actions">
-                           <a href="#" class="tool-btn primary">Use Tool</a>
-                           <a href="#" class="tool-btn secondary">Learn More</a>
+                           <a href="code_formatter.php" class="tool-btn primary">Use Tool</a>
+                           <a href="#code-formatter-info" class="tool-btn secondary">Learn More</a>
                      </div>
                   </div>
                </div>
@@ -265,7 +265,7 @@ $current_page = 'web_tools';
                </div>
                
                <!-- Tool 3 -->
-               <div class="tool-card">
+               <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-compress-arrows-alt"></i>
                   </div>
@@ -273,8 +273,7 @@ $current_page = 'web_tools';
                      <h3>Image Optimizer</h3>
                      <p>Compress and optimize images for web without losing quality. Supports PNG, JPG, and WebP.</p>
                      <div class="tool-actions">
-                           <a href="#" class="tool-btn primary">Use Tool</a>
-                           <a href="#" class="tool-btn secondary">Learn More</a>
+                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
                      </div>
                   </div>
                </div>
@@ -294,7 +293,7 @@ $current_page = 'web_tools';
                </div>
                
                <!-- Tool 5 -->
-               <div class="tool-card">
+               <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-tachometer-alt"></i>
                   </div>
@@ -302,8 +301,7 @@ $current_page = 'web_tools';
                      <h3>Performance Analyzer</h3>
                      <p>Analyze your website's performance and get recommendations for optimization.</p>
                      <div class="tool-actions">
-                           <a href="#" class="tool-btn primary">Use Tool</a>
-                           <a href="#" class="tool-btn secondary">View Demo</a>
+                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
                      </div>
                   </div>
                </div>
@@ -323,7 +321,7 @@ $current_page = 'web_tools';
                </div>
                
                <!-- Tool 7 -->
-               <div class="tool-card">
+               <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-search"></i>
                   </div>
@@ -331,8 +329,7 @@ $current_page = 'web_tools';
                      <h3>SEO Analyzer</h3>
                      <p>Check your website's SEO health and get actionable recommendations for improvement.</p>
                      <div class="tool-actions">
-                           <a href="#" class="tool-btn primary">Use Tool</a>
-                           <a href="#" class="tool-btn secondary">Guide</a>
+                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
                      </div>
                   </div>
                </div>
