@@ -67,12 +67,11 @@ if ($needs_consent && $current_page !== 'cookie_consent.php') {
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <li><a href="snippets_catalog.php" class="<?php echo $current_page == 'snippets_catalog.php' ? 'active' : ''; ?>" title="Code Snippets">Snippets</a></li>
                 <li><a href="favorites.php" class="<?php echo $current_page == 'favorites.php' ? 'active' : ''; ?>" title="My Favorites">Favorites</a></li>
+                <li><a href="web_tools.php" class="<?php echo $current_page == 'web_tools.php' ? 'active' : ''; ?>" title="Web Tools">Web Tools</a></li>
                 <li><a href="account.php" class="<?php echo $current_page == 'account.php' ? 'active' : ''; ?>" title="Account Info">Account</a></li>
             <?php endif; ?>
         <?php endif; ?>
-                
         
-
         <!-- Auth buttons -->
         <li class="nav-auth-buttons">
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>

@@ -7,6 +7,54 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
    exit;
 }
+
+// Fetch user stats
+try {
+   // Total favorites for this user
+   $favoritesQuery = "SELECT COUNT(*) as total FROM user_favorites WHERE user_id = ?";
+   $stmt = $pdo->prepare($favoritesQuery);
+   $stmt->execute([$_SESSION['user_id']]);
+   $totalFavorites = $stmt->fetch()['total'];
+   
+   // Total snippets (public ones)
+   $snippetsQuery = "SELECT COUNT(*) as total FROM snippets WHERE is_public = 1";
+   $stmt = $pdo->prepare($snippetsQuery);
+   $stmt->execute();
+   $totalSnippets = $stmt->fetch()['total'];
+   
+   // Categories count
+   $categoriesQuery = "SELECT COUNT(*) as total FROM categories";
+   $stmt = $pdo->prepare($categoriesQuery);
+   $stmt->execute();
+   $totalCategories = $stmt->fetch()['total'];
+   
+   // Languages count from snippets table
+   $languagesQuery = "SELECT COUNT(DISTINCT language) as total FROM snippets WHERE language IS NOT NULL AND language != ''";
+   $stmt = $pdo->prepare($languagesQuery);
+   $stmt->execute();
+   $totalLanguages = $stmt->fetch()['total'];
+   
+   // Total users count
+   $usersQuery = "SELECT COUNT(*) as total FROM users";
+   $stmt = $pdo->prepare($usersQuery);
+   $stmt->execute();
+   $totalUsers = $stmt->fetch()['total'];
+   
+   // Total views from all snippets (sum of views column)
+   $totalViewsQuery = "SELECT SUM(views) as total FROM snippets";
+   $stmt = $pdo->prepare($totalViewsQuery);
+   $stmt->execute();
+   $totalViews = $stmt->fetch()['total'];
+   
+} catch (PDOException $e) {
+   error_log("Failed to fetch stats: " . $e->getMessage());
+   $totalFavorites = 0;
+   $totalSnippets = 0;
+   $totalCategories = 0;
+   $totalLanguages = 0;
+   $totalUsers = 0;
+   $totalViews = 0;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,28 +126,73 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
          opacity: 0.8;
          line-height: 1.6;
       }
-      .placeholder-content {
-         text-align: center;
-         padding: 4rem 2rem;
+      /* Stats Section Styles */
+      .stats-container {
          background: white;
          border-radius: 15px;
          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+         padding: 3rem;
+         margin-bottom: 3rem;
       }
-      .placeholder-content h2 {
-         color: var(--primary);
-         margin-bottom: 1rem;
+      .stats-header {
+         text-align: center;
+         margin-bottom: 2.5rem;
+      }
+      .stats-header h2 {
          font-size: 2rem;
+         color: var(--text-color);
+         margin-bottom: 0.5rem;
       }
-      .placeholder-content p {
+      .stats-header p {
          color: var(--text-color);
          opacity: 0.8;
-         font-size: 1.1rem;
-         margin-bottom: 2rem;
       }
-      .coming-soon {
-         font-size: 4rem;
-         color: var(--secondary);
+      .stats-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+         gap: 1.5rem;
+      }
+      .stat-card {
+         background: var(--back-light);
+         padding: 1.8rem;
+         border-radius: 12px;
+         text-align: center;
+         transition: all 0.3s ease;
+         border: 2px solid transparent;
+      }
+      .stat-card:hover {
+         border-color: var(--primary);
+         transform: translateY(-3px);
+         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+      .stat-icon {
+         font-size: 2.5rem;
          margin-bottom: 1rem;
+         color: var(--primary);
+      }
+      .stat-number {
+         font-size: 2.8rem;
+         font-weight: 700;
+         color: var(--text-color);
+         margin-bottom: 0.5rem;
+         line-height: 1;
+      }
+      .stat-label {
+         font-size: 1.1rem;
+         color: var(--text-color);
+         opacity: 0.8;
+      }
+      .stat-card:nth-child(1) .stat-icon { color: #ff6b6b; }
+      .stat-card:nth-child(2) .stat-icon { color: #4ecdc4; }
+      .stat-card:nth-child(3) .stat-icon { color: #45b7d1; }
+      .stat-card:nth-child(4) .stat-icon { color: #96ceb4; }
+      .stat-card:nth-child(5) .stat-icon { color: #feca57; }
+      .stat-card:nth-child(6) .stat-icon { color: #ff9ff3; }
+      
+      .features-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+         gap: 1.5rem;
       }
       .btns{
          display: flex;
@@ -113,6 +206,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
          }
          .dashboard-grid {
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+         }
+         .stats-grid {
+            grid-template-columns: 1fr;
+         }
+         .stats-container {
+            padding: 1.5rem;
+         }
+         .stat-number {
+            font-size: 2.2rem;
          }
       }
    </style>
@@ -156,30 +258,63 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                <a href="favorites.php" class="primary_btn" style="margin-top: 1rem; padding: .5rem 1.5rem; font-size: 1rem; ">My Favorites</a>
             </div>
             <div class="dashboard-card">
-               <h3>Recent Activity</h3>
-               <p>Track your recent views and interactions with the library.</p>
-               <a href="#" class="primary_btn" style="margin-top: 1rem; padding: .5rem 1.5rem; font-size: 1rem; "> Web Tools</a>
+               <h3>Web Tools</h3>
+               <p>Collection of useful web development tools and utilities.</p>
+               <a href="web_tools.php" class="primary_btn" style="margin-top: 1rem; padding: .5rem 1.5rem; font-size: 1rem; ">Web Tools</a>
             </div>
             <div class="dashboard-card">
                <h3>Profile Settings</h3>
                <p>Update your personal information and preferences.</p>
-               <a href="account.php" class="primary_btn" style="margin-top: 1rem; padding: .5rem 1.5rem; font-size: 1rem; "> Manage Account</a>
+               <a href="account.php" class="primary_btn" style="margin-top: 1rem; padding: .5rem 1.5rem; font-size: 1rem; ">Manage Account</a>
             </div>
          </div>
          
-         <div class="placeholder-content scroll-effect">
-            <div class="coming-soon">🚀</div>
-            <h2>Dashboard Under Development</h2>
-            <p>We're working hard to bring you an amazing dashboard experience. This area will soon be filled with powerful features to help you manage your code library.</p>
-            <div class="btns">
-               <a href="index.php" class="primary_btn">
-                  <span>Back to Home</span>
-               </a>
-               <a href="index.php#contact_form" class="secondary_btn">
-                  <span>Give Feedback</span>
-               </a>
+         <!-- Stats Section -->
+         <div class="stats-container scroll-effect">
+            <div class="stats-header">
+               <h2>Code Library Statistics</h2>
+               <p>Overall statistics of the code library platform</p>
+            </div>
+            
+            <div class="stats-grid">
+               <div class="stat-card">
+                  <div class="stat-icon">📚</div>
+                  <div class="stat-number"><?php echo $totalSnippets; ?></div>
+                  <div class="stat-label">Total Snippets</div>
+               </div>
+               
+               <div class="stat-card">
+                  <div class="stat-icon">❤️</div>
+                  <div class="stat-number"><?php echo $totalFavorites; ?></div>
+                  <div class="stat-label">Your Favorites</div>
+               </div>
+               
+               <div class="stat-card">
+                  <div class="stat-icon">📁</div>
+                  <div class="stat-number"><?php echo $totalCategories; ?></div>
+                  <div class="stat-label">Categories</div>
+               </div>
+               
+               <div class="stat-card">
+                  <div class="stat-icon">💻</div>
+                  <div class="stat-number"><?php echo $totalLanguages; ?></div>
+                  <div class="stat-label">Languages</div>
+               </div>
+               
+               <div class="stat-card">
+                  <div class="stat-icon">👥</div>
+                  <div class="stat-number"><?php echo $totalUsers; ?></div>
+                  <div class="stat-label">Total Users</div>
+               </div>
+               
+               <div class="stat-card">
+                  <div class="stat-icon">👁️</div>
+                  <div class="stat-number"><?php echo $totalViews ?: '0'; ?></div>
+                  <div class="stat-label">Total Views</div>
+               </div>
             </div>
          </div>
+         
       </section>
    </main>
    
