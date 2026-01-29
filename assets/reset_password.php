@@ -4,7 +4,6 @@ require_once 'config.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
 
-   // Validate input
    $errors = [];
 
    if (empty($email)) {
@@ -23,15 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
          if ($stmt->rowCount() === 1) {
                $user = $stmt->fetch(PDO::FETCH_ASSOC);
                
-               // Generate reset token (in a real app, you'd send an email)
                $reset_token = bin2hex(random_bytes(32));
                $reset_expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
                
-               // Store token in database (in a real app)
                $updateStmt = $pdo->prepare("UPDATE users SET reset_token = ?, reset_expires = ? WHERE id = ?");
                $updateStmt->execute([$reset_token, $reset_expires, $user['id']]);
                
-               // Log the reset request
                $log_entry = "=== PASSWORD RESET REQUEST ===" . PHP_EOL;
                $log_entry .= "Time: " . date('Y-m-d H:i:s') . PHP_EOL;
                $log_entry .= "User ID: " . $user['id'] . PHP_EOL;
@@ -42,8 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                
                file_put_contents('./assets/logs/auth.log', $log_entry, FILE_APPEND | LOCK_EX);
                
-               // In a real application, you would send an email here
-               // For this demo, we'll just show a success message
                header("Location: ../forgot_password.php?success=Password+reset+link+has+been+sent+to+your+email");
                exit;
          } else {
@@ -55,7 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
    }
 
-   // If there are errors, redirect back with error messages
    if (!empty($errors)) {
       $errorString = implode("|", $errors);
       header("Location: ../forgot_password.php?error=" . urlencode($errorString));

@@ -1,17 +1,14 @@
 <?php
-// admin_edit_snippet.php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once './assets/config.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
    header("Location: admin_signin.php");
    exit;
 }
 
-// Check if snippet ID is provided
 if (!isset($_GET['id'])) {
    header("Location: admin_manage_snippets.php?error=No+snippet+ID+provided");
    exit;
@@ -20,7 +17,6 @@ if (!isset($_GET['id'])) {
 $snippet_id = intval($_GET['id']);
 $active_page = 'admin_edit_snippet';
 
-// Fetch snippet data
 try {
    $stmt = $pdo->prepare("SELECT s.*, c.name as category_name 
                          FROM snippets s 
@@ -39,7 +35,6 @@ try {
    exit;
 }
 
-// Fetch categories for dropdown
 try {
    $stmt = $pdo->query("SELECT id, name FROM categories ORDER BY name");
    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -48,9 +43,7 @@ try {
    $categories = [];
 }
 
-// Fetch languages from database
 $languages = getAllLanguages($pdo);
-// Get the CodeMirror mode for the current snippet language
 $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
 ?>
 <!DOCTYPE html>
@@ -293,7 +286,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          font-weight: normal;
       }
       
-      /* Floating Balls Background */
       .floating-balls {
          position: fixed;
          top: 0;
@@ -532,7 +524,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
             margin-left: 0;
          }
       }
-      /* Extra small screens below 350px */
       @media screen and (max-width: 350px) {
          body {
             padding-top: 60px;
@@ -588,19 +579,17 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       .form-group {
       display: flex;
       flex-direction: column;
-      position: relative; /* For better child containment */
+      position: relative;  
       }
 
-      /* Force all inputs to respect container boundaries */
+      
       .form-group input,
       .form-group select,
       .form-group textarea {
       width: 100%;
       max-width: 100%;
-      box-sizing: border-box; /* Include padding and border in width */
+      box-sizing: border-box; 
       }
-
-      /* Specifically fix select elements on mobile */
       .form-group select {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -609,62 +598,48 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       background-repeat: no-repeat;
       background-position: right 1rem center;
       background-size: 1em;
-      padding-right: 2.5rem; /* Space for dropdown arrow */
+      padding-right: 2.5rem; 
       }
-
-      /* Fix tag input container */
       .tag-input-container {
       width: 100%;
       max-width: 100%;
-      overflow-x: auto; /* Allow horizontal scrolling if needed */
+      overflow-x: auto; 
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
       }
-
-      /* Hide scrollbar for tag container but keep functionality */
       .tag-input-container::-webkit-scrollbar {
       height: 4px;
       }
-
       .tag-input-container::-webkit-scrollbar-track {
       background: #f1f1f1;
       border-radius: 10px;
       }
-
       .tag-input-container::-webkit-scrollbar-thumb {
       background: var(--primary);
       border-radius: 10px;
       }
-
-      /* Ensure tags wrap properly */
       .tag {
-      flex-shrink: 0; /* Prevent tags from shrinking */
-      max-width: calc(100% - 2rem); /* Prevent tags from being too wide */
+      flex-shrink: 0; 
+      max-width: calc(100% - 2rem); 
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       }
-
-      /* Fix CodeMirror editor overflow */
       .code-editor-container {
       width: 100%;
       max-width: 100%;
       overflow: hidden;
       }
-
       .CodeMirror {
       max-width: 100%;
       overflow-x: auto !important;
       overflow-y: auto !important;
       }
-
       .CodeMirror-scroll {
       overflow-x: auto !important;
       overflow-y: auto !important;
       max-width: 100%;
       }
-
-      /* Fix form row grid on very small screens */
       @media screen and (max-width: 480px) {
       .form-row {
          grid-template-columns: 1fr;
@@ -696,14 +671,10 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       .editor-actions {
          margin-top: 0.5rem;
       }
-      
-      /* Prevent textarea from being too small */
       .form-group textarea {
          min-height: 120px;
       }
       }
-
-      /* Extra fixes for very small screens below 350px */
       @media screen and (max-width: 350px) {
       .admin-snippet-container {
          padding: 0.5rem !important;
@@ -729,29 +700,22 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          padding: 0.4rem 0.6rem !important;
          font-size: 12px !important;
       }
-      
       .CodeMirror {
          font-size: 11px !important;
       }
-      
       .tag {
          font-size: 0.75rem;
          padding: 0.2rem 0.5rem;
       }
-      
       .tag-input {
          font-size: 14px !important;
          min-width: 60px;
       }
       }
-
-      /* Prevent form from being too wide on large screens */
       .snippet-form {
       max-width: 100%;
       overflow: hidden;
       }
-
-      /* Ensure buttons don't overflow */
       .btn-submit,
       .btn-cancel,
       .btn-delete {
@@ -759,7 +723,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       overflow: hidden;
       text-overflow: ellipsis;
       }
-
       @media screen and (max-width: 480px) {
       .btn-submit,
       .btn-cancel,
@@ -771,7 +734,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
    </style>
 </head>
 <body>
-   <!-- Floating Balls Background -->
+   
    <div class="floating-balls">
       <div class="ball auth-ball-1"></div>
       <div class="ball auth-ball-2"></div>
@@ -782,12 +745,10 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
    </div>
    
    <?php 
-   // Include admin navbar
    $admin_navbar_path = './includes/admin_navbar.php';
    if (file_exists($admin_navbar_path)) {
       include_once $admin_navbar_path;
    } else {
-      // Fallback navbar if admin_navbar doesn't exist
       echo '<nav class="admin-nav-bar">
                <a href="admin_dashboard.php" class="admin-nav-brand">Admin Panel</a>
                <div class="admin-nav-menu">
@@ -892,7 +853,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
                      <label for="tags">Tags</label>
                      <div class="tag-input-container" id="tagContainer">
                         <?php 
-                        // Safely handle tags - ensure it's never null
                         $snippet['tags'] = $snippet['tags'] ?? '';
                         $tags = !empty($snippet['tags']) ? 
                                  array_filter(explode(',', $snippet['tags']), function($tag) {
@@ -955,7 +915,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/markdown/markdown.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/shell/shell.min.js"></script>
    <script>
-      // Comprehensive mode mapping
       const modeMap = {
          'html': 'htmlmixed',
          'css': 'css',
@@ -977,10 +936,8 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          'shell': 'shell'
       };
       
-      // Initialize tags array from existing tags
       let tags = <?php echo json_encode($tags); ?>;
       
-      // Initialize CodeMirror editor with existing code
       const codeEditor = CodeMirror(document.getElementById('codeEditor'), {
          mode: '<?php echo $currentCodeMirrorMode; ?>',
          theme: 'monokai',
@@ -992,12 +949,10 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          value: `<?php echo str_replace('`', '\`', $snippet['code']); ?>`
       });
       
-      // Sync editor with form textarea
       codeEditor.on('change', function(editor) {
          document.getElementById('code').value = editor.getValue();
       });
       
-      // Update editor mode based on language selection
       document.getElementById('editorLanguage').addEventListener('change', function() {
          const language = this.value;
          const mode = modeMap[language] || 'htmlmixed';
@@ -1005,7 +960,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          document.getElementById('language').value = language;
       });
       
-      // Also update editor when main language select changes
       document.getElementById('language').addEventListener('change', function() {
          const language = this.value;
          const mode = modeMap[language] || 'htmlmixed';
@@ -1013,12 +967,10 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          document.getElementById('editorLanguage').value = language;
       });
       
-      // Tag management
       const tagContainer = document.getElementById('tagContainer');
       const tagInput = document.getElementById('tagInput');
       const tagsHidden = document.getElementById('tags');
       
-      // Update hidden tags field
       function updateTags() {
          tagsHidden.value = tags.join(',');
       }
@@ -1058,10 +1010,8 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          });
       }
       
-      // Code formatting
       function formatCode() {
          const code = codeEditor.getValue();
-         // Simple formatting - in production, use a proper formatter
          const formatted = code.replace(/\n\s*\n/g, '\n').trim();
          codeEditor.setValue(formatted);
       }
@@ -1072,7 +1022,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          }
       }
       
-      // Form validation
       document.getElementById('snippetForm').addEventListener('submit', function(e) {
          const title = document.getElementById('title').value.trim();
          const description = document.getElementById('description').value.trim();
@@ -1092,7 +1041,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          }
       });
       
-      // Add scroll effect
       document.addEventListener('DOMContentLoaded', function() {
          const scrollElements = document.querySelectorAll('.scroll-effect');
          
@@ -1120,7 +1068,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
                handleScrollAnimation();
          });
          
-         // Initial check
          handleScrollAnimation();
       });
    </script>

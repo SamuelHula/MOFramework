@@ -1,27 +1,20 @@
 <?php
-// admin_dashboard.php
 require_once './assets/config.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
    header("Location: admin_signin.php");
    exit;
 }
 
-// Set active page for navbar
 $active_page = 'dashboard';
 
-// Get admin statistics
 try {
-   // Get total admins
    $stmt = $pdo->query("SELECT COUNT(*) as total_admins FROM admins WHERE is_active = 1");
    $totalAdmins = $stmt->fetch()['total_admins'];
    
-   // Get total users
    $stmt = $pdo->query("SELECT COUNT(*) as total_users FROM users");
    $totalUsers = $stmt->fetch()['total_users'];
    
-   // Get recent activities
    $stmt = $pdo->prepare("
       SELECT a.*, ad.first_name, ad.last_name 
       FROM admin_activities a 
@@ -278,8 +271,6 @@ try {
          color: var(--text-color);
          opacity: 0.5;
       }
-      
-      /* Floating Balls Styles */
       .floating-balls {
          position: fixed;
          top: 0;
@@ -412,82 +403,79 @@ try {
          border-radius: 0 20px 0 50px;
          opacity: 0.1;
       }
-      
-      /* In the existing media query, update these styles */
-@media screen and (max-width: 768px) {
-   body {
-      padding-top: 70px;
-   }
-   
-   .admin-dashboard-container {
-      padding: 1rem;
-   }
-   
-   .admin-header {
-      padding: 1.5rem 1rem;
-      margin-bottom: 1.5rem;
-   }
-   
-   .admin-header h1 {
-      font-size: 2rem;
-   }
-   
-   .admin-greeting {
-      font-size: 1.3rem;
-   }
-   
-   .admin-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-   }
-   
-   .admin-card {
-      padding: 1.5rem;
-   }
-   
-   .stat-number {
-      font-size: 2.5rem;
-   }
-   
-   .recent-activities {
-      padding: 1.5rem 1rem;
-      margin-bottom: 1.5rem;
-   }
-   
-   .activity-item {
-      flex-direction: column;
-      gap: 0.5rem;
-      padding: 1rem 0;
-   }
-   
-   .activity-icon {
-      display: none;
-   }
-   
-   .activity-meta {
-      flex-direction: column;
-      gap: 0.3rem;
-   }
-   
-   .security-notes {
-      padding: 1.5rem 1rem;
-   }
-   
-   /* Reduce floating balls on mobile */
-   .auth-ball-1, .auth-ball-2, .auth-ball-3, .auth-ball-4, .auth-ball-5, .auth-ball-6 {
-      width: 80px !important;
-      height: 80px !important;
-   }
-   
-   .auth-ball-3, .auth-ball-5 {
-      display: none;
-   }
-}
+      @media screen and (max-width: 768px) {
+         body {
+            padding-top: 70px;
+         }
+         
+         .admin-dashboard-container {
+            padding: 1rem;
+         }
+         
+         .admin-header {
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
+         }
+         
+         .admin-header h1 {
+            font-size: 2rem;
+         }
+         
+         .admin-greeting {
+            font-size: 1.3rem;
+         }
+         
+         .admin-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+         }
+         
+         .admin-card {
+            padding: 1.5rem;
+         }
+         
+         .stat-number {
+            font-size: 2.5rem;
+         }
+         
+         .recent-activities {
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
+         }
+         
+         .activity-item {
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem 0;
+         }
+         
+         .activity-icon {
+            display: none;
+         }
+         
+         .activity-meta {
+            flex-direction: column;
+            gap: 0.3rem;
+         }
+         
+         .security-notes {
+            padding: 1.5rem 1rem;
+         }
+         
+         .auth-ball-1, .auth-ball-2, .auth-ball-3, .auth-ball-4, .auth-ball-5, .auth-ball-6 {
+            width: 80px !important;
+            height: 80px !important;
+         }
+         
+         .auth-ball-3, .auth-ball-5 {
+            display: none;
+         }
+      }
    </style>
 </head>
 <body>
-   <!-- Floating Balls Background -->
+   
    <div class="floating-balls">
       <div class="ball auth-ball-1"></div>
       <div class="ball auth-ball-2"></div>

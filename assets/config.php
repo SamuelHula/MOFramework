@@ -1,25 +1,19 @@
 <?php
-// Database configuration
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'codelibrary');
-define('DB_USER', 'root'); // Change as needed
-define('DB_PASS', 'root'); // Change as needed
+define('DB_USER', 'root'); 
+define('DB_PASS', 'root'); 
 
-// Cookie consent configuration
 define('COOKIE_CONSENT_VERSION', '1.0');
 define('COOKIE_CONSENT_DAYS', 365);
 
-// Admin configuration
 define('SUPER_ADMIN_EMAIL', 'admin@code.dev');
 
-// Start session only if not already started
 if (session_status() == PHP_SESSION_NONE) {
 session_start();
 }
 
-// Initialize cookie consent in session if not set
 if (!isset($_SESSION['cookie_consent'])) {
-// Check if cookie consent exists in cookie
 if (isset($_COOKIE['cookie_consent'])) {
    $cookie_data = json_decode($_COOKIE['cookie_consent'], true);
    if ($cookie_data && isset($cookie_data['version']) && $cookie_data['version'] === COOKIE_CONSENT_VERSION) {
@@ -48,45 +42,38 @@ if (isset($_COOKIE['cookie_consent'])) {
 }
 }
 
-// Check if we need to show cookie consent
 if (!$_SESSION['cookie_consent']['accepted'] && basename($_SERVER['PHP_SELF']) !== 'process_cookie_consent.php') {
-// Store current URL to return after consent
 $_SESSION['return_url'] = $_SERVER['REQUEST_URI'];
 }
 
-// Apply cookie consent settings to session
 if ($_SESSION['cookie_consent']['accepted']) {
-// Apply user preferences from cookie
-if ($_SESSION['cookie_consent']['preferences'] && isset($_COOKIE['user_preferences'])) {
-   $user_preferences = json_decode($_COOKIE['user_preferences'], true);
-   if ($user_preferences) {
-      $_SESSION['user_preferences'] = $user_preferences;
+   if ($_SESSION['cookie_consent']['preferences'] && isset($_COOKIE['user_preferences'])) {
+      $user_preferences = json_decode($_COOKIE['user_preferences'], true);
+      if ($user_preferences) {
+         $_SESSION['user_preferences'] = $user_preferences;
+      }
    }
 }
-}
 
-// Create database connection
 try {
 $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) {
-error_log("Database connection failed: " . $e->getMessage());
-header("Location: ../error.php?code=500&message=Database+connection+failed");
-exit;
+   error_log("Database connection failed: " . $e->getMessage());
+   header("Location: ../error.php?code=500&message=Database+connection+failed");
+   exit;
 }
 
-// Function to get all languages from database
 function getAllLanguages($pdo) {
    try {
       $stmt = $pdo->query("SELECT name FROM languages ORDER BY display_order, name");
       return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
    } catch (PDOException $e) {
       error_log("Failed to fetch languages: " . $e->getMessage());
-      return ['HTML', 'CSS', 'JavaScript', 'PHP', 'Python', 'SQL']; // Fallback default languages
+      return ['HTML', 'CSS', 'JavaScript', 'PHP', 'Python', 'SQL']; 
    }
 }
 
-// Function to get CodeMirror mode for a language
 function getCodeMirrorMode($language) {
    $modeMap = [
       'html' => 'htmlmixed',
@@ -138,7 +125,6 @@ function logAdminActivity($admin_id, $activity_type, $description = '') {
    }
 }
 
-// Check admin permissions
 function checkAdminPermission($required_role = 'admin') {
    if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
       return false;

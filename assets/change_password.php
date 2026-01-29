@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-// Check if user is logged in (session already started by config.php)
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: ../signin.php");
    exit;
@@ -12,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $new_password = trim($_POST["new_password"]);
    $confirm_password = trim($_POST["confirm_password"]);
 
-   // Validate input
    $errors = [];
 
    if (empty($current_password) || empty($new_password) || empty($confirm_password)) {
@@ -36,13 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                $user = $stmt->fetch(PDO::FETCH_ASSOC);
                
                if (password_verify($current_password, $user['password'])) {
-                  // Current password is correct, update to new password
                   $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
                   
                   $updateStmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
                   $updateStmt->execute([$hashedPassword, $_SESSION['user_id']]);
                   
-                  // Log the password change
                   $log_entry = "=== PASSWORD CHANGED ===" . PHP_EOL;
                   $log_entry .= "Time: " . date('Y-m-d H:i:s') . PHP_EOL;
                   $log_entry .= "User ID: " . $_SESSION['user_id'] . PHP_EOL;
@@ -66,7 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
    }
 
-   // If there are errors, redirect back with error messages
    if (!empty($errors)) {
       $errorString = implode("|", $errors);
       header("Location: ../account.php?error=" . urlencode($errorString));

@@ -2,7 +2,6 @@
 require_once 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Collect and sanitize input data
     $firstName = strip_tags(trim($_POST["firstName"]));
     $lastName = strip_tags(trim($_POST["lastName"]));
     $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
@@ -10,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirmPassword = trim($_POST["confirmPassword"]);
     $agreeTerms = isset($_POST["agreeTerms"]) ? true : false;
 
-    // Validate input
     $errors = [];
 
     if (empty($firstName) || empty($lastName) || empty($email) || empty($password)) {
@@ -33,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "You must agree to the terms and conditions";
     }
 
-    // Check if email already exists
     if (empty($errors)) {
         try {
             $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
@@ -48,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // If no errors, create user
     if (empty($errors)) {
         try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -57,17 +53,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute([$firstName, $lastName, $email, $hashedPassword]);
             
             if ($stmt->rowCount() > 0) {
-                // Get the new user ID
                 $userId = $pdo->lastInsertId();
                 
-                // Set session variables
                 $_SESSION['user_id'] = $userId;
                 $_SESSION['user_email'] = $email;
                 $_SESSION['user_name'] = $firstName . ' ' . $lastName;
                 $_SESSION['first_name'] = $firstName;
                 $_SESSION['loggedin'] = true;
                 
-                // Log the successful registration
                 $log_entry = "=== SUCCESSFUL REGISTRATION ===" . PHP_EOL;
                 $log_entry .= "Time: " . date('Y-m-d H:i:s') . PHP_EOL;
                 $log_entry .= "User ID: " . $userId . PHP_EOL;
@@ -78,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 file_put_contents('./assets/logs/auth.log', $log_entry, FILE_APPEND | LOCK_EX);
                 
-                // Redirect to dashboard
                 header("Location: ../dashboard.php");
                 exit;
             } else {
@@ -90,7 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // If there are errors, redirect back with error messages
     if (!empty($errors)) {
         $errorString = implode("|", $errors);
         header("Location: ../signup.php?error=" . urlencode($errorString));

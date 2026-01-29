@@ -2,12 +2,10 @@
 require_once 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Collect and sanitize input data
     $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
     $password = trim($_POST["password"]);
     $remember = isset($_POST["remember"]) ? true : false;
 
-    // Validate input
     $errors = [];
 
     if (empty($email) || empty($password)) {
@@ -18,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Invalid email format";
     }
 
-    // Check credentials
     if (empty($errors)) {
         try {
             $stmt = $pdo->prepare("SELECT id, first_name, last_name, password FROM users WHERE email = ?");
@@ -28,20 +25,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 
                 if (password_verify($password, $user['password'])) {
-                    // Password is correct, set session
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['user_email'] = $email;
                     $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name'];
                     $_SESSION['first_name'] = $user['first_name'];
                     $_SESSION['loggedin'] = true;
                     
-                    // Set remember me cookie if requested
                     if ($remember) {
                         $cookie_value = $user['id'] . ':' . hash('sha256', $user['password']);
-                        setcookie('remember_me', $cookie_value, time() + (30 * 24 * 60 * 60), '/'); // 30 days
+                        setcookie('remember_me', $cookie_value, time() + (30 * 24 * 60 * 60), '/'); 
                     }
                     
-                    // Log the successful login
                     $log_entry = "=== SUCCESSFUL LOGIN ===" . PHP_EOL;
                     $log_entry .= "Time: " . date('Y-m-d H:i:s') . PHP_EOL;
                     $log_entry .= "User ID: " . $user['id'] . PHP_EOL;
@@ -52,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     file_put_contents('./assets/logs/auth.log', $log_entry, FILE_APPEND | LOCK_EX);
                     
-                    // Redirect to dashboard
                     header("Location: ../dashboard.php");
                     exit;
                 } else {
@@ -67,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // If there are errors, redirect back with error messages
     if (!empty($errors)) {
         $errorString = implode("|", $errors);
         header("Location: ../signin.php?error=" . urlencode($errorString));

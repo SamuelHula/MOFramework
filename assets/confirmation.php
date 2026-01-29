@@ -151,7 +151,6 @@
    </div>
    <script src="../js/scroll.js"></script>
    <script>
-         // Initialize scroll effects
          document.addEventListener('DOMContentLoaded', function() {
             const scrollElements = document.querySelectorAll('.scroll-effect');
             const elementInView = (el, dividend = 1) => {
@@ -174,7 +173,6 @@
             window.addEventListener('scroll', () => {
                handleScrollAnimation();
             });
-            // Trigger once on load
             handleScrollAnimation();
          });
    </script>

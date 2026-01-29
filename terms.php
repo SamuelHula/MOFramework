@@ -1,5 +1,4 @@
 <?php
-// Start session and include config
 require_once './assets/config.php';
 ?>
 <!DOCTYPE html>
@@ -366,8 +365,6 @@ require_once './assets/config.php';
             font-size: 0.9rem;
          }
       }
-
-      /* Touch-friendly improvements */
       @media (hover: none) and (pointer: coarse) {
          .toc-list a {
             padding: 0.5rem 0;
@@ -381,8 +378,6 @@ require_once './assets/config.php';
             min-height: 20px;
          }
       }
-
-      /* Print button responsiveness */
       @media screen and (max-width: 768px) {
          .terms-content + button {
             bottom: 10px;
@@ -648,7 +643,6 @@ require_once './assets/config.php';
    <script src="./js/scroll.js"></script>
    <script src="./js/fly-in.js"></script>
    <script>
-      // Smooth scrolling for table of contents links
       document.querySelectorAll('.toc-list a').forEach(anchor => {
          anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -663,7 +657,6 @@ require_once './assets/config.php';
          });
       });
       
-      // Agreement checkbox functionality
       const agreeCheckbox = document.getElementById('agree-check');
       if (agreeCheckbox) {
          agreeCheckbox.addEventListener('change', function() {
@@ -677,7 +670,6 @@ require_once './assets/config.php';
          });
       }
       
-      // Print functionality
       const printButton = document.createElement('button');
       printButton.innerHTML = '🖨️ Print These Terms';
       printButton.style.cssText = `

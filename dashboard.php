@@ -1,46 +1,37 @@
 <?php
-// Include config first - it handles session starting
 require_once './assets/config.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
    exit;
 }
 
-// Fetch user stats
 try {
-   // Total favorites for this user
    $favoritesQuery = "SELECT COUNT(*) as total FROM user_favorites WHERE user_id = ?";
    $stmt = $pdo->prepare($favoritesQuery);
    $stmt->execute([$_SESSION['user_id']]);
    $totalFavorites = $stmt->fetch()['total'];
    
-   // Total snippets (public ones)
    $snippetsQuery = "SELECT COUNT(*) as total FROM snippets WHERE is_public = 1";
    $stmt = $pdo->prepare($snippetsQuery);
    $stmt->execute();
    $totalSnippets = $stmt->fetch()['total'];
    
-   // Categories count
    $categoriesQuery = "SELECT COUNT(*) as total FROM categories";
    $stmt = $pdo->prepare($categoriesQuery);
    $stmt->execute();
    $totalCategories = $stmt->fetch()['total'];
    
-   // Languages count from snippets table
    $languagesQuery = "SELECT COUNT(DISTINCT language) as total FROM snippets WHERE language IS NOT NULL AND language != ''";
    $stmt = $pdo->prepare($languagesQuery);
    $stmt->execute();
    $totalLanguages = $stmt->fetch()['total'];
    
-   // Total users count
    $usersQuery = "SELECT COUNT(*) as total FROM users";
    $stmt = $pdo->prepare($usersQuery);
    $stmt->execute();
    $totalUsers = $stmt->fetch()['total'];
    
-   // Total views from all snippets (sum of views column)
    $totalViewsQuery = "SELECT SUM(views) as total FROM snippets";
    $stmt = $pdo->prepare($totalViewsQuery);
    $stmt->execute();
@@ -126,7 +117,6 @@ try {
          opacity: 0.8;
          line-height: 1.6;
       }
-      /* Stats Section Styles */
       .stats-container {
          background: white;
          border-radius: 15px;
@@ -269,7 +259,6 @@ try {
             </div>
          </div>
          
-         <!-- Stats Section -->
          <div class="stats-container scroll-effect">
             <div class="stats-header">
                <h2>Code Library Statistics</h2>

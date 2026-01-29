@@ -1,21 +1,16 @@
 <?php
-// manage_admin.php
 require_once './assets/config.php';
 
-// Check if admin is logged in and is super_admin
 if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true || $_SESSION['admin_role'] !== 'super_admin') {
    header("Location: admin_dashboard.php");
    exit;
 }
 
-// Set active page for navbar
 $active_page = 'manage_admins';
 
-// Handle actions
 $action = $_GET['action'] ?? '';
 $adminId = $_GET['id'] ?? 0;
 
-// Get admin list
 try {
    $stmt = $pdo->query("
       SELECT a.*, creator.first_name as creator_first, creator.last_name as creator_last 
@@ -26,7 +21,6 @@ try {
    ");
    $adminList = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
-   // Get specific admin for editing
    $editAdmin = null;
    if ($action === 'edit' && $adminId > 0) {
       $stmt = $pdo->prepare("SELECT * FROM admins WHERE id = ? AND is_active = 1");
@@ -253,8 +247,6 @@ try {
          gap: 1rem;
          margin-top: 2rem;
       }
-      
-      /* Floating Balls Styles */
       .floating-balls {
          position: fixed;
          top: 0;
@@ -378,12 +370,10 @@ try {
             width: 100%;
             padding: 0.8rem;
          }
-         /* Hide some balls on mobile for better performance */
          .auth-ball-3, .auth-ball-5 {
             display: none;
          }
       }
-      /* Add to existing media query in manage_admin.php */
 @media screen and (max-width: 768px) {
    .admin-table {
       display: block;
@@ -415,7 +405,7 @@ try {
    </style>
 </head>
 <body>
-   <!-- Floating Balls Background -->
+   
    <div class="floating-balls">
       <div class="ball auth-ball-1"></div>
       <div class="ball auth-ball-2"></div>
@@ -434,7 +424,6 @@ try {
                <p>Create and manage administrator accounts with different permission levels</p>
          </div>
          
-         <!-- Add/Edit Admin Form -->
          <?php if ($action === 'add' || $action === 'edit'): ?>
          <div class="add-admin-form scroll-effect">
                <div class="form-card-decor"></div>
@@ -499,7 +488,6 @@ try {
          </div>
          <?php endif; ?>
          
-         <!-- Admin List -->
          <div class="admin-management scroll-effect">
                <div class="table-header-actions">
                   <h2>Administrator Team</h2>
@@ -577,7 +565,6 @@ try {
          }
       }
       
-      // Form validation for add admin
       document.addEventListener('DOMContentLoaded', function() {
          const addAdminForm = document.querySelector('form');
          if (addAdminForm && addAdminForm.querySelector('#password')) {

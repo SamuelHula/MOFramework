@@ -1,9 +1,7 @@
 <?php
-// assets/process_toggle_favorite.php
 session_start();
 require_once 'config.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header('Content-Type: application/json');
    echo json_encode(['success' => false, 'message' => 'Not logged in']);
@@ -21,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    }
    
    try {
-      // Check if snippet exists and is public
       $stmt = $pdo->prepare("SELECT id FROM snippets WHERE id = ? AND is_public = 1");
       $stmt->execute([$snippet_id]);
       
@@ -31,14 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          exit;
       }
       
-      // Check if already favorited
       $stmt = $pdo->prepare("SELECT id FROM user_favorites WHERE user_id = ? AND snippet_id = ?");
       $stmt->execute([$_SESSION['user_id'], $snippet_id]);
       $is_favorite = $stmt->fetch();
       
       if ($action === 'add' || $action === '') {
          if (!$is_favorite) {
-            // Add to favorites
             $stmt = $pdo->prepare("INSERT INTO user_favorites (user_id, snippet_id) VALUES (?, ?)");
             $stmt->execute([$_SESSION['user_id'], $snippet_id]);
             $is_favorite = true;
@@ -48,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          
       } elseif ($action === 'remove') {
          if ($is_favorite) {
-            // Remove from favorites
             $stmt = $pdo->prepare("DELETE FROM user_favorites WHERE user_id = ? AND snippet_id = ?");
             $stmt->execute([$_SESSION['user_id'], $snippet_id]);
             $is_favorite = false;
@@ -57,14 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          echo json_encode(['success' => true, 'is_favorite' => false, 'message' => 'Removed from favorites']);
          
       } else {
-         // Toggle action
          if ($is_favorite) {
-            // Remove
             $stmt = $pdo->prepare("DELETE FROM user_favorites WHERE user_id = ? AND snippet_id = ?");
             $stmt->execute([$_SESSION['user_id'], $snippet_id]);
             $is_favorite = false;
          } else {
-            // Add
             $stmt = $pdo->prepare("INSERT INTO user_favorites (user_id, snippet_id) VALUES (?, ?)");
             $stmt->execute([$_SESSION['user_id'], $snippet_id]);
             $is_favorite = true;

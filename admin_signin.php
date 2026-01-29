@@ -155,8 +155,6 @@
       margin-bottom: 0.5rem;
       opacity: 1;
    }
-
-   /* Floating Balls Styles */
    .floating-balls {
       position: fixed;
       top: 0;
@@ -248,7 +246,6 @@
       .admin-header h1 {
          font-size: 2rem;
       }
-      /* Hide some balls on mobile for better performance */
       .auth-ball-3, .auth-ball-5 {
          display: none;
       }
@@ -275,7 +272,7 @@
 </style>
 </head>
 <body>
-<!-- Floating Balls Background -->
+
 <div class="floating-balls">
    <div class="ball auth-ball-1"></div>
    <div class="ball auth-ball-2"></div>
@@ -286,7 +283,6 @@
 </div>
 
 <div class="admin-auth-container">
-   <!-- Messages inside the container -->
    <div style="margin-bottom: 1.5rem;">
       <?php if (isset($_GET['error'])): ?>
          <div class="error-message">
@@ -376,7 +372,6 @@
                   errorDiv.className = 'error-message';
                   errorDiv.textContent = 'Please fill in all required fields.';
                   
-                  // Insert error message at the top of the form
                   if (!document.querySelector('.error-message')) {
                      adminForm.insertBefore(errorDiv, adminForm.firstChild);
                   }
@@ -384,7 +379,6 @@
             });
       }
       
-      // Auto-remove error messages after 5 seconds
       setTimeout(() => {
             const messages = document.querySelectorAll('.error-message, .warning-message, .success-message');
             messages.forEach(msg => {

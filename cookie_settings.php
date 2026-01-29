@@ -255,11 +255,9 @@ if (!isset($_SESSION['cookie_consent']) || !$_SESSION['cookie_consent']['accepte
             font-size: 0.9rem;
          }
       }
-
-      /* Touch-friendly improvements */
       @media (hover: none) and (pointer: coarse) {
          .cookie-btn {
-            min-height: 44px; /* Minimum touch target size */
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;

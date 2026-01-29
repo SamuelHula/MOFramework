@@ -1,8 +1,6 @@
 <?php
-// code_formatter.php
 require_once './assets/config.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
    exit;
@@ -10,26 +8,21 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $current_page = 'web_tools';
 
-// Initialize variables
 $input_code = '';
 $formatted_code = '';
 $language = 'html';
 $error = '';
 $success = false;
-$show_input = true; // Flag to control input visibility
+$show_input = true; 
 
-// Check if we're coming from a clear action
 if (isset($_GET['clear']) && $_GET['clear'] == '1') {
-   // Clear session data if any
    unset($_SESSION['formatter_data']);
    $input_code = '';
    $formatted_code = '';
    $show_input = true;
 }
 
-// Function to format HTML code
 function formatHTML($code) {
-   // Remove existing indentation
    $lines = explode("\n", $code);
    $formatted_lines = [];
    $indent_level = 0;
@@ -37,21 +30,17 @@ function formatHTML($code) {
    foreach ($lines as $line) {
       $trimmed_line = trim($line);
       
-      // Skip empty lines unless they're in the middle of content
       if (empty($trimmed_line)) {
          continue;
       }
       
-      // Check for closing tags that should decrease indent
       if (preg_match('/^<\/(\w+)/', $trimmed_line)) {
          $indent_level = max(0, $indent_level - 1);
       }
       
-      // Add indentation
       $indent = str_repeat('    ', $indent_level);
       $formatted_lines[] = $indent . $trimmed_line;
       
-      // Check for opening tags that should increase indent (excluding self-closing tags)
       if (preg_match('/^<(\w+)(?![^>]*\/>)/', $trimmed_line) && !preg_match('/<\/(\w+)>/', $trimmed_line)) {
          $indent_level++;
       }
@@ -60,13 +49,11 @@ function formatHTML($code) {
    return implode("\n", $formatted_lines);
 }
 
-// Function to format CSS code
 function formatCSS($code) {
    $formatted = '';
    $indent_level = 0;
    $in_rule = false;
    
-   // Remove multiple spaces and normalize line endings
    $code = preg_replace('/\s+/', ' ', $code);
    $code = str_replace(['{', '}', ';'], [" {\n", "\n}\n", ";\n"], $code);
    
@@ -79,16 +66,13 @@ function formatCSS($code) {
          continue;
       }
       
-      // Decrease indent before closing brace
       if (strpos($trimmed_line, '}') !== false) {
          $indent_level = max(0, $indent_level - 1);
       }
       
-      // Add indentation
       $indent = str_repeat('    ', $indent_level);
       $formatted .= $indent . $trimmed_line . "\n";
       
-      // Increase indent after opening brace
       if (strpos($trimmed_line, '{') !== false) {
          $indent_level++;
       }
@@ -97,14 +81,12 @@ function formatCSS($code) {
    return trim($formatted);
 }
 
-// Function to format JavaScript code
 function formatJS($code) {
    $formatted = '';
    $indent_level = 0;
    $in_string = false;
    $string_char = '';
    
-   // Add spaces around operators for better parsing
    $code = preg_replace('/([=+\-*\/%&|^<>!]+)/', ' $1 ', $code);
    
    $chars = str_split($code);
@@ -112,7 +94,6 @@ function formatJS($code) {
    for ($i = 0; $i < count($chars); $i++) {
       $char = $chars[$i];
       
-      // Handle strings
       if (($char === '"' || $char === "'") && ($i === 0 || $chars[$i-1] !== '\\')) {
          if (!$in_string) {
                $in_string = true;
@@ -123,7 +104,6 @@ function formatJS($code) {
       }
       
       if (!$in_string) {
-         // Handle braces and brackets
          if ($char === '{' || $char === '[') {
                $formatted .= $char . "\n" . str_repeat('    ', ++$indent_level);
                continue;
@@ -134,13 +114,11 @@ function formatJS($code) {
                continue;
          }
          
-         // Handle semicolons
          if ($char === ';') {
                $formatted .= $char . "\n" . str_repeat('    ', $indent_level);
                continue;
          }
          
-         // Handle commas
          if ($char === ',') {
                $formatted .= $char . ' ';
                continue;
@@ -150,13 +128,11 @@ function formatJS($code) {
       $formatted .= $char;
    }
    
-   // Clean up multiple newlines
    $formatted = preg_replace("/\n\s*\n/", "\n", $formatted);
    
    return trim($formatted);
 }
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    if (isset($_POST['code']) && isset($_POST['language'])) {
       $input_code = trim($_POST['code']);
@@ -178,9 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                      $formatted_code = $input_code;
                }
                $success = true;
-               $show_input = false; // Hide input after successful formatting
+               $show_input = false; 
                
-               // Store in session for persistence if needed
                $_SESSION['formatter_data'] = [
                   'input' => $input_code,
                   'output' => $formatted_code,
@@ -188,11 +163,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                ];
          } catch (Exception $e) {
                $error = 'Error formatting code: ' . $e->getMessage();
-               $show_input = true; // Keep input visible on error
+               $show_input = true; 
          }
       } else {
          $error = 'Please enter some code to format.';
-         $show_input = true; // Keep input visible on error
+         $show_input = true; 
       }
    }
 }
@@ -627,7 +602,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    <script src="./js/scroll.js"></script>
    <script src="./js/fly-in.js"></script>
    <script>
-      // Language selection
       document.querySelectorAll('.language-option').forEach(option => {
          option.addEventListener('click', function() {
                document.querySelectorAll('.language-option').forEach(opt => {
@@ -649,7 +623,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          navigator.clipboard.writeText(text).then(() => {
                showNotification(message || 'Copied to clipboard!');
                
-               // Update button state temporarily
                const event = window.event;
                if (event && event.target) {
                   const originalHTML = event.target.innerHTML;
@@ -690,7 +663,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       
       function newCode() {
-         // Redirect to fresh form
          window.location.href = 'code_formatter.php?clear=1';
       }
       
@@ -723,7 +695,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          }, 3000);
       }
       
-      // Add CSS for animation
       const style = document.createElement('style');
       style.textContent = `
          @keyframes slideIn {
@@ -737,7 +708,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       `;
       document.head.appendChild(style);
       
-      // Auto-resize textareas
       function autoResize(textarea) {
          textarea.style.height = 'auto';
          textarea.style.height = (textarea.scrollHeight) + 'px';
@@ -748,7 +718,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          inputTextarea.addEventListener('input', function() {
                autoResize(this);
          });
-         // Initial resize
          autoResize(inputTextarea);
       }
       
@@ -757,7 +726,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          outputTextarea.addEventListener('input', function() {
                autoResize(this);
          });
-         // Initial resize
          autoResize(outputTextarea);
       }
    </script>

@@ -603,7 +603,7 @@ footer {
    z-index: 9999;
    transform: translateY(100%);
    transition: transform 0.3s ease;
-   display: none; /* Hidden by default, shown by PHP */
+   display: none; 
    justify-content: space-between;
    align-items: center;
    gap: 2rem;
@@ -778,7 +778,6 @@ footer {
 #admin_nav_toggle {
    display: none;
 }
-/* Mobile Styles for Admin Navbar */
 @media screen and (max-width: 1370px) {
    .admin-nav-bar {
       padding: 0.8rem 1rem;

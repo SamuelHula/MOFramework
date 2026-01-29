@@ -122,8 +122,6 @@
       .auth-redirect a:hover {
          color: var(--secondary);
       }
-
-      /* Floating Balls Styles */
       .floating-balls {
          position: fixed;
          top: 0;
@@ -220,7 +218,7 @@
       </div>
    <?php endif; ?>
 
-   <!-- Floating Balls Background -->
+   
    <div class="floating-balls">
       <div class="ball auth-ball-1"></div>
       <div class="ball auth-ball-2"></div>
@@ -254,7 +252,6 @@
    </div>
    
    <script>
-      // Form validation
       document.addEventListener('DOMContentLoaded', function() {
          const authForm = document.querySelector('.auth-form');
          

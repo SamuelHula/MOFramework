@@ -1,8 +1,6 @@
 <?php
-// add_user.php
 require_once './assets/config.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
    header("Location: admin_signin.php");
    exit;
@@ -175,7 +173,6 @@ if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true)
                flex-direction: column;
          }
       }
-      /* Update media query in add_user.php and edit_user.php */
       @media screen and (max-width: 768px) {
          .add-user-container,
          .edit-user-container {
@@ -287,22 +284,18 @@ if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true)
          
          let strength = 0;
          
-         // Length check
          if (password.length >= 8) strength += 25;
          if (password.length >= 12) strength += 15;
          
-         // Character variety
          if (/[A-Z]/.test(password)) strength += 20;
          if (/[a-z]/.test(password)) strength += 20;
          if (/[0-9]/.test(password)) strength += 20;
          if (/[^A-Za-z0-9]/.test(password)) strength += 20;
          
-         // Cap at 100
          strength = Math.min(strength, 100);
          
          meter.style.width = strength + '%';
          
-         // Color coding
          if (strength < 40) {
                meter.className = 'strength-meter';
          } else if (strength < 70) {
@@ -338,18 +331,15 @@ if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true)
          
          let errors = [];
          
-         // Check required fields
          if (!firstName.trim()) errors.push('First name is required');
          if (!lastName.trim()) errors.push('Last name is required');
          if (!email.trim()) errors.push('Email is required');
          
-         // Email validation
          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
          if (email && !emailRegex.test(email)) {
                errors.push('Please enter a valid email address');
          }
          
-         // Password validation
          if (password.length < 8) {
                errors.push('Password must be at least 8 characters long');
          }

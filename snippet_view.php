@@ -1,8 +1,6 @@
 <?php
-// snippet_view.php
 require_once './assets/config.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
    exit;
@@ -15,7 +13,6 @@ if (!isset($_GET['id'])) {
 
 $snippet_id = intval($_GET['id']);
 
-// Fetch snippet details
 try {
    $stmt = $pdo->prepare("
       SELECT s.*, c.name as category_name,
@@ -34,11 +31,9 @@ try {
       exit;
    }
    
-   // Increment view count
    $stmt = $pdo->prepare("UPDATE snippets SET views = views + 1 WHERE id = ?");
    $stmt->execute([$snippet_id]);
    
-   // Fetch tags
    $stmt = $pdo->prepare("
       SELECT t.name FROM tags t 
       JOIN snippet_tags st ON t.id = st.tag_id 
@@ -466,7 +461,6 @@ try {
          </div>
          
          <?php
-         // Fetch related snippets
          try {
                $stmt = $pdo->prepare("
                   SELECT s.id, s.title, s.language, s.views, s.created_at
@@ -523,7 +517,6 @@ try {
          .then(response => response.json())
          .then(data => {
             if (data.success) {
-               // Update button state
                const icon = button.querySelector('i');
                if (data.is_favorite) {
                   icon.classList.remove('far');
@@ -536,7 +529,6 @@ try {
                   button.style.color = '#ccc';
                   button.setAttribute('data-is-favorite', '0');
                }
-               // Show notification
                showNotification(data.message || 'Favorite updated');
             } else {
                alert(data.message || 'An error occurred');
@@ -553,7 +545,6 @@ try {
          const copyButtons = document.querySelectorAll('.copy-btn, .action-btn.btn-primary');
          
          navigator.clipboard.writeText(codeText).then(() => {
-            // Update all copy buttons
             copyButtons.forEach(button => {
                const originalHTML = button.innerHTML;
                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
@@ -565,7 +556,6 @@ try {
                }, 2000);
             });
             
-            // Show notification
             showNotification('Code copied to clipboard!');
          }).catch(err => {
             console.error('Failed to copy: ', err);
@@ -573,7 +563,6 @@ try {
          });
       }
       
-      // Highlight.js initialization
       document.addEventListener('DOMContentLoaded', function() {
          hljs.highlightAll();
       });

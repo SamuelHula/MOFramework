@@ -1,7 +1,6 @@
 <?php
 require_once './assets/config.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
    header("Location: admin_signin.php");
    exit;
@@ -9,7 +8,6 @@ if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true)
 
 $active_page = 'manage_users';
 
-// Get all users
 try {
    $stmt = $pdo->query("SELECT id, first_name, last_name, email, role, created_at, updated_at FROM users ORDER BY created_at DESC");
    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -310,7 +308,7 @@ try {
          }
          
          .users-table {
-            min-width: 800px; /* Allow horizontal scroll on small screens */
+            min-width: 800px; 
          }
          
          .users-actions {
@@ -442,8 +440,6 @@ try {
             gap: 0.5rem;
          }
       }
-
-      /* Extra small screens below 350px */
       @media screen and (max-width: 350px) {
          body {
             padding-top: 60px;
@@ -524,19 +520,15 @@ try {
                </div>
          <?php endif; ?>
          
-         <!-- User Statistics -->
          <div class="stats-cards scroll-effect">
                <?php
                try {
-                  // Total users
                   $stmt = $pdo->query("SELECT COUNT(*) as total FROM users");
                   $totalUsers = $stmt->fetch()['total'];
                   
-                  // New users (last 7 days)
                   $stmt = $pdo->query("SELECT COUNT(*) as new_users FROM users WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
                   $newUsers = $stmt->fetch()['new_users'];
                   
-                  // Users by role
                   $stmt = $pdo->query("SELECT role, COUNT(*) as count FROM users GROUP BY role");
                   $roleStats = $stmt->fetchAll(PDO::FETCH_ASSOC);
                   

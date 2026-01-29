@@ -1,9 +1,7 @@
 <?php
-// assets/process_add_snippet.php
 session_start();
 require_once 'config.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
    header("Location: ../admin_signin.php");
    exit;
@@ -21,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
    $errors = [];
    
-   // Validation
    if (empty($title)) {
       $errors[] = 'Title is required';
    }
@@ -38,10 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $errors[] = 'Language is required';
    }
    
-   // Create slug
    $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
    
-   // Check if slug already exists
    try {
       $stmt = $pdo->prepare("SELECT id FROM snippets WHERE slug = ?");
       $stmt->execute([$slug]);
@@ -56,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       try {
          $pdo->beginTransaction();
          
-         // Insert snippet
          $stmt = $pdo->prepare("
                INSERT INTO snippets 
                (title, slug, description, code, language, category_id, admin_id, is_featured, is_public) 
@@ -77,13 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          
          $snippet_id = $pdo->lastInsertId();
          
-         // Process tags
          if (!empty($tags)) {
                foreach ($tags as $tagName) {
                   $tagName = trim($tagName);
                   if (empty($tagName)) continue;
                   
-                  // Check if tag exists
                   $stmt = $pdo->prepare("SELECT id FROM tags WHERE name = ?");
                   $stmt->execute([$tagName]);
                   $tag = $stmt->fetch();
@@ -91,14 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   if ($tag) {
                      $tag_id = $tag['id'];
                   } else {
-                     // Create new tag
                      $tagSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $tagName)));
                      $stmt = $pdo->prepare("INSERT INTO tags (name, slug) VALUES (?, ?)");
                      $stmt->execute([$tagName, $tagSlug]);
                      $tag_id = $pdo->lastInsertId();
                   }
                   
-                  // Link tag to snippet
                   $stmt = $pdo->prepare("INSERT IGNORE INTO snippet_tags (snippet_id, tag_id) VALUES (?, ?)");
                   $stmt->execute([$snippet_id, $tag_id]);
                }
@@ -106,7 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          
          $pdo->commit();
          
-         // Log the activity
          logAdminActivity($_SESSION['admin_id'], 'add_snippet', "Added new snippet: $title ($language)");
          
          header("Location: ../admin_dashboard.php?success=Snippet+added+successfully");
@@ -118,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
    }
    
-   // If there are errors, redirect back
    if (!empty($errors)) {
       $errorString = implode('|', $errors);
       header("Location: ../admin_add_snippet.php?error=" . urlencode($errorString));

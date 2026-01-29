@@ -1,11 +1,9 @@
 <?php
-// admin_add_snippet.php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once './assets/config.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
    header("Location: admin_signin.php");
    exit;
@@ -13,7 +11,6 @@ if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true)
 
 $active_page = 'admin_add_snippet';
 
-// Fetch categories for dropdown
 try {
    $stmt = $pdo->query("SELECT id, name FROM categories ORDER BY name");
    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -22,7 +19,6 @@ try {
    $categories = [];
 }
 
-// Fetch languages from database
 $languages = getAllLanguages($pdo);
 ?>
 <!DOCTYPE html>
@@ -255,7 +251,6 @@ $languages = getAllLanguages($pdo);
          font-weight: normal;
       }
       
-      /* Floating Balls Background */
       .floating-balls {
          position: fixed;
          top: 0;
@@ -380,139 +375,138 @@ $languages = getAllLanguages($pdo);
          }
       }
       @media screen and (max-width: 480px) {
-    .admin-snippet-container {
-        padding: 0.5rem;
-    }
-    
-    .admin-header {
-        padding: 1.5rem;
-    }
-    
-    .admin-header h1 {
-        font-size: 1.8rem;
-    }
-    
-    .admin-header p {
-        font-size: 1rem;
-    }
-    
-    .snippet-form-container {
-        padding: 1rem;
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        width: 100%;
-        max-width: 100%;
-        font-size: 16px; /* Prevents zoom on iOS */
-        padding: 0.8rem;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 0.8rem;
-    }
-    
-    .code-editor-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-    
-    .language-selector,
-    .editor-actions {
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .CodeMirror {
-        height: 200px;
-        font-size: 12px;
-    }
-    
-    .tag-input-container {
-        min-height: auto;
-        padding: 0.5rem;
-    }
-    
-    .tag-input {
-        min-width: 50px;
-        font-size: 16px;
-    }
-    
-    .checkbox-group {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    .form-actions {
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-    
-    .btn-submit,
-    .btn-cancel {
-        width: 100%;
-        padding: 0.9rem;
-    }
-}
+         .admin-snippet-container {
+            padding: 0.5rem;
+         }
+         
+         .admin-header {
+            padding: 1.5rem;
+         }
+         
+         .admin-header h1 {
+            font-size: 1.8rem;
+         }
+         
+         .admin-header p {
+            font-size: 1rem;
+         }
+         
+         .snippet-form-container {
+            padding: 1rem;
+         }
+         
+         .form-group input,
+         .form-group select,
+         .form-group textarea {
+            width: 100%;
+            max-width: 100%;
+            font-size: 16px; 
+            padding: 0.8rem;
+         }
+         
+         .form-row {
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+         }
+         
+         .code-editor-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+         }
+         
+         .language-selector,
+         .editor-actions {
+            width: 100%;
+            justify-content: space-between;
+         }
+         
+         .CodeMirror {
+            height: 200px;
+            font-size: 12px;
+         }
+         
+         .tag-input-container {
+            min-height: auto;
+            padding: 0.5rem;
+         }
+         
+         .tag-input {
+            min-width: 50px;
+            font-size: 16px;
+         }
+         
+         .checkbox-group {
+            flex-direction: column;
+            gap: 0.5rem;
+         }
+         
+         .form-actions {
+            flex-direction: column;
+            gap: 0.8rem;
+         }
+         
+         .btn-submit,
+         .btn-cancel {
+            width: 100%;
+            padding: 0.9rem;
+         }
+      }
 
-@media screen and (max-width: 350px) {
-    body {
-        padding-top: 60px;
-    }
-    
-    .admin-header {
-        padding: 1rem;
-    }
-    
-    .admin-header h1 {
-        font-size: 1.5rem;
-    }
-    
-    .admin-header p {
-        font-size: 0.9rem;
-    }
-    
-    .snippet-form-container {
-        padding: 0.8rem;
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 14px;
-        padding: 0.7rem;
-    }
-    
-    .form-group label {
-        font-size: 0.9rem;
-    }
-    
-    .code-editor-header {
-        padding: 0.6rem;
-    }
-    
-    .CodeMirror {
-        height: 180px;
-    }
-    
-    .tag {
-        font-size: 0.8rem;
-        padding: 0.2rem 0.6rem;
-    }
-    
-    .btn-submit,
-    .btn-cancel {
-        padding: 0.8rem;
-        font-size: 1rem;
-    }
-}
+      @media screen and (max-width: 350px) {
+         body {
+            padding-top: 60px;
+         }
+         
+         .admin-header {
+            padding: 1rem;
+         }
+         
+         .admin-header h1 {
+            font-size: 1.5rem;
+         }
+         
+         .admin-header p {
+            font-size: 0.9rem;
+         }
+         
+         .snippet-form-container {
+            padding: 0.8rem;
+         }
+         
+         .form-group input,
+         .form-group select,
+         .form-group textarea {
+            font-size: 14px;
+            padding: 0.7rem;
+         }
+         
+         .form-group label {
+            font-size: 0.9rem;
+         }
+         
+         .code-editor-header {
+            padding: 0.6rem;
+         }
+         
+         .CodeMirror {
+            height: 180px;
+         }
+         
+         .tag {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.6rem;
+         }
+         
+         .btn-submit,
+         .btn-cancel {
+            padding: 0.8rem;
+            font-size: 1rem;
+         }
+      }
    </style>
 </head>
 <body>
-   <!-- Floating Balls Background -->
    <div class="floating-balls">
       <div class="ball auth-ball-1"></div>
       <div class="ball auth-ball-2"></div>
@@ -523,12 +517,10 @@ $languages = getAllLanguages($pdo);
    </div>
    
    <?php 
-   // Include admin navbar
    $admin_navbar_path = './includes/admin_navbar.php';
    if (file_exists($admin_navbar_path)) {
       include_once $admin_navbar_path;
    } else {
-      // Fallback navbar if admin_navbar doesn't exist
       echo '<nav class="admin-nav-bar">
                <a href="admin_dashboard.php" class="admin-nav-brand">Admin Panel</a>
                <div class="admin-nav-menu">
@@ -652,7 +644,6 @@ $languages = getAllLanguages($pdo);
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/markdown/markdown.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/shell/shell.min.js"></script>
    <script>
-      // Comprehensive mode mapping
       const modeMap = {
          'html': 'htmlmixed',
          'css': 'css',
@@ -674,7 +665,6 @@ $languages = getAllLanguages($pdo);
          'shell': 'shell'
       };
       
-      // Initialize CodeMirror editor
       const codeEditor = CodeMirror(document.getElementById('codeEditor'), {
          mode: 'htmlmixed',
          theme: 'monokai',
@@ -686,12 +676,10 @@ $languages = getAllLanguages($pdo);
          value: '<!-- Enter your code here -->\n'
       });
       
-      // Sync editor with form textarea
       codeEditor.on('change', function(editor) {
          document.getElementById('code').value = editor.getValue();
       });
       
-      // Update editor mode based on language selection
       document.getElementById('editorLanguage').addEventListener('change', function() {
          const language = this.value;
          const mode = modeMap[language] || 'htmlmixed';
@@ -699,7 +687,6 @@ $languages = getAllLanguages($pdo);
          document.getElementById('language').value = language;
       });
       
-      // Also update editor when main language select changes
       document.getElementById('language').addEventListener('change', function() {
          const language = this.value;
          const mode = modeMap[language] || 'htmlmixed';
@@ -707,7 +694,6 @@ $languages = getAllLanguages($pdo);
          document.getElementById('editorLanguage').value = language;
       });
       
-      // Tag management
       const tagContainer = document.getElementById('tagContainer');
       const tagInput = document.getElementById('tagInput');
       const tagsHidden = document.getElementById('tags');
@@ -752,10 +738,8 @@ $languages = getAllLanguages($pdo);
          tagsHidden.value = tags.join(',');
       }
       
-      // Code formatting
       function formatCode() {
          const code = codeEditor.getValue();
-         // Simple formatting - in production, use a proper formatter
          const formatted = code.replace(/\n\s*\n/g, '\n').trim();
          codeEditor.setValue(formatted);
       }
@@ -766,7 +750,6 @@ $languages = getAllLanguages($pdo);
          }
       }
       
-      // Form validation
       document.getElementById('snippetForm').addEventListener('submit', function(e) {
          const title = document.getElementById('title').value.trim();
          const description = document.getElementById('description').value.trim();
@@ -786,7 +769,6 @@ $languages = getAllLanguages($pdo);
          }
       });
       
-      // Add scroll effect
       document.addEventListener('DOMContentLoaded', function() {
          const scrollElements = document.querySelectorAll('.scroll-effect');
          
@@ -814,7 +796,6 @@ $languages = getAllLanguages($pdo);
                handleScrollAnimation();
          });
          
-         // Initial check
          handleScrollAnimation();
       });
    </script>

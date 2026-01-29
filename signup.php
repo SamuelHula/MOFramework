@@ -221,8 +221,6 @@
          background: #ff4444;
          transition: all 0.3s ease;
       }
-
-      /* Floating Balls Styles */
       .floating-balls {
          position: fixed;
          top: 0;
@@ -320,7 +318,6 @@
          .name-fields {
             grid-template-columns: 1fr;
          }
-         /* Hide some balls on mobile for better performance */
          .auth-ball-3, .auth-ball-5 {
             display: none;
          }
@@ -358,7 +355,7 @@
          ?>
       </div>
    <?php endif; ?>
-   <!-- Floating Balls Background -->
+   
    <div class="floating-balls">
       <div class="ball auth-ball-1"></div>
       <div class="ball auth-ball-2"></div>
@@ -445,7 +442,6 @@
    </div>
    
    <script>
-      // Form validation and password strength
       document.addEventListener('DOMContentLoaded', function() {
          const authForm = document.querySelector('.auth-form');
          const password = document.getElementById('password');
@@ -453,7 +449,6 @@
          const strengthText = document.getElementById('strength-text');
          const strengthFill = document.getElementById('strength-fill');
          
-         // Password strength checker
          password.addEventListener('input', function() {
             const value = password.value;
             let strength = 0;
@@ -485,7 +480,6 @@
                const agreeTerms = document.getElementById('agreeTerms');
                let valid = true;
                
-               // Check required fields
                const requiredFields = [firstName, lastName, email, password, confirmPassword];
                requiredFields.forEach(field => {
                   if (!field.value.trim()) {
@@ -496,7 +490,6 @@
                   }
                });
                
-               // Check password match
                if (password.value !== confirmPassword.value) {
                   valid = false;
                   password.style.borderColor = 'red';
@@ -504,7 +497,6 @@
                   alert('Passwords do not match.');
                }
                
-               // Check terms agreement
                if (!agreeTerms.checked) {
                   valid = false;
                   alert('Please agree to the Terms of Service and Privacy Policy.');

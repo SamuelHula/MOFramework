@@ -1,5 +1,4 @@
 <?php
-// Start session and include config
 require_once './assets/config.php';
 ?>
 <!DOCTYPE html>
@@ -324,8 +323,6 @@ require_once './assets/config.php';
             height: 14px;
          }
       }
-
-      /* Touch-friendly improvements for table of contents */
       @media (hover: none) and (pointer: coarse) {
          .toc-list a {
             padding: 0.5rem 0;
@@ -335,8 +332,6 @@ require_once './assets/config.php';
             margin-bottom: 0.5rem;
          }
       }
-
-      /* Improve text readability on small screens */
       @media screen and (max-width: 480px) {
          .policy-section p {
             text-align: justify;
@@ -583,7 +578,6 @@ require_once './assets/config.php';
    <script src="./js/scroll.js"></script>
    <script src="./js/fly-in.js"></script>
    <script>
-      // Smooth scrolling for table of contents links
       document.querySelectorAll('.toc-list a').forEach(anchor => {
          anchor.addEventListener('click', function(e) {
             e.preventDefault();

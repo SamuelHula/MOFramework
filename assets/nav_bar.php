@@ -1,13 +1,10 @@
 <?php
-// Start session if not already started
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Include cookie functions
 require_once 'cookie_functions.php';
 
-// Auto-login from remember me cookie
 if (!isset($_SESSION['loggedin']) && isset($_COOKIE['remember_me'])) {
     require_once 'config.php';
     
@@ -20,7 +17,6 @@ if (!isset($_SESSION['loggedin']) && isset($_COOKIE['remember_me'])) {
         if ($stmt->rowCount() === 1) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            // Verify token
             if (hash('sha256', $user['password']) === $token) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_email'] = $user['email'];
@@ -36,12 +32,9 @@ if (!isset($_SESSION['loggedin']) && isset($_COOKIE['remember_me'])) {
 
 $current_page = basename($_SERVER['PHP_SELF']);
 
-// Check if cookie consent is needed
 $needs_consent = needs_cookie_consent();
 
-// If consent is needed and we're not on the consent page, redirect to consent
 if ($needs_consent && $current_page !== 'cookie_consent.php') {
-    // Store current URL to return after consent
     $_SESSION['return_url'] = $_SERVER['REQUEST_URI'];
     header("Location: cookie_consent.php");
     exit;
@@ -72,7 +65,6 @@ if ($needs_consent && $current_page !== 'cookie_consent.php') {
             <?php endif; ?>
         <?php endif; ?>
         
-        <!-- Auth buttons -->
         <li class="nav-auth-buttons">
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <a href="dashboard.php" class="dashboard_btn" title="Dashboard">Dashboard</a>

@@ -1,14 +1,11 @@
 <?php
-// edit_user.php
 require_once './assets/config.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
    header("Location: admin_signin.php");
    exit;
 }
 
-// Get user ID from URL
 if (!isset($_GET['id'])) {
    header("Location: manage_users.php?error=User+ID+not+provided");
    exit;
@@ -16,7 +13,6 @@ if (!isset($_GET['id'])) {
 
 $userId = intval($_GET['id']);
 
-// Fetch user data
 try {
    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
    $stmt->execute([$userId]);
@@ -356,18 +352,15 @@ try {
          
          let errors = [];
          
-         // Check required fields
          if (!firstName.trim()) errors.push('First name is required');
          if (!lastName.trim()) errors.push('Last name is required');
          if (!email.trim()) errors.push('Email is required');
          
-         // Email validation
          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
          if (email && !emailRegex.test(email)) {
                errors.push('Please enter a valid email address');
          }
          
-         // Password validation if provided
          if (password.length > 0) {
                if (password.length < 8) {
                   errors.push('Password must be at least 8 characters long');

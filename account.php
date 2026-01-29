@@ -1,8 +1,6 @@
 <?php
-// Include config first - it handles session starting
 require_once './assets/config.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
    exit;
@@ -128,8 +126,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
          text-align: center;
          padding: 1rem 2rem;
       }
-
-      /* Responsive Design */
       @media screen and (max-width: 1200px) {
          .account-container {
             padding: 2.5% 10% 5%;
@@ -251,13 +247,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             font-size: 1rem;
          }
       }
-
-      /* Floating balls responsiveness */
       @media screen and (max-width: 768px) {
          .floating-balls .ball:nth-child(n+3) {
             display: none;
          }
-         
          .floating-balls .ball {
             width: 80px;
             height: 80px;
@@ -363,7 +356,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
          }
       }
 
-      // Add form validation for password change
       document.addEventListener('DOMContentLoaded', function() {
          const passwordForm = document.querySelector('form[action="./assets/change_password.php"]');
          

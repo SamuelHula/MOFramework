@@ -253,15 +253,13 @@ if (session_status() == PHP_SESSION_NONE) {
             font-size: 1.3rem;
          }
       }
-
-      /* Touch-friendly improvements */
       @media (hover: none) and (pointer: coarse) {
          .policy-list li {
             padding: 0.25rem 0;
          }
          .cookie-table th,
          .cookie-table td {
-            min-height: 44px; /* Minimum touch target size */
+            min-height: 44px; 
             display: flex;
             align-items: center;
          }

@@ -7,7 +7,6 @@
    <link rel="stylesheet" href="./css/general.css">
    <link rel="stylesheet" href="./css/home.css">
    <style>
-      /* Cookie Consent Modal Styles */
       .cookie-overlay {
          position: fixed;
          top: 0;
@@ -108,7 +107,6 @@
          font-style: italic;
          color: #1565c0;
       }
-      /* Checkbox Styling */
       .checkbox-container {
          display: flex;
          align-items: center;
@@ -233,7 +231,6 @@
                
                <form action="./assets/process_cookie_consent.php" method="POST">
                   <div class="cookie-categories">
-                     <!-- Essential Cookies -->
                      <div class="cookie-category category-essential active">
                            <div class="category-header">
                               <div class="category-title">
@@ -249,7 +246,6 @@
                            <input type="hidden" name="necessary" value="1">
                      </div>
                      
-                     <!-- Preference Cookies -->
                      <div class="cookie-category">
                            <div class="category-header">
                               <div class="category-title">
@@ -265,7 +261,6 @@
                            <p class="category-description">Remember your settings and preferences (language, theme, etc.)</p>
                      </div>
                      
-                     <!-- Statistics Cookies -->
                      <div class="cookie-category">
                            <div class="category-header">
                               <div class="category-title">
@@ -281,7 +276,6 @@
                            <p class="category-description">Help us understand how visitors interact with our website</p>
                      </div>
                      
-                     <!-- Marketing Cookies -->
                      <div class="cookie-category">
                            <div class="category-header">
                               <div class="category-title">

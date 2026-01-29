@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-// Check if this is a form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    $action = $_POST['action'] ?? '';
    
@@ -43,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          break;
          
       default:
-         // Default to necessary only
          $consent = [
                'version' => COOKIE_CONSENT_VERSION,
                'accepted' => true,
@@ -55,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          ];
    }
    
-   // Save consent to cookie
    $cookie_data = json_encode($consent);
    setcookie(
       'cookie_consent',
@@ -64,13 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       '/',
       '',
       false,
-      true // HttpOnly flag
+      true 
    );
    
-   // Save consent to session
    $_SESSION['cookie_consent'] = $consent;
    
-   // Set user preferences cookie if allowed
    if ($consent['preferences']) {
       $user_preferences = [
          'theme' => 'light',
@@ -89,22 +84,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['user_preferences'] = $user_preferences;
    }
    
-   // Redirect back to original page or home
    $return_url = $_SESSION['return_url'] ?? '../index.php';
    unset($_SESSION['return_url']);
    
-   // Add success message
    $message = urlencode('Cookie preferences saved successfully!');
    header("Location: $return_url?cookie_success=$message");
    exit;
    
 } elseif (isset($_GET['action']) && $_GET['action'] === 'show_settings') {
-   // Show cookie settings modal
    header("Location: ../cookie_consent.php?show_modal=true");
    exit;
    
 } elseif (isset($_GET['action']) && $_GET['action'] === 'reset_consent') {
-   // Reset cookie consent
    setcookie('cookie_consent', '', time() - 3600, '/');
    setcookie('user_preferences', '', time() - 3600, '/');
    unset($_SESSION['cookie_consent']);
@@ -114,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    exit;
 }
 
-// If direct access, redirect to home
 header("Location: ../index.php");
 exit;
 ?>

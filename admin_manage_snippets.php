@@ -1,13 +1,9 @@
 <?php
-// admin_manage_snippets.php
-
-// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once './assets/config.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true) {
    header("Location: admin_signin.php");
    exit;
@@ -15,7 +11,6 @@ if (!isset($_SESSION['admin_loggedin']) || $_SESSION['admin_loggedin'] !== true)
 
 $active_page = 'admin_manage_snippets';
 
-// Handle delete action
 if (isset($_GET['delete'])) {
    $snippet_id = intval($_GET['delete']);
    try {
@@ -33,13 +28,11 @@ if (isset($_GET['delete'])) {
    }
 }
 
-// Fetch snippets with pagination
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $limit = 20;
 $offset = ($page - 1) * $limit;
 
 try {
-   // Build query
    $query = "SELECT s.*, c.name as category_name, 
                   (SELECT COUNT(*) FROM user_favorites WHERE snippet_id = s.id) as favorite_count 
             FROM snippets s 
@@ -53,7 +46,6 @@ try {
    $stmt->execute();
    $snippets = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
-   // Count total snippets
    $stmt = $pdo->query("SELECT COUNT(*) as total FROM snippets");
    $totalSnippets = $stmt->fetch()['total'];
    $totalPages = ceil($totalSnippets / $limit);
@@ -237,8 +229,6 @@ try {
          color: white;
          border-color: var(--primary);
       }
-      
-      /* Floating Balls Background */
       .floating-balls {
          position: fixed;
          top: 0;
@@ -359,7 +349,7 @@ try {
    </style>
 </head>
 <body>
-   <!-- Floating Balls Background -->
+   
    <div class="floating-balls">
       <div class="ball auth-ball-1"></div>
       <div class="ball auth-ball-2"></div>
@@ -370,12 +360,10 @@ try {
    </div>
    
    <?php 
-   // Include admin navbar
    $admin_navbar_path = './includes/admin_navbar.php';
    if (file_exists($admin_navbar_path)) {
       include_once $admin_navbar_path;
    } else {
-      // Fallback navbar if admin_navbar doesn't exist
       echo '<nav class="admin-nav-bar">
                <a href="admin_dashboard.php" class="admin-nav-brand">Admin Panel</a>
                <div class="admin-nav-menu">
@@ -481,7 +469,6 @@ try {
          }
       }
       
-      // Add scroll effect
       document.addEventListener('DOMContentLoaded', function() {
          const scrollElements = document.querySelectorAll('.scroll-effect');
          
@@ -509,7 +496,6 @@ try {
                handleScrollAnimation();
          });
          
-         // Initial check
          handleScrollAnimation();
       });
    </script>

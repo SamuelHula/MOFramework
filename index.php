@@ -2,19 +2,16 @@
 require_once './assets/config.php';
 require_once './assets/cookie_functions.php';
 
-// Check if we need to redirect to cookie consent
 if (needs_cookie_consent() && basename($_SERVER['PHP_SELF']) !== 'cookie_consent.php') {
    header("Location: cookie_consent.php");
    exit;
 }
 
-// First, let's fetch the categories to get their IDs
 try {
    $categoryStmt = $pdo->prepare("SELECT id, name FROM categories ORDER BY name");
    $categoryStmt->execute();
    $allCategories = $categoryStmt->fetchAll(PDO::FETCH_ASSOC);
    
-   // Create a category name to ID mapping
    $categoryMap = [];
    foreach ($allCategories as $cat) {
       $categoryMap[$cat['name']] = $cat['id'];
@@ -40,16 +37,12 @@ try {
    $recentSnippets = [];
 }
 
-// Function to normalize code for preview (same as in snippets_catalog.php)
 function normalizeCodeToSameHeight($code, $target_lines = 8) {
-   // Split code into lines
    $lines = explode("\n", $code);
    $total_original_lines = count($lines);
    
-   // Take exactly $target_lines lines
    $selected_lines = array_slice($lines, 0, $target_lines);
    
-   // If we have fewer lines than target, add empty lines
    if (count($selected_lines) < $target_lines) {
       $missing_lines = $target_lines - count($selected_lines);
       for ($i = 0; $i < $missing_lines; $i++) {
@@ -57,44 +50,34 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
       }
    }
    
-   // Check for incomplete tags at the end of the LAST line
    $last_line = end($selected_lines);
    $last_tag_open = strrpos($last_line, '<');
    $last_tag_close = strrpos($last_line, '>');
    
    if ($last_tag_open !== false && ($last_tag_close === false || $last_tag_open > $last_tag_close)) {
-      // We're inside a tag on the last line, replace with placeholder
       array_pop($selected_lines);
       $selected_lines[] = "&lt;...&gt;";
-      // Add one more empty line to maintain count
       if (count($selected_lines) < $target_lines) {
          $selected_lines[] = "";
       }
    }
    
-   // Check for incomplete PHP tags
    $last_php_open = strrpos($last_line, '<?php');
    $last_php_close = strrpos($last_line, '?>');
    
    if ($last_php_open !== false && ($last_php_close === false || $last_php_open > $last_php_close)) {
-      // We're inside PHP code, replace with placeholder
       array_pop($selected_lines);
       $selected_lines[] = "&lt;?php ... ?&gt;";
-      // Add one more empty line to maintain count
       if (count($selected_lines) < $target_lines) {
          $selected_lines[] = "";
       }
    }
    
-   // IMPORTANT: Add visual indicator that code continues ONLY if original had more lines
-   // We'll add an ellipsis line at the EXACT SAME POSITION for all snippets
    if ($total_original_lines > $target_lines) {
-      // Replace the last line with ellipsis to maintain visual consistency
       array_pop($selected_lines);
       $selected_lines[] = "...";
    }
    
-   // Ensure we have exactly $target_lines
    $selected_lines = array_slice($selected_lines, 0, $target_lines);
    
    return implode("\n", $selected_lines);
@@ -106,7 +89,6 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Homepage</title>
-   <!-- SEO Meta Tags -->
    <meta name="theme-color" content="var(--back-light)" />
    <meta name="background-color" content="var(--back-light)" />
    <meta name="description" content="Discover ready-to-use code snippets, components, and assets to accelerate your web development projects. From CSS animations to PHP utilities.">
@@ -135,7 +117,6 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
    <meta name="twitter:creator" content="@codelibrary">
    <meta name="twitter:site" content="@codelibrary">
    
-   <!-- Schema.org JSON-LD -->
    <script type="application/ld+json">
       {
          "@context": "https://schema.org",
@@ -176,7 +157,6 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
          }
       }
    </script>
-   <!-- Website Schema -->
    <script type="application/ld+json">
       {
          "@context": "https://schema.org",
@@ -310,50 +290,55 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                   <p style="color: var(--text-color); opacity: 0.7; margin-bottom: 2rem;">Check back later for new additions.</p>
             </div>
          <?php else: ?>
-            <div class="recent-snippets-grid">
+            <div class="catalog-grid" style="margin-top: 2rem; margin-bottom: 3rem;">
                   <?php foreach ($recentSnippets as $snippet): ?>
                      <?php 
-                     $code_preview = normalizeCodeToSameHeight($snippet['code'], 8);
-                     $description_preview = strlen($snippet['description']) > 150 ? 
-                        substr($snippet['description'], 0, 150) . '...' : 
-                        $snippet['description'];
+                     $description_preview = strip_tags($snippet['description']);
+                     if (strlen($description_preview) > 150) {
+                        $description_preview = substr($description_preview, 0, 150) . '...';
+                     }
+                     
+                     $code_preview = htmlspecialchars(substr($snippet['code'], 0, 200));
+                     if (strlen($snippet['code']) > 200) {
+                        $code_preview .= '...';
+                     }
+                     
+                     $category_name = !empty($snippet['category_name']) ? htmlspecialchars($snippet['category_name']) : 'Uncategorized';
                      ?>
-                     <div class="recent-snippet-card">
-                        <div class="recent-snippet-header">
-                              <div class="recent-snippet-title">
-                                 <?php echo htmlspecialchars($snippet['title']); ?>
+                     
+                     <div class="snippet-card">
+                        <div class="snippet-header">
+                              <div class="snippet-title">
+                                 <span><?php echo htmlspecialchars($snippet['title']); ?></span>
+                                 <span class="language-badge"><?php echo htmlspecialchars($snippet['language']); ?></span>
                               </div>
-                              <span class="recent-language-badge"><?php echo htmlspecialchars($snippet['language']); ?></span>
-                              <div class="recent-snippet-meta">
-                                 <?php if ($snippet['category_name']): ?>
-                                    <span><?php echo htmlspecialchars($snippet['category_name']); ?></span>
-                                 <?php endif; ?>
+                              <div class="snippet-meta">
+                                 <span><?php echo $category_name; ?></span>
                                  <span><?php echo date('M j, Y', strtotime($snippet['created_at'])); ?></span>
                                  <span><?php echo $snippet['views']; ?> views</span>
                               </div>
                         </div>
                         
-                        <div class="recent-snippet-content">
-                              <p class="recent-snippet-description">
+                        <div class="snippet-content">
+                              <p class="snippet-description">
                                  <?php echo htmlspecialchars($description_preview); ?>
                               </p>
                               
-                              <div class="recent-snippet-preview">
+                              <div class="snippet-preview">
                                  <pre><code><?php echo $code_preview; ?></code></pre>
                               </div>
                         </div>
                         
-                        <div class="recent-snippet-actions">
-                              <a href="snippet_view.php?id=<?php echo $snippet['id']; ?>" class="recent-view-btn">
+                        <div class="snippet-actions">
+                              <a href="snippet_view.php?id=<?php echo $snippet['id']; ?>" class="view-btn">
                                  View Full Code
                               </a>
                               <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                                 <!-- Note: Favorite functionality would require additional logic -->
-                                 <button class="recent-favorite-btn" onclick="alert('Login to add favorites')">
+                                 <button class="favorite-btn" onclick="alert('Login to add favorites')">
                                     <i class="far fa-heart"></i>
                                  </button>
                               <?php else: ?>
-                                 <button class="recent-favorite-btn" onclick="location.href='signin.php'">
+                                 <button class="favorite-btn" onclick="location.href='signin.php'">
                                     <i class="far fa-heart"></i>
                                  </button>
                               <?php endif; ?>
@@ -646,7 +631,6 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
    </main>
    <?php include './assets/footer.php' ?>
    <script>
-      // Add form validation
       document.addEventListener('DOMContentLoaded', function() {
          const contactForm = document.querySelector('.message-form');
          
@@ -664,7 +648,6 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                      }
                   });
                   
-                  // Email validation
                   const emailInput = contactForm.querySelector('#email');
                   if (emailInput && !isValidEmail(emailInput.value)) {
                      valid = false;

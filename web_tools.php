@@ -1,8 +1,6 @@
 <?php
-// web_tools.php
 require_once './assets/config.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
    exit;
@@ -251,6 +249,20 @@ $current_page = 'web_tools';
                </div>
                
                <!-- Tool 2 -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-search"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>SEO Meta Tags Generator</h3>
+                     <p>Generate comprehensive SEO meta tags including Open Graph, Twitter Cards, and standard metadata.</p>
+                     <div class="tool-actions">
+                        <a href="seo_generator.php" class="tool-btn primary">Use Tool</a>
+                        <a href="#seo-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-palette"></i>

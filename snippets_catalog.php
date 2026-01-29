@@ -1,8 +1,6 @@
 <?php
-// snippets_catalog.php
 require_once './assets/config.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
    exit;
@@ -10,7 +8,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $current_page = 'snippets';
 
-// Fetch categories for filter
 try {
    $categoryQuery = "SELECT id, name FROM categories ORDER BY name";
    $categoryStmt = $pdo->query($categoryQuery);
@@ -20,7 +17,6 @@ try {
    $categories = [];
 }
 
-// Get filter parameters
 $category = isset($_GET['category']) ? intval($_GET['category']) : null;
 $language = isset($_GET['language']) ? $_GET['language'] : null;
 $search = isset($_GET['search']) ? trim($_GET['search']) : null;
@@ -28,7 +24,6 @@ $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $limit = 12;
 $offset = ($page - 1) * $limit;
 
-// Build the base query - SIMPLIFIED for better performance
 $query = "SELECT SQL_CALC_FOUND_ROWS 
           s.*, 
           c.name as category_name,
@@ -39,7 +34,6 @@ $query = "SELECT SQL_CALC_FOUND_ROWS
 
 $params = [$_SESSION['user_id']];
 
-// Add filters
 if ($category) {
    $query .= " AND s.category_id = ?";
    $params[] = $category;
@@ -57,30 +51,24 @@ if ($search) {
    $params[] = $searchTerm;
 }
 
-// Add ordering and pagination - ORDER BY ID to maintain consistency
 $query .= " ORDER BY s.id DESC LIMIT ? OFFSET ?";
 
-// Prepare and execute the query
 $stmt = $pdo->prepare($query);
 
-// Bind parameters - IMPORTANT: Use correct types
 for ($i = 0; $i < count($params); $i++) {
    $stmt->bindValue($i + 1, $params[$i]);
 }
 
-// Bind LIMIT and OFFSET
 $stmt->bindValue(count($params) + 1, $limit, PDO::PARAM_INT);
 $stmt->bindValue(count($params) + 2, $offset, PDO::PARAM_INT);
 
 $stmt->execute();
 $snippets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get total count using FOUND_ROWS()
 $totalResult = $pdo->query("SELECT FOUND_ROWS()")->fetch();
 $totalResults = $totalResult[0];
 $totalPages = ceil($totalResults / $limit);
 
-// Fetch distinct languages for filter dropdown
 try {
    $languageQuery = "SELECT DISTINCT language FROM snippets WHERE language IS NOT NULL AND language != '' ORDER BY language";
    $languageStmt = $pdo->query($languageQuery);
@@ -195,8 +183,6 @@ try {
       .clear-btn:hover {
          background: var(--back-dark);
       }
-      
-      /* NEW: Simple grid system */
       .catalog-grid {
          display: flex;
          flex-wrap: wrap;
@@ -213,7 +199,7 @@ try {
          transition: all 0.3s ease;
          display: flex;
          flex-direction: column;
-         width: calc(33.333% - 1.34rem); /* 3 cards per row with gap */
+         width: calc(33.333% - 1.34rem); 
          min-height: 400px;
       }
       
@@ -422,13 +408,12 @@ try {
          width: 100%;
       }
       
-      /* Responsive adjustments */
       @media screen and (max-width: 1200px) {
          .catalog-container {
                padding: 2% 5% 5%;
          }
          .snippet-card {
-               width: calc(50% - 1rem); /* 2 cards per row on medium screens */
+               width: calc(50% - 1rem); 
          }
       }
       
@@ -449,7 +434,7 @@ try {
                grid-template-columns: 1fr;
          }
          .snippet-card {
-               width: 100%; /* 1 card per row on mobile */
+               width: 100%; 
          }
          .catalog-header h1 {
                font-size: 2.2rem;
@@ -538,13 +523,11 @@ try {
                <div class="catalog-grid scroll-effect">
                   <?php foreach ($snippets as $snippet): ?>
                      <?php 
-                     // Simple text truncation for preview
                      $description_preview = strip_tags($snippet['description']);
                      if (strlen($description_preview) > 150) {
                         $description_preview = substr($description_preview, 0, 150) . '...';
                      }
                      
-                     // Simple code preview (first 200 characters)
                      $code_preview = htmlspecialchars(substr($snippet['code'], 0, 200));
                      if (strlen($snippet['code']) > 200) {
                         $code_preview .= '...';
@@ -633,7 +616,6 @@ try {
          .then(response => response.json())
          .then(data => {
                if (data.success) {
-                  // Update button state
                   button.classList.toggle('active');
                   const icon = button.querySelector('i');
                   if (data.is_favorite) {
@@ -645,7 +627,6 @@ try {
                      icon.classList.add('far');
                      button.setAttribute('data-is-favorite', '0');
                   }
-                  // Optional: Show notification
                   showNotification(data.message || 'Favorite updated');
                } else {
                   alert(data.message || 'An error occurred');
@@ -657,7 +638,6 @@ try {
          });
       }
 
-      // Helper function for notifications
       function showNotification(message) {
          const notification = document.createElement('div');
          notification.style.cssText = `
@@ -681,7 +661,6 @@ try {
          }, 3000);
       }
 
-      // Add CSS for animation
       const style = document.createElement('style');
       style.textContent = `
          @keyframes slideIn {

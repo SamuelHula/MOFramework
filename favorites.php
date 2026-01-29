@@ -1,8 +1,6 @@
 <?php
-// favorites.php
 require_once './assets/config.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
    exit;
@@ -10,12 +8,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $current_page = 'favorites';
 
-// Get pagination parameters
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $limit = 12;
 $offset = ($page - 1) * $limit;
 
-// Fetch user's favorite snippets
 try {
    $query = "SELECT s.*, c.name as category_name 
             FROM user_favorites uf 
@@ -33,7 +29,6 @@ try {
    
    $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
-   // Count total favorites (only public ones)
    $countQuery = "SELECT COUNT(*) as total 
                   FROM user_favorites uf 
                   JOIN snippets s ON uf.snippet_id = s.id
@@ -51,16 +46,12 @@ try {
    $totalPages = 0;
 }
 
-// Function to make all code snippets end at exactly the same visual position
 function normalizeCodeToSameHeight($code, $target_lines = 8) {
-   // Split code into lines
    $lines = explode("\n", $code);
    $total_original_lines = count($lines);
    
-   // Take exactly $target_lines lines
    $selected_lines = array_slice($lines, 0, $target_lines);
    
-   // If we have fewer lines than target, add empty lines
    if (count($selected_lines) < $target_lines) {
       $missing_lines = $target_lines - count($selected_lines);
       for ($i = 0; $i < $missing_lines; $i++) {
@@ -68,44 +59,34 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
       }
    }
    
-   // Check for incomplete tags at the end of the LAST line
    $last_line = end($selected_lines);
    $last_tag_open = strrpos($last_line, '<');
    $last_tag_close = strrpos($last_line, '>');
    
    if ($last_tag_open !== false && ($last_tag_close === false || $last_tag_open > $last_tag_close)) {
-      // We're inside a tag on the last line, replace with placeholder
       array_pop($selected_lines);
       $selected_lines[] = "&lt;...&gt;";
-      // Add one more empty line to maintain count
       if (count($selected_lines) < $target_lines) {
          $selected_lines[] = "";
       }
    }
    
-   // Check for incomplete PHP tags
    $last_php_open = strrpos($last_line, '<?php');
    $last_php_close = strrpos($last_line, '?>');
    
    if ($last_php_open !== false && ($last_php_close === false || $last_php_open > $last_php_close)) {
-      // We're inside PHP code, replace with placeholder
       array_pop($selected_lines);
       $selected_lines[] = "&lt;?php ... ?&gt;";
-      // Add one more empty line to maintain count
       if (count($selected_lines) < $target_lines) {
          $selected_lines[] = "";
       }
    }
    
-   // IMPORTANT: Add visual indicator that code continues ONLY if original had more lines
-   // We'll add an ellipsis line at the EXACT SAME POSITION for all snippets
    if ($total_original_lines > $target_lines) {
-      // Replace the last line with ellipsis to maintain visual consistency
       array_pop($selected_lines);
       $selected_lines[] = "...";
    }
    
-   // Ensure we have exactly $target_lines
    $selected_lines = array_slice($selected_lines, 0, $target_lines);
    
    return implode("\n", $selected_lines);
@@ -299,25 +280,23 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
          flex: 1;
          display: flex;
          flex-direction: column;
-         min-height: 0; /* Crucial for flex sizing */
+         min-height: 0; 
       }
       .snippet-preview code {
          display: block;
          font-family: inherit;
          line-height: 1.5;
-         /* Force exactly 8 lines */
-         min-height: 12em; /* 8 lines * 1.5 line-height */
-         max-height: 12em; /* 8 lines * 1.5 line-height */
+         min-height: 12em; 
+         max-height: 12em;
          overflow: hidden;
       }
-      /* This ensures ALL snippets end at the same visual line */
       .snippet-preview code::after {
          content: '';
          position: absolute;
-         bottom: 1rem; /* Match the padding */
+         bottom: 1rem; 
          left: 1rem;
          right: 1rem;
-         height: 1.5em; /* Exactly one line height */
+         height: 1.5em; 
          background: linear-gradient(to top, #f8f9fa 0%, rgba(248, 249, 250, 0.8) 50%, transparent 100%);
          pointer-events: none;
          z-index: 1;
@@ -523,13 +502,11 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                      card.style.transform = 'translateY(-20px)';
                      setTimeout(() => {
                            card.remove();
-                           // Update count
                            const countElement = document.querySelector('.count-number');
                            if (countElement) {
                               const currentCount = parseInt(countElement.textContent);
                               countElement.textContent = currentCount - 1;
                            }
-                           // Show notification
                            showNotification('Removed from favorites');
                      }, 300);
                   }

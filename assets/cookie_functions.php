@@ -1,10 +1,4 @@
 <?php
-// Cookie utility functions
-
-/**
- * Check if cookie consent is needed
- * Returns true if consent modal should be shown
- */
 function needs_cookie_consent() {
    if (!isset($_SESSION['cookie_consent'])) {
       return true;
@@ -13,9 +7,6 @@ function needs_cookie_consent() {
    return !$_SESSION['cookie_consent']['accepted'];
 }
 
-/**
- * Check if a specific cookie type is allowed
- */
 function is_cookie_allowed($type) {
    if (!isset($_SESSION['cookie_consent'])) {
       return false;
@@ -39,9 +30,6 @@ function is_cookie_allowed($type) {
    }
 }
 
-/**
- * Get user preferences from cookie
- */
 function get_user_preferences() {
    if (isset($_SESSION['user_preferences'])) {
       return $_SESSION['user_preferences'];
@@ -62,9 +50,6 @@ function get_user_preferences() {
    ];
 }
 
-/**
- * Save user preferences
- */
 function save_user_preferences($preferences) {
    if (!is_cookie_allowed('preferences')) {
       return false;
@@ -85,15 +70,11 @@ function save_user_preferences($preferences) {
    return true;
 }
 
-/**
- * Show cookie banner (for users who have accepted but want to change settings)
- */
 function show_cookie_banner() {
    if (!isset($_SESSION['cookie_consent']) || !$_SESSION['cookie_consent']['accepted']) {
       return false;
    }
    
-   // Show banner only once per session
    if (isset($_SESSION['cookie_banner_shown'])) {
       return false;
    }
@@ -102,9 +83,6 @@ function show_cookie_banner() {
    return true;
 }
 
-/**
- * Get current consent status for display
- */
 function get_consent_status() {
    if (!isset($_SESSION['cookie_consent'])) {
       return 'No consent given';
@@ -126,17 +104,12 @@ function get_consent_status() {
    return implode(', ', $types) . ' cookies accepted';
 }
 
-/**
- * Load analytics scripts based on consent
- */
 function load_analytics_scripts() {
    if (!is_cookie_allowed('statistics')) {
       return;
    }
    
-   // Google Analytics
    echo <<<HTML
-   <!-- Google Analytics -->
    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
    <script>
       window.dataLayer = window.dataLayer || [];
@@ -147,17 +120,12 @@ function load_analytics_scripts() {
 HTML;
 }
 
-/**
- * Load marketing scripts based on consent
- */
 function load_marketing_scripts() {
    if (!is_cookie_allowed('marketing')) {
       return;
    }
    
-   // Facebook Pixel
    echo <<<HTML
-   <!-- Facebook Pixel -->
    <script>
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
