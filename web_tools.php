@@ -262,8 +262,54 @@ $current_page = 'web_tools';
                      </div>
                   </div>
                </div>
-
-               <div class="tool-card coming-soon">
+               
+               <!-- Tool 3: Base64 Encoder/Decoder -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-exchange-alt"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Base64 Encoder/Decoder</h3>
+                     <p>Encode text to Base64 or decode Base64 back to plain text. Useful for data transmission and encoding.</p>
+                     <div class="tool-actions">
+                           <a href="base64_tool.php" class="tool-btn primary">Use Tool</a>
+                           <a href="#base64-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+               
+               <!-- Tool 4: URL Encoder/Decoder -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-link"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>URL Encoder/Decoder</h3>
+                     <p>Encode special characters in URLs or decode encoded URLs back to readable format.</p>
+                     <div class="tool-actions">
+                           <a href="url_encoder.php" class="tool-btn primary">Use Tool</a>
+                           <a href="#url-encoder-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+               
+               <!-- Tool 5: Password Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-key"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Password Generator</h3>
+                     <p>Generate strong, secure passwords with customizable length and character types.</p>
+                     <div class="tool-actions">
+                           <a href="password_generator.php" class="tool-btn primary">Use Tool</a>
+                           <a href="#password-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+               
+               <!-- Tool 6: Color Palette Generator -->
+               <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-palette"></i>
                   </div>
@@ -271,12 +317,13 @@ $current_page = 'web_tools';
                      <h3>Color Palette Generator</h3>
                      <p>Create beautiful color schemes for your projects with our advanced color palette generator.</p>
                      <div class="tool-actions">
-                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
+                           <a href="color_palette.php" class="tool-btn primary">Use Tool</a>
+                           <a href="#color-info" class="tool-btn secondary">Learn More</a>
                      </div>
                   </div>
                </div>
                
-               <!-- Tool 3 -->
+               <!-- Tool 7: Image Optimizer -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-compress-arrows-alt"></i>
@@ -290,7 +337,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 4 -->
+               <!-- Tool 8: Security Scanner -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-shield-alt"></i>
@@ -304,7 +351,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 5 -->
+               <!-- Tool 9: Performance Analyzer -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-tachometer-alt"></i>
@@ -318,7 +365,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 6 -->
+               <!-- Tool 10: Responsive Tester -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-mobile-alt"></i>
@@ -332,7 +379,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 7 -->
+               <!-- Tool 11: SEO Analyzer -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-search"></i>
@@ -346,7 +393,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 8 -->
+               <!-- Tool 12: JSON Formatter -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-database"></i>
