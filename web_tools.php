@@ -292,6 +292,36 @@ $current_page = 'web_tools';
                      </div>
                   </div>
                </div>
+
+               <!-- NEW TOOL: SVG Wave Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-wave-square"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>SVG Wave Generator</h3>
+                     <p>Create beautiful SVG waves for your designs. Customize curves, complexity, and colors.</p>
+                     <div class="tool-actions">
+                        <a href="wave_generator.php" class="tool-btn primary">Use Tool</a>
+                        <a href="#wave-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- NEW TOOL: Glassmorphism Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-glass-whiskey"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Glassmorphism Generator</h3>
+                     <p>Generate glassmorphism effects with background blur, transparency, and color effects.</p>
+                     <div class="tool-actions">
+                        <a href="glass_generator.php" class="tool-btn primary">Use Tool</a>
+                        <a href="#glass-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
                
                <!-- Tool 5: Base64 Encoder/Decoder -->
                <div class="tool-card">
