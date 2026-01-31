@@ -473,3 +473,26 @@ Remember: No
 IP: 127.0.0.1
 =================================
 
+=== SUCCESSFUL LOGIN ===
+Time: 2026-01-31 12:03:57
+User ID: 1
+Email: samko.hula@gmail.com
+Remember: No
+IP: 127.0.0.1
+=================================
+
+=== USER LOGOUT ===
+Time: 2026-01-31 12:04:19
+User ID: 1
+Email: samko.hula@gmail.com
+IP: 127.0.0.1
+=================================
+
+=== SUCCESSFUL LOGIN ===
+Time: 2026-01-31 13:09:49
+User ID: 1
+Email: samko.hula@gmail.com
+Remember: No
+IP: 127.0.0.1
+=================================
+

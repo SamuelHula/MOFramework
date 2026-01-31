@@ -263,7 +263,37 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 3: Base64 Encoder/Decoder -->
+               <!-- NEW TOOL: CSS Grid Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-th"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>CSS Grid Generator</h3>
+                     <p>Visualize and generate CSS Grid code with interactive controls. Create responsive layouts easily.</p>
+                     <div class="tool-actions">
+                           <a href="css_grid_generator.php" class="tool-btn primary">Use Tool</a>
+                           <a href="#grid-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+               
+               <!-- NEW TOOL: Schema Markup Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-sitemap"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Schema Markup Generator</h3>
+                     <p>Generate structured data (JSON-LD) for better SEO and rich results in search engines.</p>
+                     <div class="tool-actions">
+                           <a href="schema_generator.php" class="tool-btn primary">Use Tool</a>
+                           <a href="#schema-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+               
+               <!-- Tool 5: Base64 Encoder/Decoder -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-exchange-alt"></i>
@@ -278,7 +308,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 4: URL Encoder/Decoder -->
+               <!-- Tool 6: URL Encoder/Decoder -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-link"></i>
@@ -293,7 +323,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 5: Password Generator -->
+               <!-- Tool 7: Password Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-key"></i>
@@ -308,7 +338,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 6: Color Palette Generator -->
+               <!-- Tool 8: Color Palette Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-palette"></i>
@@ -323,7 +353,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 7: Image Optimizer -->
+               <!-- Tool 9: Image Optimizer -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-compress-arrows-alt"></i>
@@ -337,7 +367,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 8: Security Scanner -->
+               <!-- Tool 10: Security Scanner -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-shield-alt"></i>
@@ -351,7 +381,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 9: Performance Analyzer -->
+               <!-- Tool 11: Performance Analyzer -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-tachometer-alt"></i>
@@ -365,7 +395,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 10: Responsive Tester -->
+               <!-- Tool 12: Responsive Tester -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-mobile-alt"></i>
@@ -379,7 +409,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 11: SEO Analyzer -->
+               <!-- Tool 13: SEO Analyzer -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-search"></i>
@@ -393,7 +423,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 12: JSON Formatter -->
+               <!-- Tool 14: JSON Formatter -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-database"></i>
