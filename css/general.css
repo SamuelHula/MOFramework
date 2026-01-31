@@ -290,15 +290,15 @@ footer {
 }
 #footer_sect {
    position: relative;
-   padding: 6rem 15% 3rem;
-   background: var(--secondary);
+   padding: 0;
 }
 .footer-content {
    display: grid;
+   background: var(--secondary);
    grid-template-columns: 2fr 1fr 1fr 1.5fr;
    gap: 3rem;
-   max-width: 1400px;
    margin: 0 auto;
+   padding: 5% 15%;
 }
 /* Footer About */
 .footer-logo {
