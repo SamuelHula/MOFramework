@@ -383,6 +383,21 @@ $current_page = 'web_tools';
                   </div>
                </div>
 
+               <!-- NEW TOOL: Perspective Transform Tool -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-cube"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Perspective Transform Tool</h3>
+                     <p>Create 3D perspective effects with interactive controls. Visualize and generate CSS 3D transforms.</p>
+                     <div class="tool-actions">
+                        <a href="perspective_transform.php" class="tool-btn primary">Use Tool</a>
+                        <a href="#perspective-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+
                <!-- Tool 5: Base64 Encoder/Decoder -->
                <div class="tool-card">
                   <div class="tool-icon">
