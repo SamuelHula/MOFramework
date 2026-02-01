@@ -398,6 +398,21 @@ $current_page = 'web_tools';
                   </div>
                </div>
 
+               <!-- NEW TOOL: Box Shadow Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-square"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Box Shadow Generator</h3>
+                     <p>Create beautiful CSS box shadows with real-time preview. Customize offsets, blur, spread, and colors.</p>
+                     <div class="tool-actions">
+                        <a href="box_shadow_generator.php" class="tool-btn primary">Use Tool</a>
+                        <a href="#shadow-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+
                <!-- Tool 5: Base64 Encoder/Decoder -->
                <div class="tool-card">
                   <div class="tool-icon">
