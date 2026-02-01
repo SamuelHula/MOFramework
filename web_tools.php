@@ -368,6 +368,21 @@ $current_page = 'web_tools';
                   </div>
                </div>
 
+               <!-- NEW TOOL: Background Gradient Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-fill-drip"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Background Gradient Generator</h3>
+                     <p>Create beautiful CSS gradients with visual controls. Customize colors, stops, and gradient types.</p>
+                     <div class="tool-actions">
+                        <a href="gradient_generator.php" class="tool-btn primary">Use Tool</a>
+                        <a href="#gradient-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+
                <!-- Tool 5: Base64 Encoder/Decoder -->
                <div class="tool-card">
                   <div class="tool-icon">
