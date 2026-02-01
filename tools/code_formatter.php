@@ -513,7 +513,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                            <i class="fas fa-redo"></i> Clear
                      </a>
                      
-                     <a href="web_tools.php" class="form-btn btn-secondary">
+                     <a href="../web_tools.php" class="form-btn btn-secondary">
                            <i class="fas fa-arrow-left"></i> Back to Tools
                      </a>
                   </div>

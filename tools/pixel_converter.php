@@ -477,7 +477,7 @@ $common_conversions = [
                            <i class="fas fa-redo"></i> Reset
                      </a>
                      
-                     <a href="web_tools.php" class="form-btn btn-secondary">
+                     <a href="../web_tools.php" class="form-btn btn-secondary">
                            <i class="fas fa-arrow-left"></i> Back to Tools
                      </a>
                   </div>
