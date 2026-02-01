@@ -1,5 +1,5 @@
 <?php
-require_once './assets/config.php';
+require_once '../assets/config.php';
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
@@ -14,8 +14,8 @@ $current_page = 'web_tools';
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Box Shadow Generator - Code Library</title>
-   <link rel="stylesheet" href="./css/general.css">
-   <link rel="stylesheet" href="./css/home.css">
+   <link rel="stylesheet" href="../css/general.css">
+   <link rel="stylesheet" href="../css/home.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
    <style>
       * {
@@ -382,7 +382,7 @@ $current_page = 'web_tools';
       <div id="scrollProgress"></div>
    </div>
    <header id="header">
-      <?php include './assets/nav_bar.php' ?>
+      <?php include '../assets/nav_bar.php' ?>
    </header>
    
    <main id="main">
@@ -541,10 +541,10 @@ $current_page = 'web_tools';
       </section>
    </main>
    
-   <?php include './assets/footer.php' ?>
+   <?php include '../assets/footer.php' ?>
    
-   <script src="./js/scroll.js"></script>
-   <script src="./js/fly-in.js"></script>
+   <script src="../js/scroll.js"></script>
+   <script src="../js/fly-in.js"></script>
    <script>
       class ShadowLayer {
          constructor(id) {
@@ -796,15 +796,75 @@ $current_page = 'web_tools';
    background-color: ${boxColor};
 }`;
          
-         // Display with syntax highlighting
-         const highlighted = cssCode
-            .replace(/\.box-element/g, '<span style="color: #569cd6;">.box-element</span>')
-            .replace(/(box-shadow|background-color)/g, '<span style="color: #9cdcfe;">$1</span>')
-            .replace(/:/g, '<span style="color: #d4d4d4;">:</span>')
-            .replace(/;/g, '<span style="color: #d4d4d4;">;</span>')
-            .replace(/#[0-9a-f]{3,6}|rgba?\([^)]+\)/gi, '<span style="color: #ce9178;">$&</span>');
+         // Simple and reliable syntax highlighting
+         let highlighted = cssCode;
          
-         document.getElementById('codeOutput').innerHTML = highlighted;
+         // Process line by line to avoid regex issues
+         const lines = highlighted.split('\n');
+         const processedLines = [];
+         
+         for (let line of lines) {
+            let processedLine = line;
+            
+            // Highlight the class selector
+            if (line.includes('.box-element')) {
+               processedLine = processedLine.replace('.box-element', 
+                  '<span style="color: #569cd6;">.box-element</span>');
+            }
+            
+            // Highlight property names (split to avoid regex issues)
+            if (line.includes('box-shadow:')) {
+               const parts = processedLine.split('box-shadow:');
+               if (parts.length === 2) {
+                  processedLine = parts[0] + 
+                     '<span style="color: #9cdcfe;">box-shadow:</span>' + 
+                     parts[1];
+               }
+            }
+            
+            if (line.includes('background-color:')) {
+               const parts = processedLine.split('background-color:');
+               if (parts.length === 2) {
+                  processedLine = parts[0] + 
+                     '<span style="color: #9cdcfe;">background-color:</span>' + 
+                     parts[1];
+               }
+            }
+            
+            // Highlight hex color values
+            const hexColors = processedLine.match(/#([0-9a-f]{3}){1,2}(?![^<]*>)/gi);
+            if (hexColors) {
+               hexColors.forEach(color => {
+                  if (!processedLine.includes(`<span style="color: #ce9178;">${color}</span>`)) {
+                     processedLine = processedLine.replace(
+                        new RegExp(color.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+                        `<span style="color: #ce9178;">${color}</span>`
+                     );
+                  }
+               });
+            }
+            
+            // Highlight rgba colors
+            const rgbaColors = processedLine.match(/rgba?\([^)]+\)(?![^<]*>)/gi);
+            if (rgbaColors) {
+               rgbaColors.forEach(color => {
+                  if (!processedLine.includes(`<span style="color: #ce9178;">${color}</span>`)) {
+                     processedLine = processedLine.replace(
+                        color,
+                        `<span style="color: #ce9178;">${color}</span>`
+                     );
+                  }
+               });
+            }
+            
+            // Highlight colons and semicolons that are not inside HTML tags
+            processedLine = processedLine.replace(/([:;])(?![^<]*>)/g, 
+               '<span style="color: #d4d4d4;">$1</span>');
+            
+            processedLines.push(processedLine);
+         }
+         
+         document.getElementById('codeOutput').innerHTML = processedLines.join('\n');
       }
       
       function resetControls() {
