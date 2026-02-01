@@ -148,15 +148,6 @@ $current_page = 'web_tools';
       .tool-btn.primary:hover {
          background: var(--secondary);
       }
-      .tool-btn.secondary {
-         background: transparent;
-         color: var(--primary);
-         border: 2px solid var(--primary);
-      }
-      .tool-btn.secondary:hover {
-         background: var(--primary);
-         color: white;
-      }
       .tool-btn.disabled {
          background: #ccc;
          color: #666;
@@ -197,9 +188,6 @@ $current_page = 'web_tools';
          .tools-grid {
                grid-template-columns: 1fr;
          }
-         .tool-actions {
-               flex-direction: column;
-         }
       }
    </style>
 </head>
@@ -233,7 +221,7 @@ $current_page = 'web_tools';
          </div>
          
          <div class="tools-grid scroll-effect">
-               <!-- Tool 1 -->
+               <!-- Tool 1: Code Formatter -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-code"></i>
@@ -242,13 +230,12 @@ $current_page = 'web_tools';
                      <h3>Code Formatter</h3>
                      <p>Format and beautify your HTML, CSS, and JavaScript code with proper indentation and structure.</p>
                      <div class="tool-actions">
-                           <a href="code_formatter.php" class="tool-btn primary">Use Tool</a>
-                           <a href="#code-formatter-info" class="tool-btn secondary">Learn More</a>
+                           <a href="./tools/code_formatter.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
                
-               <!-- Tool 2 -->
+               <!-- Tool 2: SEO Meta Tags Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-search"></i>
@@ -257,13 +244,12 @@ $current_page = 'web_tools';
                      <h3>SEO Meta Tags Generator</h3>
                      <p>Generate comprehensive SEO meta tags including Open Graph, Twitter Cards, and standard metadata.</p>
                      <div class="tool-actions">
-                        <a href="seo_generator.php" class="tool-btn primary">Use Tool</a>
-                        <a href="#seo-info" class="tool-btn secondary">Learn More</a>
+                        <a href="./tools/seo_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
                
-               <!-- NEW TOOL: CSS Grid Generator -->
+               <!-- Tool 3: CSS Grid Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-th"></i>
@@ -272,13 +258,12 @@ $current_page = 'web_tools';
                      <h3>CSS Grid Generator</h3>
                      <p>Visualize and generate CSS Grid code with interactive controls. Create responsive layouts easily.</p>
                      <div class="tool-actions">
-                           <a href="css_grid_generator.php" class="tool-btn primary">Use Tool</a>
-                           <a href="#grid-info" class="tool-btn secondary">Learn More</a>
+                           <a href="./tools/css_grid_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
                
-               <!-- NEW TOOL: Schema Markup Generator -->
+               <!-- Tool 4: Schema Markup Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-sitemap"></i>
@@ -287,13 +272,12 @@ $current_page = 'web_tools';
                      <h3>Schema Markup Generator</h3>
                      <p>Generate structured data (JSON-LD) for better SEO and rich results in search engines.</p>
                      <div class="tool-actions">
-                           <a href="schema_generator.php" class="tool-btn primary">Use Tool</a>
-                           <a href="#schema-info" class="tool-btn secondary">Learn More</a>
+                           <a href="./tools/schema_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
 
-               <!-- NEW TOOL: SVG Wave Generator -->
+               <!-- Tool 5: SVG Wave Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-wave-square"></i>
@@ -302,13 +286,12 @@ $current_page = 'web_tools';
                      <h3>SVG Wave Generator</h3>
                      <p>Create beautiful SVG waves for your designs. Customize curves, complexity, and colors.</p>
                      <div class="tool-actions">
-                        <a href="wave_generator.php" class="tool-btn primary">Use Tool</a>
-                        <a href="#wave-info" class="tool-btn secondary">Learn More</a>
+                        <a href="./tools/wave_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
 
-               <!-- NEW TOOL: Glassmorphism Generator -->
+               <!-- Tool 6: Glassmorphism Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-glass-whiskey"></i>
@@ -317,13 +300,12 @@ $current_page = 'web_tools';
                      <h3>Glassmorphism Generator</h3>
                      <p>Generate glassmorphism effects with background blur, transparency, and color effects.</p>
                      <div class="tool-actions">
-                        <a href="glass_generator.php" class="tool-btn primary">Use Tool</a>
-                        <a href="#glass-info" class="tool-btn secondary">Learn More</a>
+                        <a href="./tools/glass_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
                
-               <!-- NEW TOOL: Fancy Border Radius Generator -->
+               <!-- Tool 7: Fancy Border Radius Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-border-all"></i>
@@ -332,13 +314,12 @@ $current_page = 'web_tools';
                      <h3>Border Radius Generator</h3>
                      <p>Create custom border-radius shapes with visual controls. Generate CSS for unique corner styles.</p>
                      <div class="tool-actions">
-                        <a href="border_radius_generator.php" class="tool-btn primary">Use Tool</a>
-                        <a href="#border-info" class="tool-btn secondary">Learn More</a>
+                        <a href="./tools/border_radius_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
 
-               <!-- NEW TOOL: Robots.txt Generator -->
+               <!-- Tool 8: Robots.txt Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-robot"></i>
@@ -347,13 +328,12 @@ $current_page = 'web_tools';
                      <h3>Robots.txt Generator</h3>
                      <p>Generate robots.txt files to control search engine crawlers with customizable rules.</p>
                      <div class="tool-actions">
-                        <a href="robots_generator.php" class="tool-btn primary">Use Tool</a>
-                        <a href="#robots-info" class="tool-btn secondary">Learn More</a>
+                        <a href="./tools/robots_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
 
-               <!-- NEW TOOL: Sitemap Generator -->
+               <!-- Tool 9: Sitemap Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-sitemap"></i>
@@ -362,13 +342,12 @@ $current_page = 'web_tools';
                      <h3>Sitemap Generator</h3>
                      <p>Create XML sitemaps for search engines with URL prioritization and change frequency.</p>
                      <div class="tool-actions">
-                        <a href="sitemap_generator.php" class="tool-btn primary">Use Tool</a>
-                        <a href="#sitemap-info" class="tool-btn secondary">Learn More</a>
+                        <a href="./tools/sitemap_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
 
-               <!-- NEW TOOL: Background Gradient Generator -->
+               <!-- Tool 10: Background Gradient Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-fill-drip"></i>
@@ -377,13 +356,12 @@ $current_page = 'web_tools';
                      <h3>Background Gradient Generator</h3>
                      <p>Create beautiful CSS gradients with visual controls. Customize colors, stops, and gradient types.</p>
                      <div class="tool-actions">
-                        <a href="gradient_generator.php" class="tool-btn primary">Use Tool</a>
-                        <a href="#gradient-info" class="tool-btn secondary">Learn More</a>
+                        <a href="./tools/gradient_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
 
-               <!-- NEW TOOL: Perspective Transform Tool -->
+               <!-- Tool 11: Perspective Transform Tool -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-cube"></i>
@@ -392,13 +370,12 @@ $current_page = 'web_tools';
                      <h3>Perspective Transform Tool</h3>
                      <p>Create 3D perspective effects with interactive controls. Visualize and generate CSS 3D transforms.</p>
                      <div class="tool-actions">
-                        <a href="perspective_transform.php" class="tool-btn primary">Use Tool</a>
-                        <a href="#perspective-info" class="tool-btn secondary">Learn More</a>
+                        <a href="./tools/perspective_transform.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
 
-               <!-- NEW TOOL: Box Shadow Generator -->
+               <!-- Tool 12: Box Shadow Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-square"></i>
@@ -407,13 +384,12 @@ $current_page = 'web_tools';
                      <h3>Box Shadow Generator</h3>
                      <p>Create beautiful CSS box shadows with real-time preview. Customize offsets, blur, spread, and colors.</p>
                      <div class="tool-actions">
-                        <a href="box_shadow_generator.php" class="tool-btn primary">Use Tool</a>
-                        <a href="#shadow-info" class="tool-btn secondary">Learn More</a>
+                        <a href="./tools/box_shadow_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
 
-               <!-- Tool 5: Base64 Encoder/Decoder -->
+               <!-- Tool 13: Base64 Encoder/Decoder -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-exchange-alt"></i>
@@ -422,13 +398,12 @@ $current_page = 'web_tools';
                      <h3>Base64 Encoder/Decoder</h3>
                      <p>Encode text to Base64 or decode Base64 back to plain text. Useful for data transmission and encoding.</p>
                      <div class="tool-actions">
-                           <a href="base64_tool.php" class="tool-btn primary">Use Tool</a>
-                           <a href="#base64-info" class="tool-btn secondary">Learn More</a>
+                           <a href="./tools/base64_tool.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
                
-               <!-- Tool 6: URL Encoder/Decoder -->
+               <!-- Tool 14: URL Encoder/Decoder -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-link"></i>
@@ -437,13 +412,12 @@ $current_page = 'web_tools';
                      <h3>URL Encoder/Decoder</h3>
                      <p>Encode special characters in URLs or decode encoded URLs back to readable format.</p>
                      <div class="tool-actions">
-                           <a href="url_encoder.php" class="tool-btn primary">Use Tool</a>
-                           <a href="#url-encoder-info" class="tool-btn secondary">Learn More</a>
+                           <a href="./tools/url_encoder.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
                
-               <!-- Tool 7: Password Generator -->
+               <!-- Tool 15: Password Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-key"></i>
@@ -452,13 +426,12 @@ $current_page = 'web_tools';
                      <h3>Password Generator</h3>
                      <p>Generate strong, secure passwords with customizable length and character types.</p>
                      <div class="tool-actions">
-                           <a href="password_generator.php" class="tool-btn primary">Use Tool</a>
-                           <a href="#password-info" class="tool-btn secondary">Learn More</a>
+                           <a href="./tools/password_generator.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
                
-               <!-- Tool 8: Color Palette Generator -->
+               <!-- Tool 16: Color Palette Generator -->
                <div class="tool-card">
                   <div class="tool-icon">
                      <i class="fas fa-palette"></i>
@@ -467,13 +440,12 @@ $current_page = 'web_tools';
                      <h3>Color Palette Generator</h3>
                      <p>Create beautiful color schemes for your projects with our advanced color palette generator.</p>
                      <div class="tool-actions">
-                           <a href="color_palette.php" class="tool-btn primary">Use Tool</a>
-                           <a href="#color-info" class="tool-btn secondary">Learn More</a>
+                           <a href="./tools/color_palette.php" class="tool-btn primary">Use Tool</a>
                      </div>
                   </div>
                </div>
                
-               <!-- Tool 9: Image Optimizer -->
+               <!-- Tool 17: Image Optimizer -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-compress-arrows-alt"></i>
@@ -487,7 +459,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 10: Security Scanner -->
+               <!-- Tool 18: Security Scanner -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-shield-alt"></i>
@@ -501,7 +473,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 11: Performance Analyzer -->
+               <!-- Tool 19: Performance Analyzer -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-tachometer-alt"></i>
@@ -515,7 +487,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 12: Responsive Tester -->
+               <!-- Tool 20: Responsive Tester -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-mobile-alt"></i>
@@ -529,7 +501,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 13: SEO Analyzer -->
+               <!-- Tool 21: SEO Analyzer -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-search"></i>
@@ -543,7 +515,7 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 14: JSON Formatter -->
+               <!-- Tool 22: JSON Formatter -->
                <div class="tool-card coming-soon">
                   <div class="tool-icon">
                      <i class="fas fa-database"></i>

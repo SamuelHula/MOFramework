@@ -1,5 +1,5 @@
 <?php
-require_once './assets/config.php';
+require_once '../assets/config.php';
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
    header("Location: signin.php");
@@ -14,8 +14,8 @@ $current_page = 'web_tools';
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Background Gradient Generator - Code Library</title>
-   <link rel="stylesheet" href="./css/general.css">
-   <link rel="stylesheet" href="./css/home.css">
+   <link rel="stylesheet" href="../css/general.css">
+   <link rel="stylesheet" href="../css/home.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
    <style>
       * {
@@ -362,7 +362,7 @@ $current_page = 'web_tools';
       <div id="scrollProgress"></div>
    </div>
    <header id="header">
-      <?php include './assets/nav_bar.php' ?>
+      <?php include '../assets/nav_bar.php' ?>
    </header>
    
    <main id="main">
@@ -465,10 +465,10 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
       </section>
    </main>
    
-   <?php include './assets/footer.php' ?>
+   <?php include '../assets/footer.php' ?>
    
-   <script src="./js/scroll.js"></script>
-   <script src="./js/fly-in.js"></script>
+   <script src="../js/scroll.js"></script>
+   <script src="../js/fly-in.js"></script>
    <script>
       let colorStops = [
          { color: '#667eea', position: 0 },
