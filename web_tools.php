@@ -445,89 +445,34 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
-               <!-- Tool 17: Image Optimizer -->
-               <div class="tool-card coming-soon">
+               <!-- Tool 17: Lorem Ipsum Generator -->
+               <div class="tool-card">
                   <div class="tool-icon">
-                     <i class="fas fa-compress-arrows-alt"></i>
+                        <i class="fas fa-paragraph"></i>
                   </div>
                   <div class="tool-content">
-                     <h3>Image Optimizer</h3>
-                     <p>Compress and optimize images for web without losing quality. Supports PNG, JPG, and WebP.</p>
-                     <div class="tool-actions">
-                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
-                     </div>
+                        <h3>Lorem Ipsum Generator</h3>
+                        <p>Generate placeholder text for your projects. Customize paragraphs, sentences, and word count.</p>
+                        <div class="tool-actions">
+                           <a href="./tools/lorem_ipsum_generator.php" class="tool-btn primary">Use Tool</a>
+                        </div>
                   </div>
                </div>
                
-               <!-- Tool 18: Security Scanner -->
-               <div class="tool-card coming-soon">
+               <!-- Tool 18: Pixel to REM/EM Converter -->
+               <div class="tool-card">
                   <div class="tool-icon">
-                     <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-ruler-combined"></i>
                   </div>
                   <div class="tool-content">
-                     <h3>Security Scanner</h3>
-                     <p>Check your code for common security vulnerabilities and get suggestions for improvement.</p>
-                     <div class="tool-actions">
-                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
-                     </div>
+                        <h3>Pixel to REM/EM Converter</h3>
+                        <p>Convert pixel values to REM and EM units with customizable base font sizes for responsive design.</p>
+                        <div class="tool-actions">
+                           <a href="./tools/pixel_converter.php" class="tool-btn primary">Use Tool</a>
+                        </div>
                   </div>
                </div>
-               
-               <!-- Tool 19: Performance Analyzer -->
-               <div class="tool-card coming-soon">
-                  <div class="tool-icon">
-                     <i class="fas fa-tachometer-alt"></i>
-                  </div>
-                  <div class="tool-content">
-                     <h3>Performance Analyzer</h3>
-                     <p>Analyze your website's performance and get recommendations for optimization.</p>
-                     <div class="tool-actions">
-                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
-                     </div>
-                  </div>
-               </div>
-               
-               <!-- Tool 20: Responsive Tester -->
-               <div class="tool-card coming-soon">
-                  <div class="tool-icon">
-                     <i class="fas fa-mobile-alt"></i>
-                  </div>
-                  <div class="tool-content">
-                     <h3>Responsive Tester</h3>
-                     <p>Test how your website looks on different devices and screen sizes in real-time.</p>
-                     <div class="tool-actions">
-                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
-                     </div>
-                  </div>
-               </div>
-               
-               <!-- Tool 21: SEO Analyzer -->
-               <div class="tool-card coming-soon">
-                  <div class="tool-icon">
-                     <i class="fas fa-search"></i>
-                  </div>
-                  <div class="tool-content">
-                     <h3>SEO Analyzer</h3>
-                     <p>Check your website's SEO health and get actionable recommendations for improvement.</p>
-                     <div class="tool-actions">
-                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
-                     </div>
-                  </div>
-               </div>
-               
-               <!-- Tool 22: JSON Formatter -->
-               <div class="tool-card coming-soon">
-                  <div class="tool-icon">
-                     <i class="fas fa-database"></i>
-                  </div>
-                  <div class="tool-content">
-                     <h3>JSON Formatter</h3>
-                     <p>Format, validate, and beautify JSON data with syntax highlighting and error detection.</p>
-                     <div class="tool-actions">
-                           <a href="#" class="tool-btn primary disabled">Coming Soon</a>
-                     </div>
-                  </div>
-               </div>
+            </div>
          </div>
       </section>
    </main>
