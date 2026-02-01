@@ -323,6 +323,51 @@ $current_page = 'web_tools';
                   </div>
                </div>
                
+               <!-- NEW TOOL: Fancy Border Radius Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-border-all"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Border Radius Generator</h3>
+                     <p>Create custom border-radius shapes with visual controls. Generate CSS for unique corner styles.</p>
+                     <div class="tool-actions">
+                        <a href="border_radius_generator.php" class="tool-btn primary">Use Tool</a>
+                        <a href="#border-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- NEW TOOL: Robots.txt Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-robot"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Robots.txt Generator</h3>
+                     <p>Generate robots.txt files to control search engine crawlers with customizable rules.</p>
+                     <div class="tool-actions">
+                        <a href="robots_generator.php" class="tool-btn primary">Use Tool</a>
+                        <a href="#robots-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- NEW TOOL: Sitemap Generator -->
+               <div class="tool-card">
+                  <div class="tool-icon">
+                     <i class="fas fa-sitemap"></i>
+                  </div>
+                  <div class="tool-content">
+                     <h3>Sitemap Generator</h3>
+                     <p>Create XML sitemaps for search engines with URL prioritization and change frequency.</p>
+                     <div class="tool-actions">
+                        <a href="sitemap_generator.php" class="tool-btn primary">Use Tool</a>
+                        <a href="#sitemap-info" class="tool-btn secondary">Learn More</a>
+                     </div>
+                  </div>
+               </div>
+
                <!-- Tool 5: Base64 Encoder/Decoder -->
                <div class="tool-card">
                   <div class="tool-icon">
