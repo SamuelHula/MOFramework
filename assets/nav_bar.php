@@ -32,16 +32,22 @@ if (!isset($_SESSION['loggedin']) && isset($_COOKIE['remember_me'])) {
 
 $current_page = basename($_SERVER['PHP_SELF']);
 
+// Detect if we're in the tools subdirectory
+$is_in_tools = strpos($_SERVER['PHP_SELF'], '/tools/') !== false;
+
+// Set the base path for links based on current location
+$base_path = $is_in_tools ? '../' : './';
+
 $needs_consent = needs_cookie_consent();
 
 if ($needs_consent && $current_page !== 'cookie_consent.php') {
     $_SESSION['return_url'] = $_SERVER['REQUEST_URI'];
-    header("Location: cookie_consent.php");
+    header("Location: " . $base_path . "cookie_consent.php");
     exit;
 }
 ?>
 <nav id="nav_bar">
-    <a href="index.php" class="admin-nav-brand" style="color: white;">Code Library</a>
+    <a href="<?php echo $base_path; ?>index.php" class="admin-nav-brand" style="color: white;">Code Library</a>
     <input type="checkbox" id="nav_toggle">
     <label for="nav_toggle" class="burger">
         <span></span>
@@ -49,7 +55,7 @@ if ($needs_consent && $current_page !== 'cookie_consent.php') {
         <span></span>
     </label>
     <ul class="nav_list">
-        <li><a href="index.php" class="<?php echo $current_page == 'index.php' ? 'active' : ''; ?>" title="Home">Home</a></li>
+        <li><a href="<?php echo $base_path; ?>index.php" class="<?php echo $current_page == 'index.php' ? 'active' : ''; ?>" title="Home">Home</a></li>
         
         <?php if ($current_page == 'index.php'): ?>
             <li><a href="#categories" title="Categories">Categories</a></li>
@@ -58,20 +64,20 @@ if ($needs_consent && $current_page !== 'cookie_consent.php') {
             <li><a href="#contact_form" title="Contact">Contact</a></li>
         <?php else: ?>
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                <li><a href="snippets_catalog.php" class="<?php echo $current_page == 'snippets_catalog.php' ? 'active' : ''; ?>" title="Code Snippets">Snippets</a></li>
-                <li><a href="favorites.php" class="<?php echo $current_page == 'favorites.php' ? 'active' : ''; ?>" title="My Favorites">Favorites</a></li>
-                <li><a href="web_tools.php" class="<?php echo $current_page == 'web_tools.php' ? 'active' : ''; ?>" title="Web Tools">Web Tools</a></li>
-                <li><a href="account.php" class="<?php echo $current_page == 'account.php' ? 'active' : ''; ?>" title="Account Info">Account</a></li>
+                <li><a href="<?php echo $base_path; ?>snippets_catalog.php" class="<?php echo $current_page == 'snippets_catalog.php' ? 'active' : ''; ?>" title="Code Snippets">Snippets</a></li>
+                <li><a href="<?php echo $base_path; ?>favorites.php" class="<?php echo $current_page == 'favorites.php' ? 'active' : ''; ?>" title="My Favorites">Favorites</a></li>
+                <li><a href="<?php echo $base_path; ?>web_tools.php" class="<?php echo ($current_page == 'web_tools.php' || $is_in_tools) ? 'active' : ''; ?>" title="Web Tools">Web Tools</a></li>
+                <li><a href="<?php echo $base_path; ?>account.php" class="<?php echo $current_page == 'account.php' ? 'active' : ''; ?>" title="Account Info">Account</a></li>
             <?php endif; ?>
         <?php endif; ?>
         
         <li class="nav-auth-buttons">
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                <a href="dashboard.php" class="dashboard_btn" title="Dashboard">Dashboard</a>
-                <a href="./assets/logout.php" class="signout_btn" title="Sign Out">Sign Out</a>
+                <a href="<?php echo $base_path; ?>dashboard.php" class="dashboard_btn" title="Dashboard">Dashboard</a>
+                <a href="<?php echo $base_path; ?>assets/logout.php" class="signout_btn" title="Sign Out">Sign Out</a>
             <?php else: ?>
-                <a href="signin.php" class="signin_btn" title="Sign In">Sign In</a>
-                <a href="signup.php" class="signup_btn" title="Sign Up">Sign Up</a>
+                <a href="<?php echo $base_path; ?>signin.php" class="signin_btn" title="Sign In">Sign In</a>
+                <a href="<?php echo $base_path; ?>signup.php" class="signup_btn" title="Sign Up">Sign Up</a>
             <?php endif; ?>
         </li>
     </ul>
