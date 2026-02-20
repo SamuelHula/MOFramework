@@ -365,16 +365,6 @@ require_once './assets/config.php';
          </div>
          
          <div class="policy-content scroll-effect">
-            <!-- ZJEDNODUŠENÉ ZHRNUTIE (Krok 4) -->
-            <div class="highlight-box" style="background: #e3f2fd; border-left-color: #2196F3;">
-               <h3>📝 Zhrnutie pre teba</h3>
-               <p><strong>Kto sme:</strong> Code Library, prevádzkovaná Samuelom Hulom z Novej Bane, Slovensko.</p>
-               <p><strong>Čo zbierame:</strong> Keď sa zaregistruješ, zbierame tvoje meno a email. Keď nám pošleš správu, zbierame tvoje meno, email a správu. Pri prehliadaní stránky automaticky zaznamenávame tvoju IP adresu a informácie o prehliadači (kvôli bezpečnosti a štatistike).</p>
-               <p><strong>Prečo to robíme:</strong> Aby sme ti mohli poskytnúť účet, odpovedať na otázky a zlepšovať stránku.</p>
-               <p><strong>S kým to zdieľame:</strong> S poskytovateľom hostingu (napr. <strong>[Názov tvojej hostingovej spoločnosti]</strong>) a nástrojmi na analýzu (Google Analytics) a reklamu (Facebook Pixel), ktoré môžu byť v USA. Nikdy nepredávame tvoje údaje.</p>
-               <p><strong>Tvoje práva:</strong> Môžeš požiadať o kópiu tvojich údajov, ich opravu alebo vymazanie. Stačí napísať na <strong>privacy@codelibrary.dev</strong>.</p>
-            </div>
-
             <div class="table-of-contents">
                <h3>📋 Table of Contents</h3>
                <ul class="toc-list">
