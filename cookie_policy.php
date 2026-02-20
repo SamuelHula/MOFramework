@@ -287,7 +287,7 @@ if (session_status() == PHP_SESSION_NONE) {
          
          <div class="cookie-policy-header scroll-effect">
             <h1>Cookie Policy</h1>
-            <p>Last Updated: December 2024 | Version: 1.0</p>
+            <p>Last Updated: [Aktuálny dátum] | Version: 1.1</p>
          </div>
          
          <div class="policy-content scroll-effect">
@@ -308,73 +308,62 @@ if (session_status() == PHP_SESSION_NONE) {
             <div class="policy-section">
                <h2>2. Types of Cookies We Use</h2>
                
+               <!-- AKTUALIZOVANÁ TABUĽKA PODĽA REÁLNYCH COOKIES (Krok 5) -->
                <table class="cookie-table">
                   <thead>
                      <tr>
                         <th>Cookie Type</th>
+                        <th>Name</th>
                         <th>Purpose</th>
                         <th>Duration</th>
                      </tr>
                   </thead>
                   <tbody>
                      <tr>
-                        <td>
-                           <span class="cookie-type cookie-necessary">Essential</span>
-                           session_cookie
-                        </td>
-                        <td>Maintains user session for logged-in users</td>
-                        <td>Session</td>
+                        <td><span class="cookie-type cookie-necessary">Essential</span></td>
+                        <td>PHPSESSID</td>
+                        <td>Udržiava prihlásenie používateľa a stav relácie.</td>
+                        <td>Po zatvorení prehliadača</td>
                      </tr>
                      <tr>
-                        <td>
-                           <span class="cookie-type cookie-necessary">Essential</span>
-                           csrf_token
-                        </td>
-                        <td>Protects against cross-site request forgery attacks</td>
-                        <td>Session</td>
+                        <td><span class="cookie-type cookie-necessary">Essential</span></td>
+                        <td>csrf_token</td>
+                        <td>Chráni pred CSRF útokmi (bezpečnosť formulárov).</td>
+                        <td>Po zatvorení prehliadača</td>
                      </tr>
                      <tr>
-                        <td>
-                           <span class="cookie-type cookie-preferences">Preferences</span>
-                           cookie_consent
-                        </td>
-                        <td>Stores your cookie preferences</td>
-                        <td>1 year</td>
+                        <td><span class="cookie-type cookie-preferences">Preferences</span></td>
+                        <td>cookie_consent</td>
+                        <td>Ukladá tvoje preferencie ohľadom cookies (aký súhlas si udelil).</td>
+                        <td>1 rok</td>
                      </tr>
                      <tr>
-                        <td>
-                           <span class="cookie-type cookie-preferences">Preferences</span>
-                           user_preferences
-                        </td>
-                        <td>Stores your language and theme preferences</td>
-                        <td>1 year</td>
+                        <td><span class="cookie-type cookie-preferences">Preferences</span></td>
+                        <td>user_preferences</td>
+                        <td>Ukladá tvoje preferencie, napr. jazyk alebo tému.</td>
+                        <td>1 rok</td>
                      </tr>
                      <tr>
-                        <td>
-                           <span class="cookie-type cookie-statistics">Statistics</span>
-                           _ga
-                        </td>
-                        <td>Google Analytics - Distinguishes users</td>
-                        <td>2 years</td>
+                        <td><span class="cookie-type cookie-statistics">Statistics</span></td>
+                        <td>_ga</td>
+                        <td>Google Analytics – rozlišuje používateľov.</td>
+                        <td>2 roky</td>
                      </tr>
                      <tr>
-                        <td>
-                           <span class="cookie-type cookie-statistics">Statistics</span>
-                           _gid
-                        </td>
-                        <td>Google Analytics - Distinguishes users</td>
-                        <td>24 hours</td>
+                        <td><span class="cookie-type cookie-statistics">Statistics</span></td>
+                        <td>_gid</td>
+                        <td>Google Analytics – rozlišuje používateľov.</td>
+                        <td>24 hodín</td>
                      </tr>
                      <tr>
-                        <td>
-                           <span class="cookie-type cookie-marketing">Marketing</span>
-                           _fbp
-                        </td>
-                        <td>Facebook Pixel - Used for advertising</td>
-                        <td>3 months</td>
+                        <td><span class="cookie-type cookie-marketing">Marketing</span></td>
+                        <td>_fbp</td>
+                        <td>Facebook Pixel – používa sa na zacielenie reklám.</td>
+                        <td>3 mesiace</td>
                      </tr>
                   </tbody>
                </table>
+               <p><em>Poznámka: Analytické a marketingové cookies sa ukladajú len po tvojom výslovnom súhlase.</em></p>
             </div>
             
             <div class="policy-section">
@@ -382,6 +371,7 @@ if (session_status() == PHP_SESSION_NONE) {
                <p>You have the right to choose which cookies you accept. When you first visit our website, you will see a cookie consent banner where you can:</p>
                <ul class="policy-list">
                   <li><strong>Accept All Cookies:</strong> Accept all types of cookies</li>
+                  <li><strong>Reject All:</strong> Odmietnuť všetky nevyhnutné cookies. Tvoja voľba bude rešpektovaná 6 mesiacov, počas ktorých ti banner znova neukážeme.</li>  <!-- DOPLNENÉ -->
                   <li><strong>Accept Necessary Only:</strong> Only accept essential cookies</li>
                   <li><strong>Customize Settings:</strong> Choose which cookie categories you want to accept</li>
                </ul>
@@ -438,7 +428,7 @@ if (session_status() == PHP_SESSION_NONE) {
             </div>
             
             <div class="update-date">
-               <p><strong>Last Updated:</strong> December 15, 2024</p>
+               <p><strong>Last Updated:</strong> [Aktuálny dátum]</p>
                <p>This Cookie Policy is effective as of the date above.</p>
             </div>
          </div>

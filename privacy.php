@@ -361,10 +361,20 @@ require_once './assets/config.php';
          
          <div class="privacy-header scroll-effect">
             <h1>Privacy Policy</h1>
-            <p>Effective Date: December 15, 2024 | Version: 1.0</p>
+            <p>Effective Date: December 15, 2024 | Version: 1.1</p>
          </div>
          
          <div class="policy-content scroll-effect">
+            <!-- ZJEDNODUŠENÉ ZHRNUTIE (Krok 4) -->
+            <div class="highlight-box" style="background: #e3f2fd; border-left-color: #2196F3;">
+               <h3>📝 Zhrnutie pre teba</h3>
+               <p><strong>Kto sme:</strong> Code Library, prevádzkovaná Samuelom Hulom z Novej Bane, Slovensko.</p>
+               <p><strong>Čo zbierame:</strong> Keď sa zaregistruješ, zbierame tvoje meno a email. Keď nám pošleš správu, zbierame tvoje meno, email a správu. Pri prehliadaní stránky automaticky zaznamenávame tvoju IP adresu a informácie o prehliadači (kvôli bezpečnosti a štatistike).</p>
+               <p><strong>Prečo to robíme:</strong> Aby sme ti mohli poskytnúť účet, odpovedať na otázky a zlepšovať stránku.</p>
+               <p><strong>S kým to zdieľame:</strong> S poskytovateľom hostingu (napr. <strong>[Názov tvojej hostingovej spoločnosti]</strong>) a nástrojmi na analýzu (Google Analytics) a reklamu (Facebook Pixel), ktoré môžu byť v USA. Nikdy nepredávame tvoje údaje.</p>
+               <p><strong>Tvoje práva:</strong> Môžeš požiadať o kópiu tvojich údajov, ich opravu alebo vymazanie. Stačí napísať na <strong>privacy@codelibrary.dev</strong>.</p>
+            </div>
+
             <div class="table-of-contents">
                <h3>📋 Table of Contents</h3>
                <ul class="toc-list">
@@ -436,10 +446,10 @@ require_once './assets/config.php';
                   <h3>Legal Basis for Processing (GDPR)</h3>
                   <p>For users in the European Economic Area (EEA), we process your personal data under the following legal bases:</p>
                   <ul class="policy-list">
-                     <li><strong>Consent:</strong> When you explicitly agree to data processing</li>
-                     <li><strong>Contract:</strong> To fulfill our contractual obligations to you</li>
-                     <li><strong>Legitimate Interests:</strong> For our legitimate business interests</li>
-                     <li><strong>Legal Obligation:</strong> To comply with legal requirements</li>
+                     <li><strong>Consent (čl. 6 ods. 1 písm. a) GDPR):</strong> Pre spracovanie analytických a marketingových cookies (Google Analytics, Facebook Pixel). Súhlas nám dávaš prostredníctvom cookie lišty.</li>
+                     <li><strong>Plnenie zmluvy (čl. 6 ods. 1 písm. b) GDPR):</strong> Pre vytvorenie a správu tvojho používateľského účtu. Bez týchto údajov ti nemôžeme účet poskytnúť.</li>
+                     <li><strong>Oprávnený záujem (čl. 6 ods. 1 písm. f) GDPR):</strong> Pre odpovedanie na správy z kontaktného formulára a pre zaistenie bezpečnosti našich systémov (logy, ochrana pred útokmi).</li>
+                     <li><strong>Právna povinnosť (čl. 6 ods. 1 písm. c) GDPR):</strong> Ak sme povinní uchovávať údaje na základe daňových alebo iných predpisov.</li>
                   </ul>
                </div>
             </div>
@@ -460,6 +470,19 @@ require_once './assets/config.php';
                   <li>Share your information for marketing purposes without your consent</li>
                   <li>Disclose more information than necessary</li>
                </ul>
+
+               <!-- KONKRÉTNI PRÍJEMCOVIA (Krok 4) -->
+               <h3>Konkrétni príjemcovia tvojich údajov</h3>
+               <ul class="policy-list">
+                  <li><strong>Webhosting: [Názov tvojej hostingovej spoločnosti]</strong> (so sídlom v [krajina]). Ukladajú sa tam všetky údaje, ktoré na stránke vytvoríš (účty, snippety). Spracovanie prebieha na základe zmluvy so sprostredkovateľom.</li>
+                  <li><strong>Google Analytics (USA):</strong> Používame na analýzu správania na stránke. Google môže mať prístup k tvojej IP adrese. Tento nástroj sa spúšťa len s tvojím súhlasom (kategória Štatistické cookies). Viac v <a href="https://policies.google.com/privacy">politike Google</a>.</li>
+                  <li><strong>Facebook Pixel (USA):</strong> Používame na meranie účinnosti reklám. Facebook môže priradiť tvoju návštevu k tvojmu Facebook účtu. Tento nástroj sa spúšťa len s tvojím súhlasom (kategória Marketingové cookies). Viac v <a href="https://www.facebook.com/privacy/policy">politike Facebooku</a>.</li>
+                  <li><strong>CDN služby (napr. Cloudflare, Google Fonts):</strong> Na urýchlenie načítania stránky. Tieto služby môžu zaznamenávať tvoju IP adresu.</li>
+               </ul>
+
+               <!-- PRENOS DO TRETÍCH KRAJÍN (Krok 4) -->
+               <h3>Prenos údajov mimo Európskej únie</h3>
+               <p>Niektorí naši partneri (napr. Google, Facebook) majú sídlo v Spojených štátoch amerických. To znamená, že tvoje údaje môžu byť prenesené do krajiny, ktorá nemá rovnakú úroveň ochrany údajov ako EÚ. Tento prenos je však chránený štandardnými zmluvnými doložkami (SCC), ktoré schválila Európska komisia, a ktoré zaväzujú týchto partnerov chrániť tvoje údaje. Viac informácií nájdeš v politike Google a Facebooku.</p>
             </div>
             
             <div class="policy-section" id="data-security">
@@ -559,13 +582,13 @@ require_once './assets/config.php';
                
                <ul class="policy-list">
                   <li><strong>Email:</strong> privacy@codelibrary.dev</li>
-                  <li><strong>Address:</strong> Data Protection Officer, Code Library, San Francisco, CA</li>
+                  <li><strong>Address:</strong> Samuel Hula, [Tvoja ulica a číslo], 968 01 Nová Baňa, Slovensko</li>
                   <li><strong>Website:</strong> codelibrary.dev/contact</li>
                </ul>
                
                <div class="update-info">
                   <p><strong>Effective Date:</strong> December 15, 2024</p>
-                  <p><strong>Last Updated:</strong> December 15, 2024</p>
+                  <p><strong>Last Updated:</strong> [Aktuálny dátum]</p>
                   <p>This privacy policy describes our current policies and practices regarding personal data. We reserve the right to amend this policy at any time.</p>
                </div>
             </div>

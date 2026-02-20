@@ -1,110 +1,70 @@
 <?php
 require_once 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-   $action = $_POST['action'] ?? '';
-   
-   switch ($action) {
-      case 'accept_all':
-         $consent = [
-               'version' => COOKIE_CONSENT_VERSION,
-               'accepted' => true,
-               'necessary' => true,
-               'preferences' => true,
-               'statistics' => true,
-               'marketing' => true,
-               'timestamp' => date('Y-m-d H:i:s')
-         ];
-         break;
-         
-      case 'accept_necessary':
-         $consent = [
-               'version' => COOKIE_CONSENT_VERSION,
-               'accepted' => true,
-               'necessary' => true,
-               'preferences' => false,
-               'statistics' => false,
-               'marketing' => false,
-               'timestamp' => date('Y-m-d H:i:s')
-         ];
-         break;
-         
-      case 'save_preferences':
-         $consent = [
-               'version' => COOKIE_CONSENT_VERSION,
-               'accepted' => true,
-               'necessary' => true,
-               'preferences' => isset($_POST['preferences']) ? true : false,
-               'statistics' => isset($_POST['statistics']) ? true : false,
-               'marketing' => isset($_POST['marketing']) ? true : false,
-               'timestamp' => date('Y-m-d H:i:s')
-         ];
-         break;
-         
-      default:
-         $consent = [
-               'version' => COOKIE_CONSENT_VERSION,
-               'accepted' => true,
-               'necessary' => true,
-               'preferences' => false,
-               'statistics' => false,
-               'marketing' => false,
-               'timestamp' => date('Y-m-d H:i:s')
-         ];
-   }
-   
-   $cookie_data = json_encode($consent);
-   setcookie(
-      'cookie_consent',
-      $cookie_data,
-      time() + (COOKIE_CONSENT_DAYS * 24 * 60 * 60),
-      '/',
-      '',
-      false,
-      true 
-   );
-   
-   $_SESSION['cookie_consent'] = $consent;
-   
-   if ($consent['preferences']) {
-      $user_preferences = [
-         'theme' => 'light',
-         'language' => 'en',
-         'font_size' => 'medium'
-      ];
-      setcookie(
-         'user_preferences',
-         json_encode($user_preferences),
-         time() + (COOKIE_CONSENT_DAYS * 24 * 60 * 60),
-         '/',
-         '',
-         false,
-         true
-      );
-      $_SESSION['user_preferences'] = $user_preferences;
-   }
-   
-   $return_url = $_SESSION['return_url'] ?? '../index.php';
-   unset($_SESSION['return_url']);
-   
-   $message = urlencode('Cookie preferences saved successfully!');
-   header("Location: $return_url?cookie_success=$message");
-   exit;
-   
-} elseif (isset($_GET['action']) && $_GET['action'] === 'show_settings') {
-   header("Location: ../cookie_consent.php?show_modal=true");
-   exit;
-   
-} elseif (isset($_GET['action']) && $_GET['action'] === 'reset_consent') {
-   setcookie('cookie_consent', '', time() - 3600, '/');
-   setcookie('user_preferences', '', time() - 3600, '/');
-   unset($_SESSION['cookie_consent']);
-   unset($_SESSION['user_preferences']);
-   
-   header("Location: ../index.php?cookie_reset=1");
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
+$ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? ''; 
+$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+
+function hasRecentRejection($pdo, $ip, $user_agent) {
+   $sixMonthsAgo = date('Y-m-d H:i:s', strtotime('-6 months'));
+   $stmt = $pdo->prepare("SELECT id FROM consent_logs WHERE user_ip = ? AND user_agent = ? AND consent_type IN ('rejected', 'preferences') AND created_at > ? LIMIT 1");
+   $stmt->execute([$ip, $user_agent, $sixMonthsAgo]);
+   return $stmt->fetch() !== false;
+}
+
+if (hasRecentRejection($pdo, $ip, $user_agent)) {
+   header("Location: ../index.php");
    exit;
 }
 
-header("Location: ../index.php");
-exit;
+if ($action === 'reject_all') {
+   $_SESSION['cookie_consent'] = [
+      'accepted' => false,
+      'preferences' => false,
+      'statistics' => false,
+      'marketing' => false,
+      'timestamp' => date('Y-m-d H:i:s')
+   ];
+   
+   $stmt = $pdo->prepare("INSERT INTO consent_logs (user_ip, user_agent, consent_type) VALUES (?, ?, 'rejected')");
+   $stmt->execute([$ip, $user_agent]);
+   
+   setcookie('cookie_consent_rejected', '1', time() + (86400 * 180), '/', '', true, true); 
+   
+   header("Location: ../index.php");
+   exit;
+   
+} elseif ($action === 'accept_necessary') {
+   $_SESSION['cookie_consent'] = [
+      'accepted' => false,
+      'preferences' => false,
+      'statistics' => false,
+      'marketing' => false,
+      'timestamp' => date('Y-m-d H:i:s')
+   ];
+   
+   $stmt = $pdo->prepare("INSERT INTO consent_logs (user_ip, user_agent, consent_type) VALUES (?, ?, 'preferences')");
+   $stmt->execute([$ip, $user_agent]);
+   
+   setcookie('cookie_consent_rejected', '1', time() + (86400 * 180), '/', '', true, true);
+   header("Location: ../index.php");
+   exit;
+   
+} elseif ($action === 'accept_all') {
+   $_SESSION['cookie_consent'] = [
+      'accepted' => true,
+      'preferences' => true,
+      'statistics' => true,
+      'marketing' => true,
+      'timestamp' => date('Y-m-d H:i:s')
+   ];
+   
+   $stmt = $pdo->prepare("INSERT INTO consent_logs (user_ip, user_agent, consent_type, preferences) VALUES (?, ?, 'accepted', ?)");
+   $preferences_json = json_encode($_SESSION['cookie_consent']);
+   $stmt->execute([$ip, $user_agent, $preferences_json]);
+   
+   setcookie('cookie_consent', json_encode($_SESSION['cookie_consent']), time() + (86400 * 365), '/', '', true, true);
+   header("Location: ../index.php");
+   exit;
+}
 ?>
