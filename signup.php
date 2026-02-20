@@ -27,7 +27,7 @@
          width: 100%;
          max-width: 550px;
          background: white;
-         padding: 3rem;
+         padding: 2%;
          border-radius: 20px;
          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
          position: relative;
@@ -45,7 +45,7 @@
          display: flex;
          align-items: center;
          justify-content: center;
-         margin: 0 auto 1.5rem;
+         margin: 0 auto 2%;
          color: white;
       }
       .auth-header h1 {
@@ -67,11 +67,12 @@
       .form-group {
          display: flex;
          flex-direction: column;
+         margin: 0;
       }
       .form-group label {
          font-weight: 600;
          color: var(--text-color);
-         margin-bottom: 0.5rem;
+         margin-bottom: 1%;
          font-size: 1rem;
          font-family: var(--subheading);
       }
@@ -92,13 +93,13 @@
       .name-fields {
          display: grid;
          grid-template-columns: 1fr 1fr;
-         gap: 1rem;
+         gap: 2%;
       }
       .terms {
          display: flex;
          align-items: flex-start;
-         gap: 0.5rem;
-         margin: 1rem 0;
+         gap: 1%;
+         margin: 1% 0;
       }
       .terms input {
          margin-top: 0.2rem;
@@ -416,26 +417,6 @@
          
          <button type="submit" class="auth-submit">Create Account</button>
       </form>
-      
-      <div class="auth-divider">
-         <span>Or sign up with</span>
-      </div>
-      
-      <div class="social-auth">
-         <a href="#" class="social-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-               <path fill="#1877F2" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/>
-            </svg>
-            Facebook
-         </a>
-         <a href="#" class="social-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-               <path fill="#4285F4" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/>
-            </svg>
-            Google
-         </a>
-      </div>
-      
       <div class="auth-redirect">
          Already have an account? <a href="signin.php">Sign in here</a>
       </div>
