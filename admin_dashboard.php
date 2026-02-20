@@ -602,21 +602,6 @@ try {
                   <?php endforeach; ?>
                </ul>
          </div>
-         
-         <div class="security-notes scroll-effect">
-               <h3>⚠️ Security Notes</h3>
-               <p>As an administrator, you have elevated privileges. Please ensure:</p>
-               <ul>
-                  <li>Keep your credentials secure and change passwords regularly</li>
-                  <li>Always log out after each session, especially on shared devices</li>
-                  <li>Review activity logs regularly for any suspicious activities</li>
-                  <li>Follow security protocols and report any anomalies immediately</li>
-               </ul>
-               <div class="admin-actions" style="margin-top: 2rem;">
-                  <a href="#" class="admin-btn">My Profile</a>
-                  <a href="#" class="admin-btn">Change Password</a>
-               </div>
-         </div>
       </section>
    </main>
    
