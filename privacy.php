@@ -338,7 +338,7 @@ require_once './assets/config.php';
             hyphens: auto;
          }
       }
-   </style>
+      </style>
 </head>
 <body>
    <div class="progress-container">
@@ -361,24 +361,24 @@ require_once './assets/config.php';
          
          <div class="privacy-header scroll-effect">
             <h1>Privacy Policy</h1>
-            <p>Effective Date: December 15, 2024 | Version: 1.1</p>
+            <p>Effective Date: February 21, 2025 | Version: 1.2</p>
          </div>
          
          <div class="policy-content scroll-effect">
             <div class="table-of-contents">
                <h3>📋 Table of Contents</h3>
                <ul class="toc-list">
-                  <li><a href="#introduction"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> 1. Introduction</a></li>
-                  <li><a href="#data-collection"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 15l-5-5h3V9h4v4h3l-5 5z"/></svg> 2. Information We Collect</a></li>
-                  <li><a href="#data-use"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 3. How We Use Your Information</a></li>
-                  <li><a href="#data-sharing"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> 4. Data Sharing & Disclosure</a></li>
-                  <li><a href="#data-security"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg> 5. Data Security</a></li>
-                  <li><a href="#your-rights"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 6. Your Rights</a></li>
-                  <li><a href="#cookies"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"/></svg> 7. Cookies & Tracking</a></li>
-                  <li><a href="#third-party"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 4v3h5v12h3V7h5V4H9zm-6 8h3v7h3v-7h3V9H3v3z"/></svg> 8. Third-Party Services</a></li>
-                  <li><a href="#children"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3 11h-2v2h2v2h-2v2h-2v-2H9v-2h2v-2H9v-2h2V9h2v2h2v2z"/></svg> 9. Children's Privacy</a></li>
-                  <li><a href="#changes"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79 2.73 2.71 7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58 3.51-3.47 9.14-3.47 12.65 0L21 3v7.12z"/></svg> 10. Changes to This Policy</a></li>
-                  <li><a href="#contact"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> 11. Contact Us</a></li>
+                  <li><a href="#introduction"><svg>...</svg> 1. Introduction</a></li>
+                  <li><a href="#data-collection"><svg>...</svg> 2. Information We Collect</a></li>
+                  <li><a href="#data-use"><svg>...</svg> 3. How We Use Your Information</a></li>
+                  <li><a href="#data-sharing"><svg>...</svg> 4. Data Sharing & Disclosure</a></li>
+                  <li><a href="#data-security"><svg>...</svg> 5. Data Security</a></li>
+                  <li><a href="#your-rights"><svg>...</svg> 6. Your Rights</a></li>
+                  <li><a href="#cookies"><svg>...</svg> 7. Cookies & Tracking</a></li>
+                  <li><a href="#third-party"><svg>...</svg> 8. Third-Party Services</a></li>
+                  <li><a href="#children"><svg>...</svg> 9. Children's Privacy</a></li>
+                  <li><a href="#changes"><svg>...</svg> 10. Changes to This Policy</a></li>
+                  <li><a href="#contact"><svg>...</svg> 11. Contact Us</a></li>
                </ul>
             </div>
             
@@ -404,18 +404,19 @@ require_once './assets/config.php';
                <h3>Personal Information You Provide</h3>
                <p>When you register for an account, contact us, or use our services, we may collect:</p>
                <ul class="policy-list">
-                  <li><span class="data-type data-personal">Identity Data</span> Name, email address</li>
+                  <li><span class="data-type data-personal">Identity Data</span> First name, last name, email address</li>
                   <li><span class="data-type data-personal">Contact Data</span> Email address, contact preferences</li>
-                  <li><span class="data-type data-usage">Profile Data</span> Username, password, preferences</li>
-                  <li><span class="data-type data-usage">Communication Data</span> Messages, feedback, inquiries</li>
+                  <li><span class="data-type data-usage">Profile Data</span> Username (email), password (hashed), preferences</li>
+                  <li><span class="data-type data-usage">Communication Data</span> Messages, feedback, inquiries (when you use the contact form)</li>
                </ul>
                
                <h3>Automatically Collected Information</h3>
                <p>When you visit our website, we automatically collect:</p>
                <ul class="policy-list">
-                  <li><span class="data-type data-technical">Technical Data</span> IP address, browser type, device information</li>
+                  <li><span class="data-type data-technical">Technical Data</span> IP address, browser type, device information, user agent</li>
                   <li><span class="data-type data-technical">Usage Data</span> Pages visited, time spent, navigation patterns</li>
-                  <li><span class="data-type data-technical">Cookie Data</span> Information from cookies and similar technologies</li>
+                  <li><span class="data-type data-technical">Cookie Data</span> Information from cookies and similar technologies (see our <a href="cookie_policy.php">Cookie Policy</a>)</li>
+                  <li><span class="data-type data-technical">Consent Logs</span> When you give or withdraw cookie consent, we store your IP, user agent, and choice for 6 months to respect your preference.</li>
                </ul>
             </div>
             
@@ -428,7 +429,7 @@ require_once './assets/config.php';
                   <li><strong>Account Management:</strong> Create and manage your user account</li>
                   <li><strong>Communication:</strong> Respond to your inquiries and provide support</li>
                   <li><strong>Improvement:</strong> Analyze usage to improve our website and services</li>
-                  <li><strong>Security:</strong> Protect against fraudulent or unauthorized activity</li>
+                  <li><strong>Security:</strong> Protect against fraudulent or unauthorized activity (logs of IP, user agent, actions)</li>
                   <li><strong>Legal Compliance:</strong> Comply with applicable laws and regulations</li>
                </ul>
                
@@ -436,10 +437,10 @@ require_once './assets/config.php';
                   <h3>Legal Basis for Processing (GDPR)</h3>
                   <p>For users in the European Economic Area (EEA), we process your personal data under the following legal bases:</p>
                   <ul class="policy-list">
-                     <li><strong>Consent (čl. 6 ods. 1 písm. a) GDPR):</strong> Pre spracovanie analytických a marketingových cookies (Google Analytics, Facebook Pixel). Súhlas nám dávaš prostredníctvom cookie lišty.</li>
-                     <li><strong>Plnenie zmluvy (čl. 6 ods. 1 písm. b) GDPR):</strong> Pre vytvorenie a správu tvojho používateľského účtu. Bez týchto údajov ti nemôžeme účet poskytnúť.</li>
-                     <li><strong>Oprávnený záujem (čl. 6 ods. 1 písm. f) GDPR):</strong> Pre odpovedanie na správy z kontaktného formulára a pre zaistenie bezpečnosti našich systémov (logy, ochrana pred útokmi).</li>
-                     <li><strong>Právna povinnosť (čl. 6 ods. 1 písm. c) GDPR):</strong> Ak sme povinní uchovávať údaje na základe daňových alebo iných predpisov.</li>
+                     <li><strong>Consent (Art. 6(1)(a) GDPR):</strong> For processing analytical and marketing cookies (Google Analytics, Facebook Pixel). You give consent via the cookie banner.</li>
+                     <li><strong>Performance of a contract (Art. 6(1)(b) GDPR):</strong> For creating and managing your user account. Without this data we cannot provide the account.</li>
+                     <li><strong>Legitimate interest (Art. 6(1)(f) GDPR):</strong> For responding to contact form messages and ensuring the security of our systems (logs, attack prevention).</li>
+                     <li><strong>Legal obligation (Art. 6(1)(c) GDPR):</strong> If we are required to retain data for tax or other legal reasons.</li>
                   </ul>
                </div>
             </div>
@@ -461,18 +462,16 @@ require_once './assets/config.php';
                   <li>Disclose more information than necessary</li>
                </ul>
 
-               <!-- KONKRÉTNI PRÍJEMCOVIA (Krok 4) -->
-               <h3>Konkrétni príjemcovia tvojich údajov</h3>
+               <h3>Specific Recipients of Your Data</h3>
                <ul class="policy-list">
-                  <li><strong>Webhosting: [Názov tvojej hostingovej spoločnosti]</strong> (so sídlom v [krajina]). Ukladajú sa tam všetky údaje, ktoré na stránke vytvoríš (účty, snippety). Spracovanie prebieha na základe zmluvy so sprostredkovateľom.</li>
-                  <li><strong>Google Analytics (USA):</strong> Používame na analýzu správania na stránke. Google môže mať prístup k tvojej IP adrese. Tento nástroj sa spúšťa len s tvojím súhlasom (kategória Štatistické cookies). Viac v <a href="https://policies.google.com/privacy">politike Google</a>.</li>
-                  <li><strong>Facebook Pixel (USA):</strong> Používame na meranie účinnosti reklám. Facebook môže priradiť tvoju návštevu k tvojmu Facebook účtu. Tento nástroj sa spúšťa len s tvojím súhlasom (kategória Marketingové cookies). Viac v <a href="https://www.facebook.com/privacy/policy">politike Facebooku</a>.</li>
-                  <li><strong>CDN služby (napr. Cloudflare, Google Fonts):</strong> Na urýchlenie načítania stránky. Tieto služby môžu zaznamenávať tvoju IP adresu.</li>
+                  <li><strong>Web Hosting: [Your Hosting Company Name]</strong> (based in [country]). All data you create on the site (accounts, snippets) is stored there. Processing is based on a data processing agreement.</li>
+                  <li><strong>Google Analytics (USA):</strong> We use it to analyze behavior on the site. Google may access your IP address. This tool is only activated with your consent (Statistics cookies). See <a href="https://policies.google.com/privacy">Google's privacy policy</a>.</li>
+                  <li><strong>Facebook Pixel (USA):</strong> Used to measure the effectiveness of ads. Facebook may associate your visit with your Facebook account. This tool is only activated with your consent (Marketing cookies). See <a href="https://www.facebook.com/privacy/policy">Facebook's privacy policy</a>.</li>
+                  <li><strong>CDN services (e.g., Cloudflare, Google Fonts):</strong> To speed up page loading. These services may log your IP address.</li>
                </ul>
 
-               <!-- PRENOS DO TRETÍCH KRAJÍN (Krok 4) -->
-               <h3>Prenos údajov mimo Európskej únie</h3>
-               <p>Niektorí naši partneri (napr. Google, Facebook) majú sídlo v Spojených štátoch amerických. To znamená, že tvoje údaje môžu byť prenesené do krajiny, ktorá nemá rovnakú úroveň ochrany údajov ako EÚ. Tento prenos je však chránený štandardnými zmluvnými doložkami (SCC), ktoré schválila Európska komisia, a ktoré zaväzujú týchto partnerov chrániť tvoje údaje. Viac informácií nájdeš v politike Google a Facebooku.</p>
+               <h3>Data Transfers Outside the EU</h3>
+               <p>Some of our partners (e.g., Google, Facebook) are based in the United States. This means your data may be transferred to a country that does not have the same level of data protection as the EU. This transfer is protected by Standard Contractual Clauses (SCCs) approved by the European Commission, which oblige these partners to protect your data. More information can be found in the privacy policies of Google and Facebook.</p>
             </div>
             
             <div class="policy-section" id="data-security">
@@ -540,7 +539,7 @@ require_once './assets/config.php';
                <ul class="policy-list">
                   <li><span class="data-type data-third-party">Analytics</span> <strong>Google Analytics:</strong> Website usage statistics</li>
                   <li><span class="data-type data-third-party">Hosting</span> <strong>Cloud Service Providers:</strong> Website hosting and infrastructure</li>
-                  <li><span class="data-type data-third-party">Email</span> <strong>Email Service Providers:</strong> Transactional and marketing emails</li>
+                  <li><span class="data-type data-third-party">Email</span> <strong>Email Service Providers:</strong> Transactional and marketing emails (if any)</li>
                </ul>
                
                <p>These third parties have their own privacy policies. We encourage you to review them.</p>
@@ -572,13 +571,13 @@ require_once './assets/config.php';
                
                <ul class="policy-list">
                   <li><strong>Email:</strong> privacy@codelibrary.dev</li>
-                  <li><strong>Address:</strong> Samuel Hula, [Tvoja ulica a číslo], 968 01 Nová Baňa, Slovensko</li>
+                  <li><strong>Address:</strong> Samuel Hula, [Your Street and Number], 968 01 Nová Baňa, Slovakia</li>
                   <li><strong>Website:</strong> codelibrary.dev/contact</li>
                </ul>
                
                <div class="update-info">
-                  <p><strong>Effective Date:</strong> December 15, 2024</p>
-                  <p><strong>Last Updated:</strong> [Aktuálny dátum]</p>
+                  <p><strong>Effective Date:</strong> February 21, 2025</p>
+                  <p><strong>Last Updated:</strong> February 21, 2025</p>
                   <p>This privacy policy describes our current policies and practices regarding personal data. We reserve the right to amend this policy at any time.</p>
                </div>
             </div>

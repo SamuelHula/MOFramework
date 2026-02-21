@@ -589,13 +589,13 @@ require_once './assets/config.php';
                <h2>8. Governing Law</h2>
                
                <h3>Jurisdiction</h3>
-               <p>These Terms shall be governed and construed in accordance with the laws of the State of California, United States, without regard to its conflict of law provisions.</p>
+               <p>These Terms shall be governed and construed in accordance with the laws of the Slovak Republic, without regard to its conflict of law provisions.</p>
                
                <h3>Dispute Resolution</h3>
-               <p>Any disputes arising out of or relating to these Terms or the Service shall be resolved through binding arbitration in San Francisco, California, rather than in court.</p>
+               <p>Any disputes arising out of or relating to these Terms or the Service shall be resolved by the competent courts of the Slovak Republic.</p>
                
-               <h3>Class Action Waiver</h3>
-               <p>YOU AGREE THAT ANY ARBITRATION OR PROCEEDING SHALL BE LIMITED TO THE DISPUTE BETWEEN US AND YOU INDIVIDUALLY. YOU AGREE NOT TO PARTICIPATE IN ANY CLASS ACTION OR CLASS-WIDE ARBITRATION.</p>
+               <h3>Consumer Rights</h3>
+               <p>If you are a consumer residing in the European Union, you benefit from any mandatory provisions of the law of the country where you are resident. Nothing in these Terms affects your rights as a consumer to rely on such mandatory provisions.</p>
             </div>
             
             <div class="terms-section" id="changes">
@@ -618,7 +618,7 @@ require_once './assets/config.php';
                
                <ul class="terms-list">
                   <li><strong>Email:</strong> legal@codelibrary.dev</li>
-                  <li><strong>Address:</strong> Legal Department, Code Library, 123 Tech Street, San Francisco, CA 94107</li>
+                  <li><strong>Address:</strong> Samuel Hula, [Your Street and Number], 968 01 Nová Baňa, Slovakia</li>
                   <li><strong>Website:</strong> codelibrary.dev/contact</li>
                </ul>
                
@@ -629,8 +629,8 @@ require_once './assets/config.php';
                </div>
                
                <div class="update-info">
-                  <p><strong>Effective Date:</strong> December 15, 2024</p>
-                  <p><strong>Last Updated:</strong> December 15, 2024</p>
+                  <p><strong>Effective Date:</strong> February 21, 2025</p>
+                  <p><strong>Last Updated:</strong> February 21, 2025</p>
                   <p>These Terms of Service constitute the entire agreement between you and Code Library regarding the Service and supersede any prior agreements.</p>
                </div>
             </div>

@@ -623,6 +623,9 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                      <label for="message">Message:</label>
                      <textarea id="message" name="message" rows="5" required></textarea>
                   </div>
+                  <p style="font-size: 0.85rem; margin: 1rem 0; color: var(--text-color); opacity: 0.7;">
+                     By submitting this form, you agree to our <a href="privacy.php">Privacy Policy</a>.
+                  </p>
                   <button type="submit" class="primary_btn">Send Message</button>
                </form>
             </aside>

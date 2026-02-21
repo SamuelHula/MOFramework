@@ -57,33 +57,6 @@
          color: var(--text-color);
          opacity: 0.7;
       }
-      .confirmation-details {
-         background: var(--back-light);
-         padding: 1.5rem;
-         border-radius: 10px;
-         margin: 2rem 0;
-         text-align: left;
-      }
-      .confirmation-details h3 {
-         margin-bottom: 1rem;
-         color: var(--primary);
-      }
-      .detail-item {
-         display: flex;
-         justify-content: space-between;
-         margin-bottom: 0.5rem;
-         padding: 0.5rem 0;
-         border-bottom: 1px solid var(--back-dark);
-      }
-      .detail-label {
-         font-weight: bold;
-         color: var(--text-color);
-         min-width: 80px;
-      }
-      .detail-value {
-         color: var(--text-color);
-         opacity: 0.8;
-      }
       @keyframes bounce {
          0%, 20%, 50%, 80%, 100% {
             transform: translateY(0);
@@ -116,28 +89,6 @@
          <h1>Thank You!</h1>
          <h2>Message Sent Successfully</h2>
          <p>We've received your message and will get back to you as soon as possible. Typically, we respond within 24 hours.</p>
-         
-         <div class="confirmation-details">
-            <h3>Message Details</h3>
-            <?php if (isset($_GET['name'])): ?>
-            <div class="detail-item">
-               <span class="detail-label">Name:</span>
-               <span class="detail-value"><?php echo htmlspecialchars($_GET['name']); ?></span>
-            </div>
-            <?php endif; ?>
-            <?php if (isset($_GET['email'])): ?>
-            <div class="detail-item">
-               <span class="detail-label">Email:</span>
-               <span class="detail-value"><?php echo htmlspecialchars($_GET['email']); ?></span>
-            </div>
-            <?php endif; ?>
-            <?php if (isset($_GET['subject'])): ?>
-            <div class="detail-item">
-               <span class="detail-label">Subject:</span>
-               <span class="detail-value"><?php echo htmlspecialchars($_GET['subject']); ?></span>
-            </div>
-            <?php endif; ?>
-         </div>
 
          <div class="btns">
             <a href="../index.php" class="primary_btn">
