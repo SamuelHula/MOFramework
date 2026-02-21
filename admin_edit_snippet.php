@@ -145,7 +145,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       .code-editor-container {
          border: 2px solid var(--back-dark);
          border-radius: 10px;
-         overflow: hidden;
+         overflow: visible; /* Ensure scrollbars are not clipped */
       }
       .code-editor-header {
          background: #2d2d2d;
@@ -185,11 +185,30 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       .editor-btn:hover {
          background: #555;
       }
+      
+      /* ===== CODEMIRROR SCROLL FIXES ===== */
       .CodeMirror {
-         height: 600px; /* Increased from 300px to 600px for better editing experience */
+         height: 600px !important;                /* Fixed height */
          font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
          font-size: 14px;
+         overflow: hidden !important;              /* Keep default */
       }
+      .CodeMirror-scroll {
+         overflow-y: auto !important;              /* Force scrollbars */
+         overflow-x: auto !important;
+         -webkit-overflow-scrolling: touch;        /* Smooth momentum on iOS */
+         scroll-behavior: auto !important;         /* Disable smooth scrolling that might cause jump */
+      }
+      /* Disable any transitions that could interfere */
+      .CodeMirror-scroll,
+      .CodeMirror-sizer,
+      .CodeMirror-gutter,
+      .CodeMirror-gutters,
+      .CodeMirror-linenumber {
+         transition: none !important;
+      }
+      /* ===== END FIXES ===== */
+      
       .tag-input-container {
          display: flex;
          flex-wrap: wrap;
@@ -395,7 +414,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
                max-width: 100%;
          }
          .CodeMirror {
-               height: 400px; /* Slightly smaller on tablets */
+               height: 400px !important;
          }
          .code-editor-header {
                flex-direction: column;
@@ -442,7 +461,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
                gap: 0.5rem;
          }
          .CodeMirror {
-               height: 300px; /* Smaller on mobile */
+               height: 300px !important;
          }
          .admin-snippet-container {
             padding: 0.5rem;
@@ -491,7 +510,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          }
          
          .CodeMirror {
-            height: 300px;
+            height: 300px !important;
             font-size: 12px;
          }
          
@@ -560,7 +579,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          }
          
          .CodeMirror {
-            height: 250px; /* Even smaller for very narrow screens */
+            height: 250px !important;
          }
          
          .tag {
@@ -576,159 +595,155 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          }
       }
       .form-group {
-      display: flex;
-      flex-direction: column;
-      position: relative;  
+         display: flex;
+         flex-direction: column;
+         position: relative;  
       }
 
       
       .form-group input,
       .form-group select,
       .form-group textarea {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box; 
+         width: 100%;
+         max-width: 100%;
+         box-sizing: border-box; 
       }
       .form-group select {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      background-size: 1em;
-      padding-right: 2.5rem; 
-      }
-      .tag-input-container {
-      width: 100%;
-      max-width: 100%;
-      overflow-x: auto; 
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      }
-      .tag-input-container::-webkit-scrollbar {
-      height: 4px;
-      }
-      .tag-input-container::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
-      }
-      .tag-input-container::-webkit-scrollbar-thumb {
-      background: var(--primary);
-      border-radius: 10px;
-      }
-      .tag {
-      flex-shrink: 0; 
-      max-width: calc(100% - 2rem); 
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      }
-      .code-editor-container {
-      width: 100%;
-      max-width: 100%;
-      overflow: hidden;
-      }
-      .CodeMirror {
-      max-width: 100%;
-      overflow-x: auto !important;
-      overflow-y: auto !important;
-      }
-      .CodeMirror-scroll {
-      overflow-x: auto !important;
-      overflow-y: auto !important;
-      max-width: 100%;
-      }
-      @media screen and (max-width: 480px) {
-      .form-row {
-         grid-template-columns: 1fr;
-         gap: 1rem;
-      }
-      
-      .form-group input,
-      .form-group select,
-      .form-group textarea {
-         width: 100% !important;
-         max-width: 100% !important;
          -webkit-appearance: none;
          -moz-appearance: none;
          appearance: none;
+         background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+         background-repeat: no-repeat;
+         background-position: right 1rem center;
+         background-size: 1em;
+         padding-right: 2.5rem; 
       }
-      
-      .code-editor-header {
-         flex-direction: column;
-         align-items: stretch;
-         gap: 0.5rem;
-      }
-      
-      .language-selector,
-      .editor-actions {
+      .tag-input-container {
          width: 100%;
-         justify-content: space-between;
+         max-width: 100%;
+         overflow-x: auto; 
+         -webkit-overflow-scrolling: touch;
+         scrollbar-width: thin;
       }
-      
-      .editor-actions {
-         margin-top: 0.5rem;
+      .tag-input-container::-webkit-scrollbar {
+         height: 4px;
       }
-      .form-group textarea {
-         min-height: 120px;
+      .tag-input-container::-webkit-scrollbar-track {
+         background: #f1f1f1;
+         border-radius: 10px;
       }
-      }
-      @media screen and (max-width: 350px) {
-      .admin-snippet-container {
-         padding: 0.5rem !important;
-      }
-      
-      .snippet-form-container {
-         padding: 0.75rem !important;
-      }
-      
-      .form-group input,
-      .form-group select,
-      .form-group textarea {
-         padding: 0.6rem 0.8rem !important;
-         font-size: 14px !important;
-      }
-      
-      .code-editor-header {
-         padding: 0.5rem !important;
-      }
-      
-      .code-editor-header select,
-      .code-editor-header .editor-btn {
-         padding: 0.4rem 0.6rem !important;
-         font-size: 12px !important;
-      }
-      .CodeMirror {
-         font-size: 11px !important;
+      .tag-input-container::-webkit-scrollbar-thumb {
+         background: var(--primary);
+         border-radius: 10px;
       }
       .tag {
-         font-size: 0.75rem;
-         padding: 0.2rem 0.5rem;
+         flex-shrink: 0; 
+         max-width: calc(100% - 2rem); 
+         overflow: hidden;
+         text-overflow: ellipsis;
+         white-space: nowrap;
       }
-      .tag-input {
-         font-size: 14px !important;
-         min-width: 60px;
+      .code-editor-container {
+         width: 100%;
+         max-width: 100%;
+         overflow: visible;
       }
+      .CodeMirror {
+         max-width: 100%;
       }
-      .snippet-form {
-      max-width: 100%;
-      overflow: hidden;
-      }
-      .btn-submit,
-      .btn-cancel,
-      .btn-delete {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      .CodeMirror-scroll {
+         max-width: 100%;
       }
       @media screen and (max-width: 480px) {
+         .form-row {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+         }
+         
+         .form-group input,
+         .form-group select,
+         .form-group textarea {
+            width: 100% !important;
+            max-width: 100% !important;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+         }
+         
+         .code-editor-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.5rem;
+         }
+         
+         .language-selector,
+         .editor-actions {
+            width: 100%;
+            justify-content: space-between;
+         }
+         
+         .editor-actions {
+            margin-top: 0.5rem;
+         }
+         .form-group textarea {
+            min-height: 120px;
+         }
+      }
+      @media screen and (max-width: 350px) {
+         .admin-snippet-container {
+            padding: 0.5rem !important;
+         }
+         
+         .snippet-form-container {
+            padding: 0.75rem !important;
+         }
+         
+         .form-group input,
+         .form-group select,
+         .form-group textarea {
+            padding: 0.6rem 0.8rem !important;
+            font-size: 14px !important;
+         }
+         
+         .code-editor-header {
+            padding: 0.5rem !important;
+         }
+         
+         .code-editor-header select,
+         .code-editor-header .editor-btn {
+            padding: 0.4rem 0.6rem !important;
+            font-size: 12px !important;
+         }
+         .CodeMirror {
+            font-size: 11px !important;
+         }
+         .tag {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+         }
+         .tag-input {
+            font-size: 14px !important;
+            min-width: 60px;
+         }
+      }
+      .snippet-form {
+         max-width: 100%;
+         overflow: hidden;
+      }
       .btn-submit,
       .btn-cancel,
       .btn-delete {
-         white-space: normal;
-         word-wrap: break-word;
+         white-space: nowrap;
+         overflow: hidden;
+         text-overflow: ellipsis;
       }
+      @media screen and (max-width: 480px) {
+         .btn-submit,
+         .btn-cancel,
+         .btn-delete {
+            white-space: normal;
+            word-wrap: break-word;
+         }
       }
    </style>
 </head>
@@ -937,7 +952,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       
       let tags = <?php echo json_encode($tags); ?>;
       
-      // Use json_encode to safely output the code (including any special characters)
+      // Create CodeMirror editor with safe code injection and pre-render all lines
       const codeEditor = CodeMirror(document.getElementById('codeEditor'), {
          mode: '<?php echo $currentCodeMirrorMode; ?>',
          theme: 'monokai',
@@ -946,8 +961,14 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          matchBrackets: true,
          autoCloseBrackets: true,
          lineWrapping: true,
+         viewportMargin: Infinity, // Pre-renders all lines, preventing height changes during scroll
          value: <?php echo json_encode($snippet['code'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
       });
+      
+      // One-time refresh after a short delay to ensure proper sizing (without setSize)
+      setTimeout(() => {
+         codeEditor.refresh();
+      }, 100);
       
       codeEditor.on('change', function(editor) {
          document.getElementById('code').value = editor.getValue();
