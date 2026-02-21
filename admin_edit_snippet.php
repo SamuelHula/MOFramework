@@ -186,7 +186,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          background: #555;
       }
       .CodeMirror {
-         height: 300px;
+         height: 600px; /* Increased from 300px to 600px for better editing experience */
          font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
          font-size: 14px;
       }
@@ -367,6 +367,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          }
       }
 
+      /* Responsive adjustments */
       @media screen and (max-width: 768px) {
          body {
                padding-top: 70px !important;
@@ -394,7 +395,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
                max-width: 100%;
          }
          .CodeMirror {
-               height: 250px;
+               height: 400px; /* Slightly smaller on tablets */
          }
          .code-editor-header {
                flex-direction: column;
@@ -441,10 +442,8 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
                gap: 0.5rem;
          }
          .CodeMirror {
-               height: 200px;
+               height: 300px; /* Smaller on mobile */
          }
-      }
-      @media screen and (max-width: 480px) {
          .admin-snippet-container {
             padding: 0.5rem;
          }
@@ -492,7 +491,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          }
          
          .CodeMirror {
-            height: 200px;
+            height: 300px;
             font-size: 12px;
          }
          
@@ -561,7 +560,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          }
          
          .CodeMirror {
-            height: 180px;
+            height: 250px; /* Even smaller for very narrow screens */
          }
          
          .tag {
@@ -938,6 +937,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       
       let tags = <?php echo json_encode($tags); ?>;
       
+      // Use json_encode to safely output the code (including any special characters)
       const codeEditor = CodeMirror(document.getElementById('codeEditor'), {
          mode: '<?php echo $currentCodeMirrorMode; ?>',
          theme: 'monokai',
@@ -946,7 +946,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          matchBrackets: true,
          autoCloseBrackets: true,
          lineWrapping: true,
-         value: `<?php echo str_replace('`', '\`', $snippet['code']); ?>`
+         value: <?php echo json_encode($snippet['code'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
       });
       
       codeEditor.on('change', function(editor) {

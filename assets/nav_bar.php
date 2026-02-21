@@ -57,11 +57,11 @@ if ($needs_consent && $current_page !== 'cookie_consent.php') {
     <ul class="nav_list">
         <li><a href="<?php echo $base_path; ?>index.php" class="<?php echo $current_page == 'index.php' ? 'active' : ''; ?>" title="Home">Home</a></li>
         
-        <?php if ($current_page == 'index.php'): ?>
-            <li><a href="#categories" title="Categories">Categories</a></li>
-            <li><a href="#process" title="How It Works">How It Works</a></li>
-            <li><a href="#faq" title="FAQ">FAQ</a></li>
-            <li><a href="#contact_form" title="Contact">Contact</a></li>
+        <?php if ($current_page == 'index.php' || $current_page == 'terms.php' || $current_page == 'cookie_policy.php' || $current_page == 'privacy.php' || $current_page == 'cookie_settings.php'): ?>
+            <li><a href="index.php#categories" title="Categories">Categories</a></li>
+            <li><a href="index.php#process" title="How It Works">How It Works</a></li>
+            <li><a href="index.php#faq" title="FAQ">FAQ</a></li>
+            <li><a href="index.php#contact_form" title="Contact">Contact</a></li>
         <?php else: ?>
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <li><a href="<?php echo $base_path; ?>snippets_catalog.php" class="<?php echo $current_page == 'snippets_catalog.php' ? 'active' : ''; ?>" title="Code Snippets">Snippets</a></li>
