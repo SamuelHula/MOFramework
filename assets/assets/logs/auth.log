@@ -658,3 +658,19 @@ Email: samko.hula@gmail.com
 IP: 127.0.0.1
 =================================
 
+=== PASSWORD RESET REQUEST ===
+Time: 2026-02-22 09:01:33
+User ID: 1
+Email: samko.hula@gmail.com
+Reset Token: 5a1f0355bc71a6e8c4558cc283ea5179075b9cbf7113b3a5ad88b2ec0ffb4b1b
+IP: 127.0.0.1
+=================================
+
+=== SUCCESSFUL LOGIN ===
+Time: 2026-02-22 09:04:35
+User ID: 1
+Email: samko.hula@gmail.com
+Remember: No
+IP: 127.0.0.1
+=================================
+
