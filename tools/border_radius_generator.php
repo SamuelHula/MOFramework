@@ -474,12 +474,10 @@ border-radius: 50% 0 50% 0;
          const radiusValue = document.getElementById('radiusValue');
          const presetButtons = document.querySelectorAll('.preset-btn');
          
-         // Initialize values
          const values = [50, 0, 50, 0];
          updatePreview();
          updateOutput();
          
-         // Control point dragging
          controlPoints.forEach(point => {
             point.addEventListener('mousedown', function(e) {
                e.preventDefault();
@@ -526,19 +524,18 @@ border-radius: 50% 0 50% 0;
          function updateControlPosition(control, x, y) {
             const index = parseInt(control.getAttribute('data-index'));
             
-            // Calculate radius value based on position
             let radius;
             switch(index) {
-               case 0: // Top left
+               case 0: 
                   radius = Math.min(x, y);
                   break;
-               case 1: // Top right
+               case 1: 
                   radius = Math.min(100 - x, y);
                   break;
-               case 2: // Bottom right
+               case 2: 
                   radius = Math.min(100 - x, 100 - y);
                   break;
-               case 3: // Bottom left
+               case 3: 
                   radius = Math.min(x, 100 - y);
                   break;
             }
@@ -556,7 +553,6 @@ border-radius: 50% 0 50% 0;
             controlPoints.forEach(p => p.classList.remove('active'));
          }
          
-         // Input value changes
          valueInputs.forEach(input => {
             input.addEventListener('input', function() {
                const index = parseInt(this.getAttribute('data-index'));
@@ -578,12 +574,10 @@ border-radius: 50% 0 50% 0;
             });
          });
          
-         // Radius slider
          radiusSlider.addEventListener('input', function() {
             const value = parseInt(this.value);
             radiusValue.textContent = value + '%';
             
-            // Update all values proportionally
             const currentMax = Math.max(...values);
             if (currentMax > 0) {
                const factor = value / currentMax;
@@ -599,7 +593,6 @@ border-radius: 50% 0 50% 0;
             updateOutput();
          });
          
-         // Preset buttons
          presetButtons.forEach(button => {
             button.addEventListener('click', function() {
                const valuesStr = this.getAttribute('data-values');
@@ -616,7 +609,6 @@ border-radius: 50% 0 50% 0;
                updateInputs();
                updateOutput();
                
-               // Update slider to match the average
                const avg = Math.round(newValues.reduce((a, b) => a + b, 0) / 4);
                radiusSlider.value = avg;
                radiusValue.textContent = avg + '%';
@@ -665,7 +657,6 @@ border-radius: 50% 0 50% 0;
          presetButtons.forEach(b => b.classList.remove('active'));
          presetButtons[0].classList.add('active');
          
-         // Trigger update
          const event = new Event('input');
          slider.dispatchEvent(event);
       }

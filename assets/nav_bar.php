@@ -32,10 +32,8 @@ if (!isset($_SESSION['loggedin']) && isset($_COOKIE['remember_me'])) {
 
 $current_page = basename($_SERVER['PHP_SELF']);
 
-// Detect if we're in the tools subdirectory
 $is_in_tools = strpos($_SERVER['PHP_SELF'], '/tools/') !== false;
 
-// Set the base path for links based on current location
 $base_path = $is_in_tools ? '../' : './';
 
 $needs_consent = needs_cookie_consent();

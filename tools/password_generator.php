@@ -341,7 +341,6 @@ $current_page = 'web_tools';
             lengthValue.textContent = this.value;
          });
          
-         // Generate initial password
          generatePassword();
       });
       
@@ -352,33 +351,28 @@ $current_page = 'web_tools';
          const numbers = document.getElementById('numbers').checked;
          const symbols = document.getElementById('symbols').checked;
          
-         // Check if at least one character type is selected
          if (!uppercase && !lowercase && !numbers && !symbols) {
             alert('Please select at least one character type.');
             return;
          }
          
-         // Define character sets
          const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
          const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
          const numberChars = '0123456789';
          const symbolChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
          
-         // Build available characters based on selections
          let availableChars = '';
          if (uppercase) availableChars += uppercaseChars;
          if (lowercase) availableChars += lowercaseChars;
          if (numbers) availableChars += numberChars;
          if (symbols) availableChars += symbolChars;
          
-         // Generate password
          let password = '';
          for (let i = 0; i < length; i++) {
             const randomIndex = Math.floor(Math.random() * availableChars.length);
             password += availableChars[randomIndex];
          }
          
-         // Ensure at least one of each selected character type is included
          let finalPassword = password;
          if (uppercase && !/[A-Z]/.test(finalPassword)) {
             const index = Math.floor(Math.random() * finalPassword.length);
@@ -405,28 +399,23 @@ $current_page = 'web_tools';
                            finalPassword.substring(index + 1);
          }
          
-         // Display password
          document.getElementById('passwordDisplay').textContent = finalPassword;
          
-         // Calculate and display strength
          updatePasswordStrength(finalPassword);
       }
       
       function updatePasswordStrength(password) {
          let score = 0;
          
-         // Length score
          if (password.length >= 8) score += 1;
          if (password.length >= 12) score += 1;
          if (password.length >= 16) score += 1;
          
-         // Character variety score
          if (/[A-Z]/.test(password)) score += 1;
          if (/[a-z]/.test(password)) score += 1;
          if (/[0-9]/.test(password)) score += 1;
          if (/[^A-Za-z0-9]/.test(password)) score += 1;
          
-         // Determine strength level
          let strengthText = 'Very Weak';
          let strengthClass = 'strength-weak';
          let strengthPercent = 25;
@@ -448,7 +437,6 @@ $current_page = 'web_tools';
             strengthPercent = 25;
          }
          
-         // Update UI
          document.getElementById('strengthText').textContent = strengthText;
          const strengthFill = document.getElementById('strengthFill');
          strengthFill.className = 'strength-fill ' + strengthClass;

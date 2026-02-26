@@ -8,7 +8,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $current_page = 'web_tools';
 
-// Default values
 $base_font_size = 16;
 $pixel_value = '';
 $rem_value = '';
@@ -20,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    $base_font_size = floatval($_POST['base_font_size']);
    $conversion_type = $_POST['conversion_type'];
    
-   // Validate base font size
    if ($base_font_size <= 0) {
       $base_font_size = 16;
    }
@@ -29,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $pixel_value = floatval($_POST['pixel_value']);
       if ($pixel_value > 0) {
          $rem_value = $pixel_value / $base_font_size;
-         $em_value = $rem_value; // EM equals REM when parent font-size is same as root
+         $em_value = $rem_value; 
          $conversion_result = [
                'type' => 'px_to_rem',
                'pixels' => $pixel_value,
@@ -42,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $rem_value = floatval($_POST['rem_value']);
       if ($rem_value > 0) {
          $pixel_value = $rem_value * $base_font_size;
-         $em_value = $rem_value; // EM equals REM when parent font-size is same as root
+         $em_value = $rem_value; 
          $conversion_result = [
                'type' => 'rem_to_px',
                'rem' => $rem_value,
@@ -55,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $em_value = floatval($_POST['em_value']);
       if ($em_value > 0) {
          $pixel_value = $em_value * $base_font_size;
-         $rem_value = $em_value; // REM equals EM when root font-size is same as parent
+         $rem_value = $em_value; 
          $conversion_result = [
                'type' => 'em_to_px',
                'em' => $em_value,
@@ -67,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    }
 }
 
-// Common conversions for quick reference
 $common_conversions = [
    ['px' => 1, 'rem' => 0.0625, 'em' => 0.0625],
    ['px' => 2, 'rem' => 0.125, 'em' => 0.125],
@@ -633,7 +630,6 @@ $common_conversions = [
    <script src="../js/scroll.js"></script>
    <script src="../js/fly-in.js"></script>
    <script>
-      // Update input section based on conversion type
       document.querySelectorAll('input[name="conversion_type"]').forEach(radio => {
          radio.addEventListener('change', function() {
                updateInputSection();
@@ -715,7 +711,6 @@ $common_conversions = [
       }
       
       function newConversion() {
-         // Clear form and results
          document.getElementById('converterForm').reset();
          const resultCard = document.querySelector('.result-card');
          if (resultCard) {
@@ -743,13 +738,10 @@ $common_conversions = [
          value = <?php echo $conversion_result['pixels']; ?>;
          <?php endif; ?>
          
-         // Set the new conversion type
          document.querySelector(`input[name="conversion_type"][value="${newType}"]`).checked = true;
          
-         // Update the input field
          updateInputSection();
          
-         // Set the value in the new input field
          setTimeout(() => {
                if (newType === 'rem_to_px') {
                   document.getElementById('rem_value').value = value;
@@ -757,7 +749,6 @@ $common_conversions = [
                   document.getElementById('pixel_value').value = value;
                }
                
-               // Submit the form
                document.getElementById('converterForm').submit();
          }, 100);
          <?php endif; ?>

@@ -8,14 +8,12 @@
 
    $current_page = 'web_tools';
 
-   // Default values
    $paragraphs = 3;
    $sentences_per_paragraph = 5;
    $words_per_sentence = 15;
    $include_html = true;
    $output = '';
 
-   // Lorem Ipsum words
    $lorem_words = [
       'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
       'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore',
@@ -35,7 +33,6 @@
          $sentence_words[] = $words[array_rand($words)];
       }
       
-      // Capitalize first word
       $sentence_words[0] = ucfirst($sentence_words[0]);
       
       return implode(' ', $sentence_words) . '.';
@@ -58,12 +55,10 @@
       $include_html = isset($_POST['include_html']) ? true : false;
       $output_type = isset($_POST['output_type']) ? $_POST['output_type'] : 'text';
       
-      // Validate inputs
       $paragraphs = max(1, min(20, $paragraphs));
       $sentences_per_paragraph = max(1, min(50, $sentences_per_paragraph));
       $words_per_sentence = max(5, min(100, $words_per_sentence));
       
-      // Generate Lorem Ipsum
       $generated_paragraphs = [];
       
       for ($p = 0; $p < $paragraphs; $p++) {
@@ -77,7 +72,6 @@
          }
       }
       
-      // Format output based on type
       switch ($output_type) {
          case 'html':
             $output = implode("\n\n", $generated_paragraphs);

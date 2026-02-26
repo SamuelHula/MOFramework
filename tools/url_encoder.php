@@ -342,7 +342,6 @@ $current_page = 'web_tools';
       }
       
       document.addEventListener('DOMContentLoaded', function() {
-         // Load sample data button
          const sampleBtn = document.createElement('button');
          sampleBtn.type = 'button';
          sampleBtn.className = 'url-btn reset';

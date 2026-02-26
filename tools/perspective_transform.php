@@ -440,7 +440,7 @@ $current_page = 'web_tools';
                   <div class="perspective-stage" id="perspectiveStage">
                      <div class="transformed-box" id="transformedBox"></div>
                   </div>
-                  <!-- Control handles will be added dynamically -->
+                  
                </div>
                
                <div class="control-group" id="transformControls">
@@ -638,7 +638,6 @@ $current_page = 'web_tools';
          updateTransform();
          updateCssOutput();
          
-         // Mode switching
          document.querySelectorAll('.mode-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -655,7 +654,6 @@ $current_page = 'web_tools';
             });
          });
          
-         // Slider events
          const sliders = [
             'rotateX', 'rotateY', 'rotateZ',
             'translateX', 'translateY', 'translateZ',
@@ -671,7 +669,6 @@ $current_page = 'web_tools';
             }
          });
          
-         // Preset buttons
          document.querySelectorAll('.preset-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
@@ -680,12 +677,10 @@ $current_page = 'web_tools';
             });
          });
          
-         // Setup drag handles
          setupDragHandles();
       });
       
       function initializeControls() {
-         // Set initial slider values
          document.getElementById('rotateX').value = currentTransform.rotateX;
          document.getElementById('rotateY').value = currentTransform.rotateY;
          document.getElementById('rotateZ').value = currentTransform.rotateZ;
@@ -794,7 +789,6 @@ $current_page = 'web_tools';
       }
       
       function setupDragHandles() {
-         // Create drag handles for corners
          const handles = [
             { id: 'top-left', x: -100, y: -75 },
             { id: 'top-right', x: 100, y: -75 },
@@ -811,14 +805,12 @@ $current_page = 'web_tools';
             handleEl.style.top = '50%';
             handleEl.style.transform = `translate(calc(-50% + ${handle.x}px), calc(-50% + ${handle.y}px))`;
             
-            // Add event listeners for dragging
             handleEl.addEventListener('mousedown', startDrag);
             handleEl.addEventListener('touchstart', startDragTouch);
             
             stage.appendChild(handleEl);
          });
          
-         // Add global mouse/touch events
          document.addEventListener('mousemove', drag);
          document.addEventListener('mouseup', stopDrag);
          document.addEventListener('touchmove', dragTouch);
@@ -854,7 +846,6 @@ $current_page = 'web_tools';
          const deltaX = e.clientX - startX;
          const deltaY = e.clientY - startY;
          
-         // Calculate rotation based on which handle is being dragged
          const handleId = activeHandle.id;
          
          if (handleId.includes('top-left')) {
@@ -871,7 +862,6 @@ $current_page = 'web_tools';
             currentTransform.rotateX = startTransform.rotateX - deltaY * 0.5;
          }
          
-         // Update sliders and UI
          document.getElementById('rotateX').value = currentTransform.rotateX;
          document.getElementById('rotateY').value = currentTransform.rotateY;
          updateSliderValues();
@@ -886,7 +876,6 @@ $current_page = 'web_tools';
          const deltaX = touch.clientX - startX;
          const deltaY = touch.clientY - startY;
          
-         // Calculate rotation based on which handle is being dragged
          const handleId = activeHandle.id;
          
          if (handleId.includes('top-left')) {
@@ -903,7 +892,6 @@ $current_page = 'web_tools';
             currentTransform.rotateX = startTransform.rotateX - deltaY * 0.5;
          }
          
-         // Update sliders and UI
          document.getElementById('rotateX').value = currentTransform.rotateX;
          document.getElementById('rotateY').value = currentTransform.rotateY;
          updateSliderValues();
@@ -1024,7 +1012,6 @@ $current_page = 'web_tools';
          
          currentRawCss = css;
          
-         // Add syntax highlighting
          const highlighted = css
             .replace(/\/\*.*?\*\//g, '<span class="css-comment">$&</span>')
             .replace(/(transform|transform-origin|transform-style|perspective|perspective-origin):/g, '<span class="css-property">$1</span>:')

@@ -378,7 +378,7 @@ $current_page = 'web_tools';
                </div>
                
                <div class="palette-display" id="paletteDisplay">
-                  <!-- Colors will be generated here -->
+                     
                </div>
                
                <div class="copy-success" id="copySuccess">
@@ -410,7 +410,6 @@ $current_page = 'web_tools';
       let currentColors = [];
       
       document.addEventListener('DOMContentLoaded', function() {
-         // Update range value displays
          const sliders = ['paletteSize', 'saturation', 'lightness'];
          sliders.forEach(sliderId => {
             const slider = document.getElementById(sliderId);
@@ -421,7 +420,6 @@ $current_page = 'web_tools';
             });
          });
          
-         // Palette type buttons
          const typeButtons = document.querySelectorAll('.palette-type-btn');
          typeButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -432,10 +430,8 @@ $current_page = 'web_tools';
             });
          });
          
-         // Generate initial palette
          generatePalette();
          
-         // Load random palette button
          const randomBtn = document.createElement('button');
          randomBtn.type = 'button';
          randomBtn.className = 'color-btn generate';
@@ -456,10 +452,8 @@ $current_page = 'web_tools';
          const saturation = parseInt(document.getElementById('saturation').value);
          const lightness = parseInt(document.getElementById('lightness').value);
          
-         // Convert hex to HSL
          const baseHSL = hexToHSL(baseColor);
          
-         // Generate palette based on type
          let palette = [];
          
          switch(currentPaletteType) {
@@ -525,7 +519,6 @@ $current_page = 'web_tools';
          const colors = [];
          const complementaryHue = (baseHSL.h + 180) % 360;
          
-         // Generate shades between base and complementary
          for (let i = 0; i < size; i++) {
             const ratio = i / (size - 1);
             const hue = (baseHSL.h + (complementaryHue - baseHSL.h) * ratio) % 360;
@@ -542,7 +535,6 @@ $current_page = 'web_tools';
          const colors = [];
          const triadicHues = [baseHSL.h, (baseHSL.h + 120) % 360, (baseHSL.h + 240) % 360];
          
-         // Distribute colors from triadic hues
          for (let i = 0; i < size; i++) {
             const hueIndex = i % triadicHues.length;
             const lightnessVariation = lightness + (i % 3 - 1) * 10;
@@ -638,7 +630,6 @@ $current_page = 'web_tools';
          document.getElementById('saturationValue').textContent = '50';
          document.getElementById('lightnessValue').textContent = '50';
          
-         // Reset to analogous
          const typeButtons = document.querySelectorAll('.palette-type-btn');
          typeButtons.forEach(btn => btn.classList.remove('active'));
          typeButtons[0].classList.add('active');
@@ -647,7 +638,6 @@ $current_page = 'web_tools';
          generatePalette();
       }
       
-      // Color conversion utilities
       function hexToHSL(hex) {
          const rgb = hexToRgb(hex);
          const r = rgb.r / 255;
@@ -731,7 +721,6 @@ $current_page = 'web_tools';
          return 0.2126 * r + 0.7152 * g + 0.0722 * b;
       }
       
-      // Export functions
       function exportAsCSS() {
          let css = ':root {\n';
          currentColors.forEach((color, index) => {
@@ -775,10 +764,8 @@ $current_page = 'web_tools';
          preview.textContent = code;
          preview.style.display = 'block';
          
-         // Scroll to preview
          preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
          
-         // Copy button
          const copyBtn = document.createElement('button');
          copyBtn.className = 'export-btn';
          copyBtn.style.marginTop = '1rem';
@@ -800,7 +787,6 @@ $current_page = 'web_tools';
             }, 3000);
          };
          
-         // Remove existing copy button if any
          const existingBtn = preview.parentNode.querySelector('.copy-code-btn');
          if (existingBtn) {
             existingBtn.remove();

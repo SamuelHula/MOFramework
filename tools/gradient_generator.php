@@ -405,7 +405,7 @@ $current_page = 'web_tools';
                   <div class="color-stops-container">
                      <label>Color Stops</label>
                      <div id="colorStopsContainer">
-                        <!-- Color stops will be added here dynamically -->
+                        
                      </div>
                      <button type="button" class="add-color-btn" onclick="addColorStop()">
                         <i class="fas fa-plus"></i> Add Color Stop
@@ -483,7 +483,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
          updatePreview();
          updateCssOutput();
          
-         // Gradient type buttons
          document.querySelectorAll('.gradient-type-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                document.querySelectorAll('.gradient-type-btn').forEach(b => b.classList.remove('active'));
@@ -492,7 +491,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
                updatePreview();
                updateCssOutput();
                
-               // Show/hide angle control based on gradient type
                const angleControl = document.getElementById('angleControl');
                if (gradientType === 'radial' || gradientType === 'conic') {
                   angleControl.style.display = 'none';
@@ -502,7 +500,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
             });
          });
          
-         // Angle slider
          document.getElementById('angleSlider').addEventListener('input', function() {
             angle = parseInt(this.value);
             document.getElementById('angleValue').textContent = angle + 'deg';
@@ -510,7 +507,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
             updateCssOutput();
          });
          
-         // Preset buttons
          document.querySelectorAll('.preset-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
@@ -530,7 +526,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
       }
       
       function addColorStop() {
-         // Find the last position and add a new color stop after it
          const lastPosition = colorStops[colorStops.length - 1].position;
          const newPosition = Math.min(100, lastPosition + 20);
          const newColor = getRandomColor();
@@ -559,7 +554,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
             container.insertAdjacentHTML('beforeend', colorStopHtml);
          }
          
-         // Add event listeners
          const newStop = document.getElementById(`colorStop${index}`);
          const colorPicker = newStop.querySelector('.color-picker');
          const colorSlider = newStop.querySelector('.color-slider');
@@ -585,7 +579,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
             const idx = parseInt(this.getAttribute('data-index'));
             if (colorStops.length > 2) {
                colorStops.splice(idx, 1);
-               // Reinitialize all color stops
                initializeGradient();
                updatePreview();
                updateCssOutput();
@@ -624,7 +617,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
       }
       
       function getColorStopsString() {
-         // Sort color stops by position
          const sortedStops = [...colorStops].sort((a, b) => a.position - b.position);
          return sortedStops.map(stop => `${stop.color} ${stop.position}%`).join(', ');
       }
@@ -713,7 +705,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
             angle = preset.angle;
             colorStops = [...preset.stops];
             
-            // Update UI
             document.querySelectorAll('.gradient-type-btn').forEach(b => b.classList.remove('active'));
             document.querySelector(`.gradient-type-btn[data-type="${gradientType}"]`).classList.add('active');
             
@@ -762,7 +753,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
          
          currentRawCss = css;
          
-         // Add syntax highlighting
          const highlighted = css
             .replace(/\/\*.*?\*\//g, '<span class="css-comment">$&</span>')
             .replace(/(background):/g, '<span class="css-property">$1</span>:')
@@ -782,7 +772,6 @@ background: <span class="css-property">-moz-linear-gradient</span>(<span class="
          gradientType = 'linear';
          angle = 135;
          
-         // Reset UI
          document.querySelectorAll('.gradient-type-btn').forEach(b => b.classList.remove('active'));
          document.querySelector('.gradient-type-btn[data-type="linear"]').classList.add('active');
          

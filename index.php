@@ -579,7 +579,7 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                            <path fill="var(--primary)" d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
                         </svg>
                      </div>
-                     <span>Technical support: <a href="mailto:samuel.hula.dev@gmail.com" style="text-decoration: none;">samuel.hula.dev@gmail.com<!--contact@mail.com--></a></span>
+                     <span>Technical support: <a href="mailto:samuel.hula.dev@gmail.com" style="text-decoration: none;">samuel.hula.dev@gmail.com</a></span>
                   </div>
                   <div class="contact-method">
                      <div class="method-icon">
@@ -587,7 +587,7 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                            <path fill="var(--primary)" d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
                         </svg>
                      </div>
-                     <span>Business Inquiries: <a href="mailto:samuel_hula_dev@proton.me" style="text-decoration: none;">samuel_hula_dev@proton.me<!--contact@mail.com--></a></span>
+                     <span>Business Inquiries: <a href="mailto:samuel_hula_dev@proton.me" style="text-decoration: none;">samuel_hula_dev@proton.me</a></span>
                   </div>
                </div>
                <div class="contact-details">
@@ -598,7 +598,7 @@ function normalizeCodeToSameHeight($code, $target_lines = 8) {
                      <strong>Phone:</strong> <a href="tel:+421951098064" style="text-decoration: none;">+421 951 098 064</a>
                   </div>
                   <div class="contact-detail">
-                     <strong>Email:</strong> <a href="mailto:samuel.hula.dev@gmail.com" style="text-decoration: none;">samuel.hula.dev@gmail.com<!--contact@mail.com--></a>
+                     <strong>Email:</strong> <a href="mailto:samuel.hula.dev@gmail.com" style="text-decoration: none;">samuel.hula.dev@gmail.com</a>
                   </div>
                </div>
             </aside>

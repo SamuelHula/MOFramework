@@ -451,7 +451,6 @@ $current_page = 'web_tools';
    <script src="../js/scroll.js"></script>
    <script src="../js/fly-in.js"></script>
    <script>
-      // Default glass parameters
       let currentExample = 'frosted';
       let blurAmount = 10;
       let transparency = 30;
@@ -461,7 +460,6 @@ $current_page = 'web_tools';
       let bgColor = '#ffffff';
       let borderColor = '#ffffff';
       
-      // Example presets
       const presets = {
          frosted: { blur: 10, alpha: 30, border: 1, shadow: 32, radius: 20, bg: '#ffffff', border: '#ffffff' },
          crystal: { blur: 20, alpha: 15, border: 2, shadow: 20, radius: 25, bg: '#ffffff', border: '#ffffff' },
@@ -470,9 +468,7 @@ $current_page = 'web_tools';
          neon: { blur: 8, alpha: 50, border: 2, shadow: 60, radius: 10, bg: '#ffffff', border: '#3066BE' }
       };
       
-      // Initialize controls
       document.addEventListener('DOMContentLoaded', function() {
-         // Set up event listeners
          document.getElementById('blurControl').addEventListener('input', updateBlur);
          document.getElementById('alphaControl').addEventListener('input', updateAlpha);
          document.getElementById('borderControl').addEventListener('input', updateBorder);
@@ -481,7 +477,6 @@ $current_page = 'web_tools';
          document.getElementById('bgColor').addEventListener('input', updateBgColor);
          document.getElementById('borderColor').addEventListener('input', updateBorderColor);
          
-         // Example buttons
          document.querySelectorAll('.example-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                document.querySelectorAll('.example-btn').forEach(b => b.classList.remove('active'));
@@ -496,11 +491,9 @@ $current_page = 'web_tools';
             });
          });
          
-         // Set background for preview area
          const preview = document.getElementById('glassPreview');
          preview.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
          
-         // Generate initial effect
          updateGlassEffect();
       });
       
@@ -553,7 +546,6 @@ $current_page = 'web_tools';
          bgColor = preset.bg;
          borderColor = preset.border;
          
-         // Update controls
          document.getElementById('blurControl').value = blurAmount;
          document.getElementById('alphaControl').value = transparency;
          document.getElementById('borderControl').value = borderWidth;
@@ -562,7 +554,6 @@ $current_page = 'web_tools';
          document.getElementById('bgColor').value = bgColor;
          document.getElementById('borderColor').value = borderColor;
          
-         // Update displays
          document.getElementById('blurValue').textContent = blurAmount;
          document.getElementById('alphaValue').textContent = transparency;
          document.getElementById('borderValue').textContent = borderWidth;
@@ -574,7 +565,6 @@ $current_page = 'web_tools';
          const glassElement = document.getElementById('glassElement');
          const cssCode = document.getElementById('cssCode');
          
-         // Convert hex to rgba
          function hexToRgba(hex, alpha) {
             const r = parseInt(hex.slice(1, 3), 16);
             const g = parseInt(hex.slice(3, 5), 16);
@@ -582,7 +572,6 @@ $current_page = 'web_tools';
             return `rgba(${r}, ${g}, ${b}, ${alpha / 100})`;
          }
          
-         // Apply styles to element
          glassElement.style.backdropFilter = `blur(${blurAmount}px)`;
          glassElement.style.webkitBackdropFilter = `blur(${blurAmount}px)`;
          glassElement.style.backgroundColor = hexToRgba(bgColor, transparency);
@@ -590,7 +579,6 @@ $current_page = 'web_tools';
          glassElement.style.borderRadius = `${borderRadius}px`;
          glassElement.style.boxShadow = `0 ${shadowIntensity/8}px ${shadowIntensity/2}px rgba(0, 0, 0, ${shadowIntensity/200})`;
          
-         // Generate CSS code
          const css = `.glass-element {
    /* Glassmorphism Effect */
    backdrop-filter: blur(${blurAmount}px);
@@ -618,7 +606,6 @@ $current_page = 'web_tools';
          bgColor = '#' + Math.floor(Math.random()*16777215).toString(16);
          borderColor = '#' + Math.floor(Math.random()*16777215).toString(16);
          
-         // Update controls
          document.getElementById('blurControl').value = blurAmount;
          document.getElementById('alphaControl').value = transparency;
          document.getElementById('borderControl').value = borderWidth;
@@ -627,14 +614,12 @@ $current_page = 'web_tools';
          document.getElementById('bgColor').value = bgColor;
          document.getElementById('borderColor').value = borderColor;
          
-         // Update displays
          document.getElementById('blurValue').textContent = blurAmount;
          document.getElementById('alphaValue').textContent = transparency;
          document.getElementById('borderValue').textContent = borderWidth.toFixed(1);
          document.getElementById('shadowValue').textContent = shadowIntensity;
          document.getElementById('radiusValue').textContent = borderRadius;
          
-         // Set to custom example
          document.querySelectorAll('.example-btn').forEach(b => b.classList.remove('active'));
          document.querySelector('.example-btn[data-example="custom"]').classList.add('active');
          currentExample = 'custom';

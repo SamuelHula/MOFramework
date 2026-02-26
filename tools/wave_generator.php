@@ -397,7 +397,7 @@ $current_page = 'web_tools';
                
                <div class="wave-preview">
                   <svg id="waveSvg" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg">
-                     <!-- Wave will be generated here -->
+                     
                   </svg>
                </div>
                
@@ -433,7 +433,6 @@ $current_page = 'web_tools';
    <script src="../js/scroll.js"></script>
    <script src="../js/fly-in.js"></script>
    <script>
-      // Default wave parameters
       let currentWaveType = 'smooth';
       let waveHeight = 60;
       let waveCount = 4;
@@ -442,9 +441,7 @@ $current_page = 'web_tools';
       let color2 = '#3066BE';
       let direction = 'up';
       
-      // Initialize controls
       document.addEventListener('DOMContentLoaded', function() {
-         // Set up event listeners
          document.getElementById('heightControl').addEventListener('input', updateHeight);
          document.getElementById('countControl').addEventListener('input', updateCount);
          document.getElementById('complexityControl').addEventListener('input', updateComplexity);
@@ -452,7 +449,6 @@ $current_page = 'web_tools';
          document.getElementById('color2').addEventListener('input', updateColor2);
          document.getElementById('directionControl').addEventListener('change', updateDirection);
          
-         // Wave type buttons
          document.querySelectorAll('.wave-type-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                document.querySelectorAll('.wave-type-btn').forEach(b => b.classList.remove('active'));
@@ -463,7 +459,6 @@ $current_page = 'web_tools';
             });
          });
          
-         // Generate initial wave
          generateWave();
       });
       
@@ -504,10 +499,8 @@ $current_page = 'web_tools';
          const svg = document.getElementById('waveSvg');
          const svgCode = document.getElementById('svgCode');
          
-         // Clear SVG
          svg.innerHTML = '';
          
-         // Create wave based on type
          let pathData;
          switch(currentWaveType) {
             case 'smooth':
@@ -526,7 +519,6 @@ $current_page = 'web_tools';
                pathData = generateSmoothWave();
          }
          
-         // Create gradient
          const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
          const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
          gradient.setAttribute('id', 'waveGradient');
@@ -548,14 +540,12 @@ $current_page = 'web_tools';
          defs.appendChild(gradient);
          svg.appendChild(defs);
          
-         // Create wave path
          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
          path.setAttribute('d', pathData);
          path.setAttribute('fill', 'url(#waveGradient)');
          
          svg.appendChild(path);
          
-         // Generate and display code
          const code = `<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg">
    <defs>
       <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -574,7 +564,6 @@ $current_page = 'web_tools';
          const points = [];
          const step = 1200 / (waveCount * 2);
          
-         // Starting point
          path += `M 0,200 `;
          
          for(let i = 0; i <= waveCount * 2; i++) {
@@ -595,7 +584,6 @@ $current_page = 'web_tools';
             }
          }
          
-         // Close the path
          path += `L 1200,400 L 0,400 Z`;
          
          return path;
@@ -683,7 +671,6 @@ $current_page = 'web_tools';
          color2 = '#' + Math.floor(Math.random()*16777215).toString(16);
          direction = ['up', 'down', 'both'][Math.floor(Math.random() * 3)];
          
-         // Update controls
          document.getElementById('heightControl').value = waveHeight;
          document.getElementById('countControl').value = waveCount;
          document.getElementById('complexityControl').value = complexity;
@@ -691,7 +678,6 @@ $current_page = 'web_tools';
          document.getElementById('color2').value = color2;
          document.getElementById('directionControl').value = direction;
          
-         // Update displays
          document.getElementById('heightValue').textContent = waveHeight;
          document.getElementById('countValue').textContent = waveCount;
          document.getElementById('complexityValue').textContent = complexity;

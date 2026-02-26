@@ -494,7 +494,6 @@ $current_page = 'web_tools';
    <script src="../js/scroll.js"></script>
    <script src="../js/fly-in.js"></script>
    <script>
-      // Schema descriptions
       const schemaDescriptions = {
          article: '<strong>Article Schema:</strong> For news articles, blog posts, and other written content. Helps search engines understand your content better and display rich snippets.',
          organization: '<strong>Organization Schema:</strong> For businesses, companies, and organizations. Helps establish your brand identity in search results.',
@@ -505,25 +504,20 @@ $current_page = 'web_tools';
       };
       
       document.addEventListener('DOMContentLoaded', function() {
-         // Set current date as default for date fields
          const today = new Date().toISOString().split('T')[0];
          document.getElementById('articleDatePublished').value = today;
          document.getElementById('articleDateModified').value = today;
          
-         // Schema type selector
          const schemaTypeBtns = document.querySelectorAll('.schema-type-btn');
          schemaTypeBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                const type = this.getAttribute('data-type');
                
-               // Update active button
                schemaTypeBtns.forEach(b => b.classList.remove('active'));
                this.classList.add('active');
                
-               // Update description
                document.getElementById('schemaDescription').innerHTML = `<p>${schemaDescriptions[type]}</p>`;
                
-               // Show/hide fields
                document.querySelectorAll('.schema-fields').forEach(field => {
                   field.classList.add('hidden');
                });
@@ -647,7 +641,6 @@ $current_page = 'web_tools';
       }
       
       function generateEventSchema() {
-         // Simplified event schema for example
          return {
             "@context": "https://schema.org",
             "@type": "Event",
@@ -705,13 +698,11 @@ $current_page = 'web_tools';
       }
       
       function displaySchema(schema, type) {
-         // Remove undefined properties
          const cleanSchema = JSON.parse(JSON.stringify(schema));
          
          const jsonString = JSON.stringify(cleanSchema, null, 2);
          const htmlString = `<script type="application/ld+json">\n${jsonString}\n<\/script>`;
          
-         // Syntax highlighting
          const highlighted = jsonString
             .replace(/(".*?"):/g, '<span class="code-key">$1</span>:')
             .replace(/"([^"]*?)"/g, '<span class="code-string">"$1"</span>')
@@ -724,7 +715,6 @@ $current_page = 'web_tools';
       }
       
       function resetForm() {
-         // Reset all form fields
          document.querySelectorAll('input, textarea').forEach(input => {
             if (input.type === 'date') {
                const today = new Date().toISOString().split('T')[0];
@@ -734,7 +724,6 @@ $current_page = 'web_tools';
             }
          });
          
-         // Reset to article type
          const schemaTypeBtns = document.querySelectorAll('.schema-type-btn');
          schemaTypeBtns.forEach(b => b.classList.remove('active'));
          schemaTypeBtns[0].classList.add('active');

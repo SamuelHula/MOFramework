@@ -406,7 +406,7 @@ $current_page = 'web_tools';
                
                <div class="preview-container">
                   <div class="grid-preview" id="gridPreview">
-                     <!-- Grid items will be generated here -->
+                     
                   </div>
                </div>
                
@@ -434,10 +434,8 @@ $current_page = 'web_tools';
    <script src="../js/fly-in.js"></script>
    <script>
       document.addEventListener('DOMContentLoaded', function() {
-         // Initialize with default grid
          generateGrid();
          
-         // Update value displays
          document.getElementById('rows').addEventListener('input', function() {
             document.getElementById('rowsValue').textContent = this.value;
          });
@@ -454,7 +452,6 @@ $current_page = 'web_tools';
             document.getElementById('containerWidthValue').textContent = this.value + '%';
          });
          
-         // Template buttons
          const templateBtns = document.querySelectorAll('.template-btn');
          templateBtns.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -487,11 +484,9 @@ $current_page = 'web_tools';
          const itemColor = document.getElementById('itemColor').value;
          const containerWidth = document.getElementById('containerWidth').value;
          
-         // Generate preview grid
          const gridPreview = document.getElementById('gridPreview');
          gridPreview.innerHTML = '';
          
-         // Set grid styles
          gridPreview.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
          gridPreview.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
          gridPreview.style.gap = `${gap}px`;
@@ -499,7 +494,6 @@ $current_page = 'web_tools';
          gridPreview.style.alignContent = alignContent;
          gridPreview.style.width = `${containerWidth}%`;
          
-         // Create grid items
          const totalItems = rows * columns;
          for (let i = 1; i <= totalItems; i++) {
             const gridItem = document.createElement('div');
@@ -509,7 +503,6 @@ $current_page = 'web_tools';
             gridPreview.appendChild(gridItem);
          }
          
-         // Generate CSS code
          generateCSSCode(rows, columns, gap, justifyContent, alignContent, itemColor);
       }
       

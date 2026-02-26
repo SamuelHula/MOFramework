@@ -464,7 +464,7 @@ $current_page = 'web_tools';
                   </div>
                   
                   <div class="shadow-layers" id="shadowLayers">
-                     <!-- Shadow layers will be added here dynamically -->
+                     
                   </div>
                </div>
                
@@ -575,7 +575,6 @@ $current_page = 'web_tools';
          generateShadow();
          renderLayerControls();
          
-         // Event listeners for sliders
          document.getElementById('hOffset').addEventListener('input', function() {
             shadowLayers[activeLayerIndex].hOffset = parseInt(this.value);
             document.getElementById('hOffsetValue').textContent = this.value + 'px';
@@ -623,7 +622,6 @@ $current_page = 'web_tools';
             generateShadow();
          });
          
-         // Shadow count controls
          document.getElementById('increaseCount').addEventListener('click', function() {
             if (shadowLayers.length < 5) {
                const newLayer = new ShadowLayer(shadowLayers.length + 1);
@@ -649,7 +647,6 @@ $current_page = 'web_tools';
             }
          });
          
-         // Preset buttons
          document.querySelectorAll('.preset-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                const preset = this.getAttribute('data-preset');
@@ -719,7 +716,6 @@ $current_page = 'web_tools';
          document.getElementById('colorValueDisplay').textContent = layer.color;
          document.getElementById('insetCheckbox').checked = layer.inset;
          
-         // Update radio buttons
          document.querySelectorAll('input[name="activeLayer"]').forEach((radio, index) => {
             radio.checked = index === activeLayerIndex;
          });
@@ -780,39 +776,31 @@ $current_page = 'web_tools';
          const boxColor = document.getElementById('boxColor').value;
          const box = document.getElementById('previewBox');
          
-         // Apply box color
          box.style.backgroundColor = boxColor;
          
-         // Generate shadow string
          const shadowStrings = shadowLayers.map(layer => layer.getShadowString());
          const boxShadowValue = shadowStrings.join(', ');
          
-         // Apply to preview
          box.style.boxShadow = boxShadowValue;
          
-         // Generate CSS code
          const cssCode = `.box-element {
    box-shadow: ${boxShadowValue};
    background-color: ${boxColor};
 }`;
          
-         // Simple and reliable syntax highlighting
          let highlighted = cssCode;
          
-         // Process line by line to avoid regex issues
          const lines = highlighted.split('\n');
          const processedLines = [];
          
          for (let line of lines) {
             let processedLine = line;
             
-            // Highlight the class selector
             if (line.includes('.box-element')) {
                processedLine = processedLine.replace('.box-element', 
                   '<span style="color: #569cd6;">.box-element</span>');
             }
             
-            // Highlight property names (split to avoid regex issues)
             if (line.includes('box-shadow:')) {
                const parts = processedLine.split('box-shadow:');
                if (parts.length === 2) {
@@ -831,7 +819,6 @@ $current_page = 'web_tools';
                }
             }
             
-            // Highlight hex color values
             const hexColors = processedLine.match(/#([0-9a-f]{3}){1,2}(?![^<]*>)/gi);
             if (hexColors) {
                hexColors.forEach(color => {
@@ -844,7 +831,6 @@ $current_page = 'web_tools';
                });
             }
             
-            // Highlight rgba colors
             const rgbaColors = processedLine.match(/rgba?\([^)]+\)(?![^<]*>)/gi);
             if (rgbaColors) {
                rgbaColors.forEach(color => {
@@ -857,7 +843,6 @@ $current_page = 'web_tools';
                });
             }
             
-            // Highlight colons and semicolons that are not inside HTML tags
             processedLine = processedLine.replace(/([:;])(?![^<]*>)/g, 
                '<span style="color: #d4d4d4;">$1</span>');
             
@@ -897,7 +882,6 @@ $current_page = 'web_tools';
          });
       }
       
-      // Initialize
       updateShadowCount();
    </script>
 </body>

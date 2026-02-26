@@ -145,7 +145,7 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       .code-editor-container {
          border: 2px solid var(--back-dark);
          border-radius: 10px;
-         overflow: visible; /* Ensure scrollbars are not clipped */
+         overflow: visible; 
       }
       .code-editor-header {
          background: #2d2d2d;
@@ -185,30 +185,25 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       .editor-btn:hover {
          background: #555;
       }
-      
-      /* ===== CODEMIRROR SCROLL FIXES ===== */
       .CodeMirror {
-         height: 600px !important;                /* Fixed height */
+         height: 600px !important;                
          font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
          font-size: 14px;
-         overflow: hidden !important;              /* Keep default */
+         overflow: hidden !important;              
       }
       .CodeMirror-scroll {
-         overflow-y: auto !important;              /* Force scrollbars */
+         overflow-y: auto !important;              
          overflow-x: auto !important;
-         -webkit-overflow-scrolling: touch;        /* Smooth momentum on iOS */
-         scroll-behavior: auto !important;         /* Disable smooth scrolling that might cause jump */
+         -webkit-overflow-scrolling: touch;        
+         scroll-behavior: auto !important;         
       }
-      /* Disable any transitions that could interfere */
       .CodeMirror-scroll,
       .CodeMirror-sizer,
       .CodeMirror-gutter,
       .CodeMirror-gutters,
       .CodeMirror-linenumber {
          transition: none !important;
-      }
-      /* ===== END FIXES ===== */
-      
+      }      
       .tag-input-container {
          display: flex;
          flex-wrap: wrap;
@@ -385,8 +380,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
                transform: translate(10px, 20px) rotate(3deg);
          }
       }
-
-      /* Responsive adjustments */
       @media screen and (max-width: 768px) {
          body {
                padding-top: 70px !important;
@@ -952,7 +945,6 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
       
       let tags = <?php echo json_encode($tags); ?>;
       
-      // Create CodeMirror editor with safe code injection and pre-render all lines
       const codeEditor = CodeMirror(document.getElementById('codeEditor'), {
          mode: '<?php echo $currentCodeMirrorMode; ?>',
          theme: 'monokai',
@@ -961,11 +953,10 @@ $currentCodeMirrorMode = getCodeMirrorMode($snippet['language']);
          matchBrackets: true,
          autoCloseBrackets: true,
          lineWrapping: true,
-         viewportMargin: Infinity, // Pre-renders all lines, preventing height changes during scroll
+         viewportMargin: Infinity, 
          value: <?php echo json_encode($snippet['code'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
       });
       
-      // One-time refresh after a short delay to ensure proper sizing (without setSize)
       setTimeout(() => {
          codeEditor.refresh();
       }, 100);

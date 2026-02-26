@@ -325,7 +325,6 @@ $current_page = 'web_tools';
             decodeFromBase64();
          });
          
-         // Load sample data
          const sampleBtn = document.createElement('button');
          sampleBtn.type = 'button';
          sampleBtn.className = 'base64-btn reset';
