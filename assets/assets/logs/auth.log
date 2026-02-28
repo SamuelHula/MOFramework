@@ -674,3 +674,33 @@ Remember: No
 IP: 127.0.0.1
 =================================
 
+=== SUCCESSFUL REGISTRATION ===
+Time: 2026-02-28 17:35:48
+User ID: 2
+Name: Test Hula
+Email: testuser@gmail.com
+IP: 127.0.0.1
+=================================
+
+=== PASSWORD CHANGED ===
+Time: 2026-02-28 17:36:54
+User ID: 2
+Email: testuser@gmail.com
+IP: 127.0.0.1
+=================================
+
+=== SUCCESSFUL LOGIN ===
+Time: 2026-02-28 17:44:00
+User ID: 1
+Email: samko.hula@gmail.com
+Remember: No
+IP: 127.0.0.1
+=================================
+
+=== USER LOGOUT ===
+Time: 2026-02-28 17:44:02
+User ID: 1
+Email: samko.hula@gmail.com
+IP: 127.0.0.1
+=================================
+
