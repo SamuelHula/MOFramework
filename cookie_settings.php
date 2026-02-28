@@ -1,10 +1,7 @@
 <?php
 require_once './assets/config.php';
 require_once './assets/cookie_functions.php';
-if (!isset($_SESSION['cookie_consent']) || !$_SESSION['cookie_consent']['accepted']) {
-   header("Location: cookie_consent.php");
-   exit;
-}
+$consent = getCookieConsent();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +12,7 @@ if (!isset($_SESSION['cookie_consent']) || !$_SESSION['cookie_consent']['accepte
    <link rel="stylesheet" href="./css/general.css">
    <link rel="stylesheet" href="./css/home.css">
    <style>
+      /* (styles unchanged, keep as in original) */
       #header{
          height: 10vh;
       }
@@ -304,25 +302,25 @@ if (!isset($_SESSION['cookie_consent']) || !$_SESSION['cookie_consent']['accepte
                      </li>
                      <li>
                            <span>Preference Cookies</span>
-                           <span class="setting-status <?php echo $_SESSION['cookie_consent']['preferences'] ? 'status-allowed' : 'status-denied'; ?>">
-                              <?php echo $_SESSION['cookie_consent']['preferences'] ? 'Allowed' : 'Denied'; ?>
+                           <span class="setting-status <?php echo $consent['preferences'] ? 'status-allowed' : 'status-denied'; ?>">
+                              <?php echo $consent['preferences'] ? 'Allowed' : 'Denied'; ?>
                            </span>
                      </li>
                      <li>
                            <span>Statistics Cookies</span>
-                           <span class="setting-status <?php echo $_SESSION['cookie_consent']['statistics'] ? 'status-allowed' : 'status-denied'; ?>">
-                              <?php echo $_SESSION['cookie_consent']['statistics'] ? 'Allowed' : 'Denied'; ?>
+                           <span class="setting-status <?php echo $consent['statistics'] ? 'status-allowed' : 'status-denied'; ?>">
+                              <?php echo $consent['statistics'] ? 'Allowed' : 'Denied'; ?>
                            </span>
                      </li>
                      <li>
                            <span>Marketing Cookies</span>
-                           <span class="setting-status <?php echo $_SESSION['cookie_consent']['marketing'] ? 'status-allowed' : 'status-denied'; ?>">
-                              <?php echo $_SESSION['cookie_consent']['marketing'] ? 'Allowed' : 'Denied'; ?>
+                           <span class="setting-status <?php echo $consent['marketing'] ? 'status-allowed' : 'status-denied'; ?>">
+                              <?php echo $consent['marketing'] ? 'Allowed' : 'Denied'; ?>
                            </span>
                      </li>
                      <li>
                            <span>Last Updated</span>
-                           <span><?php echo $_SESSION['cookie_consent']['timestamp'] ?? 'Never'; ?></span>
+                           <span><?php echo $consent['timestamp'] ?? 'Never'; ?></span>
                      </li>
                   </ul>
                </div>

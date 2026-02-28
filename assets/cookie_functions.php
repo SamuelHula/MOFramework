@@ -1,33 +1,65 @@
 <?php
 function needs_cookie_consent() {
-   if (!isset($_SESSION['cookie_consent'])) {
+   global $pdo;
+
+   if (isset($_SESSION['cookie_consent']['accepted']) && $_SESSION['cookie_consent']['accepted'] === true) {
+      return false;
+   }
+
+   $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+   $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+   $sixMonthsAgo = date('Y-m-d H:i:s', strtotime('-6 months'));
+
+   // If PDO is not available (database error), we cannot check logs – assume consent needed
+   if (!$pdo) {
       return true;
    }
-   
-   return !$_SESSION['cookie_consent']['accepted'];
+
+   $stmt = $pdo->prepare("SELECT id FROM consent_logs 
+                           WHERE user_ip = ? AND user_agent = ? 
+                           AND consent_type IN ('rejected', 'preferences') 
+                           AND created_at > ? LIMIT 1");
+   $stmt->execute([$ip, $user_agent, $sixMonthsAgo]);
+
+   if ($stmt->fetch()) {
+      return false;
+   }
+
+   return true;
+}
+
+function getCookieConsent() {
+   $defaults = [
+      'version'     => COOKIE_CONSENT_VERSION,
+      'accepted'    => false,
+      'necessary'   => true,
+      'preferences' => false,
+      'statistics'  => false,
+      'marketing'   => false,
+      'timestamp'   => null
+   ];
+
+   if (isset($_SESSION['cookie_consent']) && is_array($_SESSION['cookie_consent'])) {
+      return array_merge($defaults, $_SESSION['cookie_consent']);
+   }
+   return $defaults;
+}
+
+function isCookieCategoryAllowed($category) {
+   $consent = getCookieConsent();
+   return isset($consent[$category]) && $consent[$category] === true;
 }
 
 function is_cookie_allowed($type) {
-   if (!isset($_SESSION['cookie_consent'])) {
+   if ($type === 'necessary') {
+      return true;
+   }
+
+   if (!isset($_SESSION['cookie_consent']) || empty($_SESSION['cookie_consent']['accepted'])) {
       return false;
    }
-   
-   if (!$_SESSION['cookie_consent']['accepted']) {
-      return false;
-   }
-   
-   switch ($type) {
-      case 'necessary':
-         return $_SESSION['cookie_consent']['necessary'];
-      case 'preferences':
-         return $_SESSION['cookie_consent']['preferences'];
-      case 'statistics':
-         return $_SESSION['cookie_consent']['statistics'];
-      case 'marketing':
-         return $_SESSION['cookie_consent']['marketing'];
-      default:
-         return false;
-   }
+
+   return $_SESSION['cookie_consent'][$type] ?? false;
 }
 
 function get_user_preferences() {
@@ -44,8 +76,8 @@ function get_user_preferences() {
    }
    
    return [
-      'theme' => 'light',
-      'language' => 'en',
+      'theme'     => 'light',
+      'language'  => 'en',
       'font_size' => 'medium'
    ];
 }
@@ -139,5 +171,22 @@ function load_marketing_scripts() {
       fbq('track', 'PageView');
    </script>
 HTML;
+}
+
+function setCookieIfAllowed($name, $value, $expiry, $path = '/', $domain = '', $secure = true, $httponly = true, $category = 'necessary') {
+   if ($category === 'necessary') {
+      return setcookie($name, $value, $expiry, $path, $domain, $secure, $httponly);
+   }
+   if (isCookieCategoryAllowed($category)) {
+      return setcookie($name, $value, $expiry, $path, $domain, $secure, $httponly);
+   }
+   return false;
+}
+
+function deleteCookie($name, $path = '/', $domain = '') {
+   if (isset($_COOKIE[$name])) {
+      unset($_COOKIE[$name]);
+      setcookie($name, '', time() - 3600, $path, $domain, true, true);
+   }
 }
 ?>

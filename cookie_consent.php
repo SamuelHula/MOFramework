@@ -4,15 +4,6 @@ require_once './assets/cookie_functions.php';
 
 $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
 $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-
-$sixMonthsAgo = date('Y-m-d H:i:s', strtotime('-6 months'));
-$stmt = $pdo->prepare("SELECT id FROM consent_logs WHERE user_ip = ? AND user_agent = ? AND consent_type IN ('rejected', 'preferences') AND created_at > ? LIMIT 1");
-$stmt->execute([$ip, $user_agent, $sixMonthsAgo]);
-
-if ($stmt->fetch()) {
-   header("Location: index.php");
-   exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
