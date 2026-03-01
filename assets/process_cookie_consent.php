@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';  // fixed path (same directory)
+require_once 'config.php';  
 
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
 $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
@@ -70,7 +70,6 @@ if ($action === 'reject_all') {
    exit;
 
 } elseif ($action === 'show_settings') {
-   // Store the referring page as return URL if not already set
    if (isset($_SERVER['HTTP_REFERER']) && !isset($_SESSION['return_url'])) {
       $_SESSION['return_url'] = $_SERVER['HTTP_REFERER'];
    }

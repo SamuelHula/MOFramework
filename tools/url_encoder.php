@@ -253,7 +253,7 @@ $current_page = 'web_tools';
                <h2 class="section-title">Result</h2>
                
                <div class="output-code" id="outputCode">
-                  // Encoded/decoded result will appear here
+                   Encoded/decoded result will appear here
                </div>
                
                <div class="url-actions">

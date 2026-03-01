@@ -9,12 +9,10 @@ define('COOKIE_CONSENT_DAYS', 365);
 
 define('SUPER_ADMIN_EMAIL', 'admin@code.dev');
 
-// Start session if not already started
 if (session_status() == PHP_SESSION_NONE) {
    session_start();
 }
 
-// Initialize cookie consent in session if not present
 if (!isset($_SESSION['cookie_consent'])) {
    if (isset($_COOKIE['cookie_consent'])) {
       $cookie_data = json_decode($_COOKIE['cookie_consent'], true);
@@ -44,12 +42,10 @@ if (!isset($_SESSION['cookie_consent'])) {
    }
 }
 
-// Save return URL for pages that require consent (except consent-related pages)
 if (!$_SESSION['cookie_consent']['accepted'] && !in_array(basename($_SERVER['PHP_SELF']), ['cookie_consent.php', 'process_cookie_consent.php', 'cookie_policy.php'])) {
    $_SESSION['return_url'] = $_SERVER['REQUEST_URI'];
 }
 
-// Load user preferences if consent allows
 if ($_SESSION['cookie_consent']['accepted'] && $_SESSION['cookie_consent']['preferences'] && isset($_COOKIE['user_preferences'])) {
    $user_preferences = json_decode($_COOKIE['user_preferences'], true);
    if ($user_preferences) {
@@ -57,14 +53,11 @@ if ($_SESSION['cookie_consent']['accepted'] && $_SESSION['cookie_consent']['pref
    }
 }
 
-// Database connection
 try {
    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) {
    error_log("Database connection failed: " . $e->getMessage());
-   // If the database is down, we cannot check consent logs – fallback to show consent
-   // but we still need to let the user access the consent page itself.
    if (!in_array(basename($_SERVER['PHP_SELF']), ['cookie_consent.php', 'process_cookie_consent.php', 'cookie_policy.php'])) {
       header("Location: cookie_consent.php");
       exit;

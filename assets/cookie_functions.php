@@ -10,7 +10,6 @@ function needs_cookie_consent() {
    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
    $sixMonthsAgo = date('Y-m-d H:i:s', strtotime('-6 months'));
 
-   // If PDO is not available (database error), we cannot check logs – assume consent needed
    if (!$pdo) {
       return true;
    }
